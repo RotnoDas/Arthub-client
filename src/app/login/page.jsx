@@ -20,7 +20,6 @@ const LoginPage = () => {
 
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData);
-        console.log("Form Data:", data);
 
         const { data: signInData, error: signInError } = await authClient.signIn.email({
             email: data.email,
@@ -35,11 +34,11 @@ const LoginPage = () => {
             // Role-based redirection
             const userRole = signInData?.user?.role;
             if (userRole === "artist") {
-                router.push("/artist-dashboard");
+                window.location.href = "/artist-dashboard";
             } else if (userRole === "admin") {
-                router.push("/admin-dashboard");
+                window.location.href = "/admin-dashboard";
             } else {
-                router.push("/");
+                window.location.href = "/";
             }
         }
         // }
@@ -50,7 +49,7 @@ const LoginPage = () => {
         const { data, error } = await authClient.signIn.social({
             provider: "google",
         });
-        
+
         if (error) {
             toast.error(error.message || "Google sign in failed.", { id: loadingToast });
         } else {

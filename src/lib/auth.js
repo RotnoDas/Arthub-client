@@ -4,6 +4,9 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 const client = new MongoClient(process.env.MONGO_URI);
 const db = client.db(process.env.DB_NAME);
 export const auth = betterAuth({
+    advanced: {
+        cookiePrefix: "arthub",
+    },
     emailAndPassword: {
         enabled: true,
     },

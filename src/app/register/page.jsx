@@ -35,7 +35,7 @@ const RegisterPage = () => {
             setIsLoading(false);
         } else {
             toast.success("Account created successfully!");
-            router.push("/");
+            window.location.href = "/";
         }
     };
 
