@@ -43,6 +43,8 @@ const SearchBar = () => {
         if (maxPrice.trim()) params.set('maxPrice', maxPrice.trim());
         else params.delete('maxPrice');
         
+        params.set('page', '1'); // Always reset to page 1 when applying new filters
+        
         router.push(`/artworks?${params.toString()}`);
     };
 

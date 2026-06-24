@@ -8,7 +8,8 @@ async function fetchFeaturedArtworks() {
             cache: 'no-store' // ensures auto-refresh on page reload
         });
         if (!res.ok) return [];
-        return res.json();
+        const data = await res.json();
+        return data.artworks || (Array.isArray(data) ? data : []);
     } catch (error) {
         console.error("Failed to fetch featured artworks:", error);
         return [];
