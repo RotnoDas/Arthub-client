@@ -6,7 +6,8 @@ import { FaUpload, FaSave, FaTimes } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
-const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY || "YOUR_IMGBB_API_KEY_HERE";
+const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dbdj8yyjn";
+const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "arthub";
 const inputClass = "w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500/60 transition";
 
 const CATEGORIES = ["Painting", "Digital Art", "Photography", "Sculpture", "Drawing", "Abstract", "Portrait", "Landscape", "Street Art", "Other"];
@@ -38,15 +39,29 @@ export default function AddArtworkPage() {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
+    
     const fd = new FormData();
-    fd.append("image", file);
+    fd.append("file", file);
+    fd.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
     try {
-      const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: fd });
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: fd,
+      });
       const data = await res.json();
-      if (data.success) { setFormData(prev => ({ ...prev, image: data.data.display_url })); toast.success("Image uploaded!"); }
-      else toast.error("Upload failed.");
-    } catch { toast.error("Image upload error."); }
-    finally { setUploading(false); }
+      
+      if (res.ok && data.secure_url) {
+        setFormData(prev => ({ ...prev, image: data.secure_url }));
+        toast.success("Image uploaded successfully!");
+      } else {
+        toast.error("Upload failed: " + (data.error?.message || "Unknown error"));
+      }
+    } catch (err) {
+      toast.error("Cloudinary upload error.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {

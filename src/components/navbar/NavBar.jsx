@@ -109,7 +109,7 @@ const NavBar = () => {
                             </button>
 
                             {dropdownOpen && (
-                                <div className="absolute right-0 mt-3 w-64 bg-content1 border border-default-200 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                                     {/* User info */}
                                     <div className="px-4 py-2.5 border-b border-default-200 mb-1.5 cursor-default bg-default-100/50 mx-2 rounded-lg">
                                         <p className="text-[10px] text-primary font-bold uppercase tracking-wider mb-0.5">
