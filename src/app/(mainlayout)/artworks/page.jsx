@@ -55,7 +55,7 @@ const ArtworksPage = async ({ searchParams }) => {
                         </div>
                         <h3 className="text-3xl font-extrabold text-slate-900 mb-3">No artworks found</h3>
                         <p className="text-slate-500 font-medium text-lg max-w-md mx-auto">
-                            We couldn't find any artworks matching your current filters. Try adjusting your search or clearing the category.
+                            We could not find any artworks matching your current filters. Try adjusting your search or clearing the category.
                         </p>
                     </div>
                 )}
