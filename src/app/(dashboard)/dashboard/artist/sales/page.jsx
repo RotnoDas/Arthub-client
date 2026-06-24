@@ -1,0 +1,82 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { authClient } from "@/lib/auth-client";
+import { FaHistory } from "react-icons/fa";
+import Link from "next/link";
+
+export default function SalesHistoryPage() {
+  const { data: sessionData } = authClient.useSession();
+  const user = sessionData?.user;
+  const [sales, setSales] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user?.email) {
+      // Fetch sales for this artist from purchases collection
+      fetch(`http://localhost:5000/api/purchases/artist/${user.email}`)
+        .then(r => r.json())
+        .then(d => { setSales(Array.isArray(d) ? d : []); setLoading(false); })
+        .catch(() => setLoading(false));
+    }
+  }, [user]);
+
+  const totalEarned = sales.reduce((s, p) => s + (Number(p.amount) || 0), 0);
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-1">Sales History</h1>
+          <p className="text-slate-400">All purchases made on your artworks.</p>
+        </div>
+        {sales.length > 0 && (
+          <div className="rounded-2xl border border-green-500/20 bg-green-500/5 px-5 py-3 text-right">
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Earned</p>
+            <p className="text-2xl font-bold text-green-400">${totalEarned.toFixed(2)}</p>
+          </div>
+        )}
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+        {loading ? (
+          <div className="p-12 text-center text-slate-400 animate-pulse">Loading sales...</div>
+        ) : sales.length === 0 ? (
+          <div className="p-14 text-center">
+            <FaHistory className="mx-auto text-5xl text-slate-700 mb-4" />
+            <p className="text-slate-300 font-semibold text-lg">No sales yet</p>
+            <p className="text-slate-500 text-sm mt-1 mb-5">Once buyers purchase your artworks, they'll appear here.</p>
+            <Link href="/dashboard/artist/add-artwork" className="inline-block px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-semibold text-sm hover:opacity-90 transition">
+              Add More Artworks
+            </Link>
+          </div>
+        ) : (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/10 bg-white/5">
+                {["Artwork Title", "Buyer", "Purchase Date", "Amount"].map(h => (
+                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-slate-400 uppercase tracking-wider">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sales.map(sale => (
+                <tr key={sale._id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                  <td className="px-5 py-4 font-semibold text-white group-hover:text-indigo-300 transition-colors">{sale.artworkTitle}</td>
+                  <td className="px-5 py-4 text-slate-300">{sale.buyerName || sale.userEmail}</td>
+                  <td className="px-5 py-4 text-slate-400">{new Date(sale.purchaseDate || sale.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+                  <td className="px-5 py-4">
+                    <span className="font-bold text-green-400 text-base">+${sale.amount}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {sales.length > 0 && (
+        <p className="text-slate-500 text-sm px-1">{sales.length} sale{sales.length !== 1 ? "s" : ""} total</p>
+      )}
+    </div>
+  );
+}

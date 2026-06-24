@@ -1,0 +1,122 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { Button } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import { FaPalette, FaDollarSign, FaLayerGroup, FaHistory, FaPlus } from "react-icons/fa";
+import Link from "next/link";
+
+export default function ArtistDashboardOverview() {
+  const { data: sessionData } = authClient.useSession();
+  const user = sessionData?.user;
+  const [artworks, setArtworks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`http://localhost:5000/api/artworks/artist/${user.email}`)
+        .then(r => r.json())
+        .then(d => { setArtworks(Array.isArray(d) ? d : []); setLoading(false); })
+        .catch(() => setLoading(false));
+    }
+  }, [user]);
+
+  if (!user) return <div className="text-white p-8">Loading...</div>;
+
+  const totalRevenue = artworks.filter(a => a.status === "sold").reduce((s, a) => s + (Number(a.price) || 0), 0);
+  const soldCount = artworks.filter(a => a.status === "sold").length;
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Header */}
+      <div className="flex items-center gap-4">
+        {user.image && <img src={user.image} alt={user.name} className="w-16 h-16 rounded-full object-cover ring-2 ring-indigo-500/60 ring-offset-2 ring-offset-[#080c16]" />}
+        <div>
+          <h1 className="text-3xl font-bold text-white">Artist Studio, {user.name} 🎨</h1>
+          <p className="text-slate-400 mt-1">Manage your portfolio and track your sales.</p>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
+        {[
+          { label: "Total Artworks", value: artworks.length, icon: <FaLayerGroup />, color: "indigo" },
+          { label: "Artworks Sold", value: soldCount, icon: <FaPalette />, color: "pink" },
+          { label: "Total Revenue", value: `$${totalRevenue.toFixed(2)}`, icon: <FaDollarSign />, color: "green" },
+          { label: "Available", value: artworks.length - soldCount, icon: <FaLayerGroup />, color: "blue" },
+        ].map(s => (
+          <div key={s.label} className="rounded-2xl border border-white/10 bg-white/5 p-5 flex items-center gap-4 hover:border-white/20 transition-colors">
+            <div className={`w-12 h-12 rounded-xl bg-${s.color}-500/10 text-${s.color}-400 flex items-center justify-center text-xl shrink-0`}>{s.icon}</div>
+            <div className="min-w-0">
+              <p className="text-slate-400 text-xs font-bold uppercase tracking-wider">{s.label}</p>
+              <p className="text-white font-bold text-xl truncate">{s.value}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Quick Nav */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {[
+          { href: "/dashboard/artist/add-artwork", icon: <FaPlus />, color: "pink", label: "Add Artwork", desc: "Post a new artwork to the marketplace." },
+          { href: "/dashboard/artist/manage-artworks", icon: <FaLayerGroup />, color: "indigo", label: "Manage Artworks", desc: "Edit or delete your existing artworks." },
+          { href: "/dashboard/artist/sales", icon: <FaHistory />, color: "green", label: "Sales History", desc: "See who bought your artworks and when." },
+          { href: "/dashboard/artist/profile", icon: <FaPalette />, color: "purple", label: "Profile", desc: "Update your artist profile details." },
+        ].map(c => (
+          <Link key={c.href} href={c.href} className={`group rounded-2xl border border-white/10 bg-white/5 hover:bg-${c.color}-500/5 hover:border-${c.color}-500/30 transition-all duration-200 p-6 flex flex-col gap-3`}>
+            <div className={`w-10 h-10 rounded-xl bg-${c.color}-500/10 text-${c.color}-400 flex items-center justify-center text-lg group-hover:bg-${c.color}-500/20 transition-colors`}>{c.icon}</div>
+            <div>
+              <p className="font-bold text-white">{c.label}</p>
+              <p className="text-slate-400 text-xs mt-1">{c.desc}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Recent Artworks */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-white">Recent Artworks</h2>
+          <Link href="/dashboard/artist/manage-artworks" className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors">View All →</Link>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+          {loading ? (
+            <div className="p-10 text-center text-slate-400 animate-pulse">Loading artworks...</div>
+          ) : artworks.length === 0 ? (
+            <div className="p-10 text-center">
+              <FaPalette className="mx-auto text-4xl text-slate-600 mb-3" />
+              <p className="text-slate-400 font-medium">No artworks posted yet.</p>
+              <Link href="/dashboard/artist/add-artwork" className="inline-block mt-3 px-5 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-500 text-white text-sm font-semibold hover:opacity-90 transition">
+                Post Your First Artwork
+              </Link>
+            </div>
+          ) : (
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/5">
+                  {["Title", "Category", "Price", "Status"].map(h => (
+                    <th key={h} className="text-left px-5 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {artworks.slice(0, 5).map(a => (
+                  <tr key={a._id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td className="px-5 py-3.5 font-semibold text-white flex items-center gap-3">
+                      {a.image ? <img src={a.image} alt={a.title} className="w-9 h-9 rounded-lg object-cover shrink-0" /> : <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0"><FaPalette className="text-indigo-400 text-xs" /></div>}
+                      <span className="truncate max-w-[180px]">{a.title}</span>
+                    </td>
+                    <td className="px-5 py-3.5 text-slate-300">{a.category || "—"}</td>
+                    <td className="px-5 py-3.5 text-green-400 font-bold">${a.price}</td>
+                    <td className="px-5 py-3.5">
+                      <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${a.status === "sold" ? "bg-green-500/10 text-green-400" : "bg-blue-500/10 text-blue-400"}`}>{a.status || "Available"}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -32,7 +32,7 @@ const NavBar = () => {
 
     const menuItems = [
         { name: "Home", href: "/" },
-        { name: "Browse Artworks", href: "/browse" },
+        { name: "Browse Artworks", href: "/artworks" },
     ];
 
     const handleLogout = async () => {
@@ -45,9 +45,6 @@ const NavBar = () => {
     const closeMenu = () => setIsMenuOpen(false);
 
     const getDashboardLink = () => {
-        if (!user) return "/dashboard";
-        if (user.role === 'artist') return "/artist-dashboard";
-        if (user.role === 'admin') return "/admin-dashboard";
         return "/dashboard";
     };
 

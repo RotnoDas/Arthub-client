@@ -31,17 +31,8 @@ const LoginPage = () => {
             setIsLoading(false);
         } else {
             toast.success("Welcome back!");
-            // Role-based redirection
-            const userRole = signInData?.user?.role;
-            if (userRole === "artist") {
-                window.location.href = "/artist-dashboard";
-            } else if (userRole === "admin") {
-                window.location.href = "/admin-dashboard";
-            } else {
-                window.location.href = "/";
-            }
+            router.push("/dashboard");
         }
-        // }
     };
 
     const handleGoogleSignIn = async () => {

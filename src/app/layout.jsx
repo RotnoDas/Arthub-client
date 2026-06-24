@@ -35,9 +35,7 @@ export default function RootLayout({ children }) {
                 padding: '16px',
             }
         }} />
-        <NavBar></NavBar>
         {children}
-        <Footer></Footer>
       </body>
     </html>
   );
