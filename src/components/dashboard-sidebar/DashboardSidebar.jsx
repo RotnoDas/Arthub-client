@@ -55,34 +55,34 @@ const DashboardSidebar = () => {
     return pathname.startsWith(href);
   };
 
-  const roleColor = role === "admin" ? "text-yellow-400 bg-yellow-500/10" : role === "artist" ? "text-indigo-400 bg-indigo-500/10" : "text-pink-400 bg-pink-500/10";
-  const activeBg = role === "admin" ? "bg-yellow-500/10 text-yellow-300 border-yellow-500/20" : role === "artist" ? "bg-indigo-500/10 text-indigo-300 border-indigo-500/20" : "bg-pink-500/10 text-pink-300 border-pink-500/20";
-  const activeIcon = role === "admin" ? "bg-yellow-500/20 text-yellow-400" : role === "artist" ? "bg-indigo-500/20 text-indigo-400" : "bg-pink-500/20 text-pink-400";
+  const roleColor = role === "admin" ? "text-amber-600 bg-amber-100" : role === "artist" ? "text-indigo-600 bg-indigo-100" : "text-pink-600 bg-pink-100";
+  const activeBg = role === "admin" ? "bg-amber-50 text-amber-700 border-amber-200" : role === "artist" ? "bg-indigo-50 text-indigo-700 border-indigo-200" : "bg-pink-50 text-pink-700 border-pink-200";
+  const activeIcon = role === "admin" ? "bg-amber-100 text-amber-600" : role === "artist" ? "bg-indigo-100 text-indigo-600" : "bg-pink-100 text-pink-600";
 
   return (
-    <aside className="w-64 h-screen sticky top-0 shrink-0 border-r border-white/5">
-      <div className="h-full flex flex-col bg-slate-950/90 backdrop-blur-xl">
+    <aside className="w-64 h-screen sticky top-0 shrink-0 border-r border-slate-200">
+      <div className="h-full flex flex-col bg-white">
 
         {/* Brand */}
-        <div className="px-6 py-5 border-b border-white/5">
+        <div className="px-6 py-5 border-b border-slate-200">
           <Logo />
         </div>
 
         {/* User Profile Card */}
-        <div className="px-4 py-4 border-b border-white/5">
-          <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-white/5">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-500/40 shrink-0">
+        <div className="px-4 py-4 border-b border-slate-200">
+          <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-200 shrink-0">
               <Image
                 width={40}
                 height={40}
                 unoptimized
-                src={session?.user?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(session?.user?.name || "U")}&background=ec4899&color=fff&bold=true`}
+                src={session?.user?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(session?.user?.name || "U")}&background=fbcfe8&color=be185d&bold=true`}
                 alt="Avatar"
                 className="object-cover w-full h-full"
               />
             </div>
             <div className="overflow-hidden flex-1">
-              <p className="text-white text-sm font-bold truncate leading-tight">{session?.user?.name}</p>
+              <p className="text-slate-900 text-sm font-bold truncate leading-tight">{session?.user?.name}</p>
               <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md ${roleColor}`}>
                 {role}
               </span>
@@ -92,7 +92,7 @@ const DashboardSidebar = () => {
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-          <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest px-3 pb-3">Menu</p>
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest px-3 pb-3">Menu</p>
           {menuItems.map(({ key, label, icon: Icon, href }) => {
             const active = isActive(href);
             return (
@@ -101,11 +101,11 @@ const DashboardSidebar = () => {
                 href={href}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border ${
                   active
-                    ? `${activeBg} border-opacity-40`
-                    : "text-slate-400 hover:text-white hover:bg-white/5 border-transparent"
+                    ? `${activeBg}`
+                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-50 border-transparent"
                 }`}
               >
-                <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${active ? activeIcon : "bg-white/5 text-slate-400"}`}>
+                <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${active ? activeIcon : "bg-slate-100 text-slate-500"}`}>
                   <Icon size={15} />
                 </span>
                 <span>{label}</span>
@@ -116,18 +116,18 @@ const DashboardSidebar = () => {
         </nav>
 
         {/* Bottom Links */}
-        <div className="px-3 py-4 border-t border-white/5 space-y-1">
-          <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-150 border border-transparent">
-            <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+        <div className="px-3 py-4 border-t border-slate-200 space-y-1">
+          <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all duration-150 border border-transparent">
+            <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
               <FaHome size={13} />
             </span>
             Back to Site
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-red-400 hover:bg-red-500/5 transition-all duration-150 cursor-pointer border border-transparent"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all duration-150 cursor-pointer border border-transparent"
           >
-            <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
               <FaSignOutAlt size={13} />
             </span>
             Sign Out

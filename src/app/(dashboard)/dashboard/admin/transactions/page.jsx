@@ -25,66 +25,66 @@ export default function AdminTransactionsPage() {
 
   const typeBadge = (t) => {
     const type = (t.paymentFor || t.paymentType || "purchase").toLowerCase();
-    if (type.includes("subscription")) return "bg-purple-500/10 text-purple-400";
-    if (type.includes("purchase")) return "bg-blue-500/10 text-blue-400";
-    return "bg-slate-500/10 text-slate-400";
+    if (type.includes("subscription")) return "bg-fuchsia-50 text-fuchsia-600 border border-fuchsia-100";
+    if (type.includes("purchase")) return "bg-emerald-50 text-emerald-600 border border-emerald-100";
+    return "bg-slate-50 text-slate-600 border border-slate-200";
   };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-1">All Transactions</h1>
-          <p className="text-slate-400">Every payment processed on the ArtHub platform.</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-1">All Transactions</h1>
+          <p className="text-slate-500">Every payment processed on the ArtHub platform.</p>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          <div className="rounded-2xl border border-green-500/20 bg-green-500/5 px-5 py-2.5 text-right">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Revenue</p>
-            <p className="text-xl font-bold text-green-400">${totalRevenue.toFixed(2)}</p>
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-2.5 text-right shadow-sm">
+            <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">Total Revenue</p>
+            <p className="text-xl font-bold text-emerald-700">${totalRevenue.toFixed(2)}</p>
           </div>
           <div className="relative">
-            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
+            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search..."
-              className="pl-8 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-green-500/60 transition w-56"
+              className="pl-8 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 transition w-56 shadow-sm"
             />
           </div>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-slate-400 animate-pulse">Loading transactions...</div>
+          <div className="p-12 text-center text-slate-500 animate-pulse">Loading transactions...</div>
         ) : filtered.length === 0 ? (
           <div className="p-14 text-center">
-            <FaExchangeAlt className="mx-auto text-5xl text-slate-700 mb-4" />
-            <p className="text-slate-400 font-medium">{search ? "No results found." : "No transactions yet."}</p>
+            <FaExchangeAlt className="mx-auto text-5xl text-slate-300 mb-4" />
+            <p className="text-slate-500 font-medium">{search ? "No results found." : "No transactions yet."}</p>
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
+              <tr className="border-b border-slate-200 bg-slate-50">
                 {["Transaction ID", "Type", "User / Artist", "Amount", "Date"].map(h => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-slate-400 uppercase tracking-wider">{h}</th>
+                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map(t => (
-                <tr key={t._id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="px-5 py-4 font-mono text-xs text-slate-400">{t.transactionId || t._id?.slice(-8).toUpperCase()}</td>
+                <tr key={t._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                  <td className="px-5 py-4 font-mono text-xs font-semibold text-slate-600">{t.transactionId || t._id?.slice(-8).toUpperCase()}</td>
                   <td className="px-5 py-4">
                     <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${typeBadge(t)}`}>
                       {t.paymentFor || t.paymentType || "Purchase"}
                     </span>
                   </td>
-                  <td className="px-5 py-4 text-slate-300">{t.userEmail}</td>
+                  <td className="px-5 py-4 text-slate-700 font-medium">{t.userEmail}</td>
                   <td className="px-5 py-4">
-                    <span className="font-bold text-green-400">${Number(t.amount).toFixed(2)}</span>
+                    <span className="font-bold text-emerald-600">${Number(t.amount).toFixed(2)}</span>
                   </td>
-                  <td className="px-5 py-4 text-slate-400">
+                  <td className="px-5 py-4 text-slate-500 font-medium">
                     {t.paidAt ? new Date(t.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}
                   </td>
                 </tr>

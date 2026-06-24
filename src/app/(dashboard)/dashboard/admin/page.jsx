@@ -1,259 +1,159 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { authClient } from "@/lib/auth-client";
-import { FaUsers, FaPalette, FaChartLine, FaDollarSign, FaShoppingBag } from "react-icons/fa";
-import Link from "next/link";
-import {
-  AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
-} from "recharts";
+'use client';
 
-const COLORS = ["#ec4899", "#6366f1", "#22c55e", "#f59e0b", "#8b5cf6", "#06b6d4"];
+import React, { useEffect, useState } from 'react';
+import { FaUsers, FaPaintBrush, FaCheckCircle, FaWallet, FaChartLine } from 'react-icons/fa';
+import { 
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
+    PieChart, Pie, Legend
+} from 'recharts';
 
-const CustomTooltip = ({ active, payload, label, prefix = "" }) => {
-  if (!active || !payload?.length) return null;
-  return (
-    <div className="bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 shadow-xl">
-      {label && <p className="text-slate-400 text-xs mb-1">{label}</p>}
-      {payload.map((p, i) => (
-        <p key={i} className="text-white text-sm font-bold" style={{ color: p.color }}>
-          {prefix}{typeof p.value === "number" ? p.value.toFixed(2) : p.value}
-        </p>
-      ))}
-    </div>
-  );
-};
+export default function AdminDashboardPage() {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-export default function AdminOverviewPage() {
-  const { data: sessionData } = authClient.useSession();
-  const user = sessionData?.user;
-  const [users, setUsers] = useState([]);
-  const [artworks, setArtworks] = useState([]);
-  const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        fetch('http://localhost:5000/api/admin/analytics')
+            .then(res => res.json())
+            .then(json => {
+                setData(json);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch analytics", err);
+                setLoading(false);
+            });
+    }, []);
 
-  useEffect(() => {
-    if (user?.role === "admin") {
-      Promise.all([
-        fetch("http://localhost:5000/api/users").then(r => r.json()),
-        fetch("http://localhost:5000/api/artworks").then(r => r.json()),
-        fetch("http://localhost:5000/api/transactions").then(r => r.json()),
-      ]).then(([u, a, t]) => {
-        setUsers(Array.isArray(u) ? u : []);
-        setArtworks(Array.isArray(a) ? a : []);
-        setTransactions(Array.isArray(t) ? t : []);
-        setLoading(false);
-      }).catch(() => setLoading(false));
+    if (loading || !data) {
+        return (
+            <div className="py-20 flex justify-center">
+                <div className="text-slate-500 animate-pulse text-sm font-medium">Loading analytics...</div>
+            </div>
+        );
     }
-  }, [user]);
 
-  if (!user || user.role !== "admin") return <div className="text-white p-8">Access denied.</div>;
+    const COLORS = ['#a21caf', '#4f46e5', '#db2777', '#7c3aed', '#0d9488', '#d97706'];
 
-  // Derived stats
-  const totalUsers = users.length;
-  const totalArtists = users.filter(u => u.role === "artist").length;
-  const soldArtworks = artworks.filter(a => a.status === "sold").length;
-  const totalRevenue = transactions.reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const stats = [
+        { title: 'Total Users', value: data.totalUsers, icon: FaUsers, gradient: 'from-blue-500 to-cyan-400', ring: 'ring-blue-100' },
+        { title: 'Total Artists', value: data.totalArtists, icon: FaPaintBrush, gradient: 'from-fuchsia-500 to-pink-400', ring: 'ring-fuchsia-100' },
+        { title: 'Artworks Sold', value: data.artworksSold, icon: FaCheckCircle, gradient: 'from-emerald-500 to-teal-400', ring: 'ring-emerald-100' },
+        { title: 'Total Revenue', value: `$${(data.totalRevenue || 0).toFixed(2)}`, icon: FaWallet, gradient: 'from-amber-500 to-yellow-400', ring: 'ring-amber-100' },
+    ];
 
-  // Monthly Revenue – last 6 months
-  const now = new Date();
-  const monthlyData = Array.from({ length: 6 }, (_, i) => {
-    const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1);
-    const label = d.toLocaleString("default", { month: "short" });
-    const revenue = transactions
-      .filter(t => {
-        const td = new Date(t.paidAt);
-        return td.getFullYear() === d.getFullYear() && td.getMonth() === d.getMonth();
-      })
-      .reduce((s, t) => s + (Number(t.amount) || 0), 0);
-    return { month: label, revenue: parseFloat(revenue.toFixed(2)) };
-  });
-
-  // Artworks by category – Pie chart
-  const categoryMap = {};
-  artworks.forEach(a => {
-    if (a.category) categoryMap[a.category] = (categoryMap[a.category] || 0) + 1;
-  });
-  const categoryData = Object.entries(categoryMap)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 6)
-    .map(([name, value]) => ({ name, value }));
-
-  // Artworks sold vs available – Bar chart
-  const soldData = [
-    { name: "Available", count: artworks.length - soldArtworks },
-    { name: "Sold", count: soldArtworks },
-  ];
-
-  // User roles breakdown
-  const userRoleData = [
-    { name: "Users", value: users.filter(u => u.role === "user" || !u.role).length },
-    { name: "Artists", value: totalArtists },
-    { name: "Admins", value: users.filter(u => u.role === "admin").length },
-  ].filter(d => d.value > 0);
-
-  const statCards = [
-    { label: "Total Users", value: totalUsers, icon: <FaUsers />, color: "blue", href: "/dashboard/admin/users" },
-    { label: "Total Artists", value: totalArtists, icon: <FaPalette />, color: "pink", href: "/dashboard/admin/users" },
-    { label: "Artworks Sold", value: soldArtworks, icon: <FaShoppingBag />, color: "green", href: "/dashboard/admin/artworks" },
-    { label: "Total Revenue", value: `$${totalRevenue.toFixed(2)}`, icon: <FaDollarSign />, color: "yellow", href: "/dashboard/admin/transactions" },
-  ];
-
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div>
-        <h1 className="text-3xl font-bold text-white mb-1">Admin Overview</h1>
-        <p className="text-slate-400">Platform analytics, health metrics, and quick access.</p>
-      </div>
-
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-        {statCards.map(s => (
-          <Link key={s.label} href={s.href}
-            className={`rounded-2xl border border-white/10 bg-white/5 p-5 flex items-center gap-4 hover:border-${s.color}-500/30 hover:bg-${s.color}-500/5 transition-all duration-200 group`}>
-            <div className={`w-12 h-12 rounded-xl bg-${s.color}-500/10 text-${s.color}-400 flex items-center justify-center text-xl shrink-0 group-hover:bg-${s.color}-500/20 transition-colors`}>
-              {s.icon}
+    return (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {/* Header */}
+            <div>
+                <h1 className="text-3xl font-bold text-slate-900 mb-1">Analytics Overview</h1>
+                <p className="text-slate-500">A high-level snapshot of the ArtHub platform.</p>
             </div>
-            <div className="min-w-0">
-              <p className="text-slate-400 text-xs font-bold uppercase tracking-wider">{s.label}</p>
-              {loading
-                ? <div className="h-7 w-16 bg-white/10 rounded-lg animate-pulse mt-1" />
-                : <p className="text-white font-bold text-xl truncate">{s.value}</p>}
+
+            {/* Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {stats.map((stat) => {
+                    const Icon = stat.icon;
+                    return (
+                        <div key={stat.title} className={`rounded-2xl border border-slate-200 bg-white shadow-sm p-5 ring-1 ${stat.ring}`}>
+                            <div className="flex items-center gap-4">
+                                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-white shadow-md shrink-0`}>
+                                    <Icon size={18} />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{stat.title}</p>
+                                    <h3 className="text-2xl font-black text-slate-900 mt-0.5">{stat.value}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
-          </Link>
-        ))}
-      </div>
 
-      {/* Charts Row 1 */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Monthly Revenue Area Chart */}
-        <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <FaChartLine className="text-green-400" />
-            <h2 className="text-white font-bold text-base">Monthly Revenue</h2>
-          </div>
-          {loading ? (
-            <div className="h-52 bg-white/5 rounded-xl animate-pulse" />
-          ) : (
-            <ResponsiveContainer width="100%" height={210}>
-              <AreaChart data={monthlyData} margin={{ top: 5, right: 5, bottom: 0, left: 0 }}>
-                <defs>
-                  <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.35} />
-                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}`} />
-                <Tooltip content={<CustomTooltip prefix="$" />} />
-                <Area type="monotone" dataKey="revenue" stroke="#22c55e" strokeWidth={2.5} fill="url(#revenueGrad)" dot={{ fill: "#22c55e", strokeWidth: 0, r: 4 }} activeDot={{ r: 6, fill: "#22c55e" }} />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
+            {/* Charts Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Revenue Area Chart */}
+                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+                    <div className="flex items-center gap-2 mb-6">
+                        <FaChartLine className="text-fuchsia-500" />
+                        <h3 className="text-base font-bold text-slate-900">Revenue Over Time</h3>
+                    </div>
+                    <div className="h-80 w-full">
+                        {data.salesData && data.salesData.length > 0 ? (
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={data.salesData} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
+                                    <defs>
+                                        <linearGradient id="adminColorRevenue" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#c026d3" stopOpacity={0.45}/>
+                                            <stop offset="100%" stopColor="#c026d3" stopOpacity={0.03}/>
+                                        </linearGradient>
+                                    </defs>
+                                    <XAxis dataKey="date" stroke="#64748b" fontSize={12} fontWeight={600} tickLine={false} axisLine={false} />
+                                    <YAxis stroke="#64748b" fontSize={12} fontWeight={600} tickLine={false} axisLine={false} tickFormatter={(val) => `$${val}`} />
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                    <RechartsTooltip 
+                                        contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', backgroundColor: '#ffffff', color: '#0f172a', fontSize: '13px', fontWeight: '600', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)' }}
+                                        formatter={(value) => [`$${value}`, 'Revenue']}
+                                        labelStyle={{ color: '#64748b', fontWeight: '700', marginBottom: '4px' }}
+                                    />
+                                    <Area type="monotone" dataKey="revenue" stroke="#a21caf" strokeWidth={3} fillOpacity={1} fill="url(#adminColorRevenue)" dot={{ r: 4, fill: '#a21caf', strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 6, fill: '#a21caf', strokeWidth: 2, stroke: '#fff' }} />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <div className="flex h-full items-center justify-center text-slate-400 font-medium text-sm">No sales data available yet.</div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Category Pie Chart */}
+                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+                    <div className="flex items-center gap-2 mb-6">
+                        <FaPaintBrush className="text-indigo-500" />
+                        <h3 className="text-base font-bold text-slate-900">Artworks by Category</h3>
+                    </div>
+                    <div className="h-80 w-full">
+                        {data.categoryData && data.categoryData.length > 0 ? (
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                    <Pie
+                                        data={data.categoryData.map((entry, index) => ({
+                                            ...entry,
+                                            fill: COLORS[index % COLORS.length]
+                                        }))}
+                                        cx="50%"
+                                        cy="45%"
+                                        innerRadius={70}
+                                        outerRadius={110}
+                                        paddingAngle={data.categoryData.length > 1 ? 3 : 0}
+                                        dataKey="value"
+                                        stroke="#fff"
+                                        strokeWidth={2}
+                                        label={data.categoryData.length > 1
+                                            ? ({ name, value }) => `${name} (${value})`
+                                            : false
+                                        }
+                                        labelLine={data.categoryData.length > 1 ? { stroke: '#94a3b8', strokeWidth: 1 } : false}
+                                    />
+                                    <RechartsTooltip 
+                                        contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', backgroundColor: '#ffffff', color: '#0f172a', fontSize: '13px', fontWeight: '600', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)' }}
+                                        formatter={(value, name) => [`${value} artworks`, name]}
+                                    />
+                                    <Legend 
+                                        iconType="circle"
+                                        iconSize={10}
+                                        formatter={(value, entry) => {
+                                            const item = data.categoryData.find(d => d.name === value);
+                                            return `${value} — ${item ? item.value : 0} artworks`;
+                                        }}
+                                        wrapperStyle={{ fontSize: '12px', fontWeight: '700', color: '#334155', paddingTop: '12px' }} 
+                                    />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <div className="flex h-full items-center justify-center text-slate-400 font-medium text-sm">No category data available yet.</div>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
-
-        {/* User Roles Pie */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <FaUsers className="text-blue-400" />
-            <h2 className="text-white font-bold text-base">User Roles</h2>
-          </div>
-          {loading ? (
-            <div className="h-52 bg-white/5 rounded-xl animate-pulse" />
-          ) : userRoleData.length === 0 ? (
-            <div className="h-52 flex items-center justify-center text-slate-500 text-sm">No data yet.</div>
-          ) : (
-            <ResponsiveContainer width="100%" height={210}>
-              <PieChart>
-                <Pie
-                  data={userRoleData}
-                  cx="50%" cy="50%"
-                  innerRadius={55} outerRadius={85}
-                  paddingAngle={3}
-                  dataKey="value"
-                >
-                  {userRoleData.map((_, i) => (
-                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-                <Legend
-                  iconType="circle"
-                  iconSize={8}
-                  formatter={(val) => <span style={{ color: "#94a3b8", fontSize: 11 }}>{val}</span>}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-      </div>
-
-      {/* Charts Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Artworks by Category Bar Chart */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <FaPalette className="text-pink-400" />
-            <h2 className="text-white font-bold text-base">Artworks by Category</h2>
-          </div>
-          {loading ? (
-            <div className="h-52 bg-white/5 rounded-xl animate-pulse" />
-          ) : categoryData.length === 0 ? (
-            <div className="h-52 flex items-center justify-center text-slate-500 text-sm">No categories yet.</div>
-          ) : (
-            <ResponsiveContainer width="100%" height={210}>
-              <BarChart data={categoryData} margin={{ top: 5, right: 5, bottom: 20, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} angle={-20} textAnchor="end" interval={0} />
-                <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-                  {categoryData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-
-        {/* Sold vs Available Bar Chart */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <FaShoppingBag className="text-indigo-400" />
-            <h2 className="text-white font-bold text-base">Artwork Status</h2>
-          </div>
-          {loading ? (
-            <div className="h-52 bg-white/5 rounded-xl animate-pulse" />
-          ) : (
-            <ResponsiveContainer width="100%" height={210}>
-              <BarChart data={soldData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" radius={[8, 8, 0, 0]}>
-                  <Cell fill="#6366f1" />
-                  <Cell fill="#22c55e" />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-      </div>
-
-      {/* Quick Nav */}
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          { href: "/dashboard/admin/users", label: "Manage Users →", color: "blue" },
-          { href: "/dashboard/admin/artworks", label: "All Artworks →", color: "pink" },
-          { href: "/dashboard/admin/transactions", label: "Transactions →", color: "green" },
-        ].map(n => (
-          <Link key={n.href} href={n.href}
-            className={`rounded-2xl border border-white/10 bg-white/5 hover:border-${n.color}-500/30 hover:bg-${n.color}-500/5 transition-all duration-200 p-4 text-center font-semibold text-sm text-slate-300 hover:text-white`}>
-            {n.label}
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
+    );
 }
