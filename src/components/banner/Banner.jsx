@@ -60,8 +60,8 @@ const Banner = () => {
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-white">
             {/* Soft Light Theme Background with Pastel Blurs */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-50 via-white to-slate-100 -z-20" />
-            <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-fuchsia-200/50 rounded-full blur-[120px] -z-10 animate-pulse" />
-            <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-indigo-200/50 rounded-full blur-[120px] -z-10" />
+            <div className="absolute top-[-10%] right-[-5%] w-150 h-150 bg-fuchsia-200/50 rounded-full blur-[120px] -z-10 animate-pulse" />
+            <div className="absolute bottom-[-10%] left-[-5%] w-150 h-150 bg-indigo-200/50 rounded-full blur-[120px] -z-10" />
 
             <Swiper
                 navigation
@@ -94,7 +94,7 @@ const Banner = () => {
                                         className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-black leading-[1.15]"
                                     >
                                         {slide.title}
-                                        <span className="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent block mt-2">
+                                        <span className="bg-linear-to-r from-fuchsia-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent block mt-2">
                                             {slide.highlight}
                                         </span>
                                         {slide.titleEnd}
@@ -119,7 +119,7 @@ const Banner = () => {
                                     >
                                         <Link href={slide.primaryLink}>
                                             <Button
-                                                className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-bold h-14 px-8 text-md shadow-xl shadow-indigo-200 hover:shadow-indigo-300 hover:scale-105 transition-all w-full sm:w-auto"
+                                                className="bg-linear-to-r from-fuchsia-600 to-indigo-600 text-white font-bold h-14 px-8 text-md shadow-xl shadow-indigo-200 hover:shadow-indigo-300 hover:scale-105 transition-all w-full sm:w-auto"
                                                 radius="full"
                                             >
                                                 {slide.primaryBtn} <ArrowRight className="ml-2 w-5 h-5" />
@@ -145,8 +145,8 @@ const Banner = () => {
                                     transition={{ duration: 1, ease: "easeOut" }}
                                     className="relative group hidden lg:block"
                                 >
-                                    <div className="absolute -inset-2 bg-gradient-to-r from-fuchsia-200 to-indigo-300 rounded-[3rem] blur-xl opacity-50 group-hover:opacity-80 transition duration-1000"></div>
-                                    <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-[4/5] border border-slate-100">
+                                    <div className="absolute -inset-2 bg-linear-to-r from-fuchsia-200 to-indigo-300 rounded-[3rem] blur-xl opacity-50 group-hover:opacity-80 transition duration-1000"></div>
+                                    <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-4/5 border border-slate-100">
                                         <Image
                                             src={slide.img}
                                             alt={slide.tag}

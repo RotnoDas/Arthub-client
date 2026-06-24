@@ -1,10 +1,11 @@
 import Banner from "@/components/banner/Banner";
-import Image from "next/image";
+import FeaturedArtworks from "@/components/featured-artworks/FeaturedArtworks";
 
 export default function Home() {
   return (
-    <div>
-      <Banner></Banner>
+    <div className="min-h-screen bg-slate-50">
+      <Banner />
+      <FeaturedArtworks />
     </div>
   );
 }
