@@ -22,7 +22,9 @@ const ArtworksPage = async ({ searchParams }) => {
     const searchParamsData = await searchParams;
     const searchTerm = searchParamsData.search || '';
     const category = searchParamsData.category || '';
-    const data = await fetchArtworks(searchTerm, category);
+    const minPrice = searchParamsData.minPrice || '';
+    const maxPrice = searchParamsData.maxPrice || '';
+    const data = await fetchArtworks(searchTerm, category, minPrice, maxPrice);
 
     return (
         <div className="min-h-screen bg-slate-50">

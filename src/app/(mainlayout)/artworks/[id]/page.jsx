@@ -36,6 +36,19 @@ export default async function ArtworkDetails({ params }) {
 
     const isArtist = session?.user?.email === artwork.artistEmail;
 
+    let isPurchased = false;
+    if (session?.user?.email) {
+        try {
+            const purchaseRes = await fetch(`http://localhost:5000/api/artworks/purchase/${session.user.email}`, { cache: 'no-store' });
+            if (purchaseRes.ok) {
+                const purchases = await purchaseRes.json();
+                isPurchased = purchases.some(p => p.artworkId === id);
+            }
+        } catch (e) {
+            console.error("Failed to fetch purchase history", e);
+        }
+    }
+
     return (
         <div className="min-h-screen bg-slate-50 py-16 px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
@@ -127,7 +140,7 @@ export default async function ArtworkDetails({ params }) {
 
                 {/* Comment Section below the artwork card */}
                 <div className="bg-white rounded-[3rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden p-8 lg:p-16">
-                    <CommentSection artworkId={artwork._id} session={session} />
+                    <CommentSection artworkId={artwork._id} session={session} isPurchased={isPurchased} />
                 </div>
             </div>
         </div>

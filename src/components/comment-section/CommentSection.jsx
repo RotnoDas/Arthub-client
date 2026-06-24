@@ -3,14 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Avatar } from '@heroui/react';
 import toast from 'react-hot-toast';
-import { FaPaperPlane, FaLock } from 'react-icons/fa';
+import { FaPaperPlane, FaLock, FaEdit, FaTrash, FaCheck, FaTimes, FaShieldAlt } from 'react-icons/fa';
 import Link from 'next/link';
 
-const CommentSection = ({ artworkId, session }) => {
+const CommentSection = ({ artworkId, session, isPurchased }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+
+    // Edit State
+    const [editingId, setEditingId] = useState(null);
+    const [editContent, setEditContent] = useState('');
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -31,19 +35,19 @@ const CommentSection = ({ artworkId, session }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!newComment.trim()) return;
+        if (!newComment.trim() || !isPurchased) return;
 
         setIsSubmitting(true);
         try {
             const commentData = {
-                artworkId,
-                text: newComment,
+                userId: session.user.id || session.user.email,
                 userEmail: session.user.email,
                 userName: session.user.name || session.user.email.split('@')[0],
-                avatar: session.user.image || `https://ui-avatars.com/api/?name=${session.user.name || session.user.email}&background=random`
+                avatar: session.user.image || `https://ui-avatars.com/api/?name=${session.user.name || session.user.email}&background=random`,
+                comment: newComment
             };
 
-            const res = await fetch(`http://localhost:5000/api/comments`, {
+            const res = await fetch(`http://localhost:5000/api/artworks/${artworkId}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(commentData)
@@ -51,12 +55,12 @@ const CommentSection = ({ artworkId, session }) => {
 
             if (res.ok) {
                 const postedComment = await res.json();
-                // Optimistically update the UI
                 setComments([{ ...commentData, _id: postedComment.insertedId, createdAt: new Date().toISOString() }, ...comments]);
                 setNewComment('');
-                toast.success('Comment posted!');
+                toast.success('Comment posted successfully!');
             } else {
-                toast.error('Failed to post comment.');
+                const err = await res.json();
+                toast.error(err.error || 'Failed to post comment.');
             }
         } catch (error) {
             toast.error('An error occurred.');
@@ -65,42 +69,86 @@ const CommentSection = ({ artworkId, session }) => {
         }
     };
 
+    const handleDelete = async (commentId) => {
+        if (!window.confirm("Are you sure you want to delete this comment?")) return;
+        
+        try {
+            const res = await fetch(`http://localhost:5000/api/comments/${commentId}`, { method: 'DELETE' });
+            if (res.ok) {
+                setComments(comments.filter(c => c._id !== commentId));
+                toast.success('Comment deleted.');
+            } else {
+                toast.error('Failed to delete comment.');
+            }
+        } catch (error) {
+            toast.error('An error occurred.');
+        }
+    };
+
+    const handleEditSave = async (commentId) => {
+        if (!editContent.trim()) return;
+
+        try {
+            const res = await fetch(`http://localhost:5000/api/comments/${commentId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: editContent })
+            });
+
+            if (res.ok) {
+                setComments(comments.map(c => c._id === commentId ? { ...c, comment: editContent } : c));
+                setEditingId(null);
+                toast.success('Comment updated.');
+            } else {
+                toast.error('Failed to update comment.');
+            }
+        } catch (error) {
+            toast.error('An error occurred.');
+        }
+    };
+
     return (
-        <div className="mt-16 pt-16 border-t border-slate-100">
-            <h3 className="text-2xl font-extrabold text-slate-900 mb-8 flex items-center gap-2">
-                Discussion <span className="bg-slate-100 text-slate-500 text-sm py-1 px-3 rounded-full">{comments.length}</span>
+        <div className="mt-8 border-t border-slate-100 pt-8">
+            <h3 className="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
+                Discussion <span className="bg-fuchsia-100 text-fuchsia-700 text-sm py-1 px-3 rounded-full">{comments.length}</span>
             </h3>
 
             {/* Comment Input */}
-            <div className="mb-10 p-6 bg-slate-50 rounded-3xl border border-slate-200 shadow-sm">
+            <div className="mb-8 p-6 bg-indigo-50/50 rounded-3xl border border-indigo-100 shadow-sm">
                 {!session ? (
-                    <div className="text-center py-8">
-                        <FaLock className="mx-auto text-slate-300 w-8 h-8 mb-4" />
+                    <div className="text-center py-6">
+                        <FaLock className="mx-auto text-indigo-300 w-8 h-8 mb-3" />
                         <h4 className="text-lg font-bold text-slate-700 mb-2">Join the conversation</h4>
-                        <p className="text-slate-500 mb-6">You must be logged in to leave a comment.</p>
+                        <p className="text-slate-500 mb-6">You must log in to participate.</p>
                         <Link href="/login">
-                            <Button className="bg-slate-900 text-white font-bold px-8 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                Log In to Comment
+                            <Button className="bg-indigo-600 text-white font-bold px-8 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all rounded-full">
+                                Log In
                             </Button>
                         </Link>
+                    </div>
+                ) : !isPurchased ? (
+                    <div className="text-center py-6">
+                        <FaShieldAlt className="mx-auto text-amber-400 w-8 h-8 mb-3" />
+                        <h4 className="text-lg font-bold text-slate-700 mb-2">Verified Buyers Only</h4>
+                        <p className="text-slate-500">Only users who have purchased this artwork can leave a comment.</p>
                     </div>
                 ) : (
                     <form onSubmit={handleSubmit} className="flex gap-4 items-start">
                         <Avatar src={session.user?.image || `https://ui-avatars.com/api/?name=${session.user?.name || session.user?.email}&background=random`} />
-                        <div className="flex-1 space-y-3">
+                        <div className="flex-1 space-y-2">
                             <textarea
                                 placeholder="What do you think about this artwork?"
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                rows={3}
-                                className="w-full bg-white text-slate-700 border-2 border-slate-200 shadow-sm hover:border-fuchsia-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/20 rounded-2xl transition-all p-4 outline-none resize-y font-medium"
+                                rows={2}
+                                className="w-full bg-white text-slate-700 border-2 border-indigo-100 shadow-sm hover:border-indigo-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 rounded-2xl transition-all p-3 outline-none resize-y font-medium text-sm"
                             />
                             <div className="flex justify-end">
                                 <Button 
                                     type="submit" 
                                     isLoading={isSubmitting}
                                     isDisabled={!newComment.trim()}
-                                    className="bg-fuchsia-600 text-white font-bold rounded-xl shadow-md shadow-fuchsia-200 hover:shadow-fuchsia-300 hover:bg-fuchsia-700 transition-all"
+                                    className="bg-indigo-600 text-white font-bold rounded-xl shadow-md shadow-indigo-200 hover:shadow-indigo-300 hover:bg-indigo-700 transition-all px-6 py-2 h-10"
                                 >
                                     {!isSubmitting && <FaPaperPlane className="mr-2 text-xs" />} Post Comment
                                 </Button>
@@ -111,28 +159,64 @@ const CommentSection = ({ artworkId, session }) => {
             </div>
 
             {/* Comments List */}
-            <div className="space-y-6">
+            <div className="space-y-4">
                 {isLoading ? (
-                    <div className="text-center text-slate-400 py-8 font-medium animate-pulse">Loading comments...</div>
+                    <div className="text-center text-indigo-400 py-8 font-medium animate-pulse">Loading comments...</div>
                 ) : comments.length === 0 ? (
-                    <div className="text-center text-slate-400 py-12 font-medium bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
-                        No comments yet. Be the first to share your thoughts!
+                    <div className="text-center text-slate-400 py-10 font-medium bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
+                        No comments yet. Be the first verified buyer to share your thoughts!
                     </div>
                 ) : (
-                    comments.map((comment) => (
-                        <div key={comment._id} className="flex gap-4 p-6 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
-                            <Avatar src={comment.avatar} className="flex-shrink-0" />
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-slate-900">{comment.userName}</span>
-                                    <span className="text-xs text-slate-400 font-medium">
-                                        {new Date(comment.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                                    </span>
+                    comments.map((c) => {
+                        const isOwner = session?.user?.email && (c.userEmail === session.user.email || c.userId === session.user.email || c.userId === session.user.id);
+                        
+                        return (
+                            <div key={c._id} className="flex gap-4 p-5 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                                <Avatar src={c.avatar} className="flex-shrink-0" />
+                                <div className="flex-1">
+                                    <div className="flex items-center justify-between mb-1">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-bold text-slate-900">{c.userName}</span>
+                                            <span className="text-xs text-slate-400 font-medium">
+                                                {new Date(c.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                            </span>
+                                        </div>
+                                        {isOwner && editingId !== c._id && (
+                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                                                <button onClick={() => { setEditingId(c._id); setEditContent(c.comment || c.text); }} className="text-slate-400 hover:text-indigo-600 transition-colors p-1">
+                                                    <FaEdit size={14} />
+                                                </button>
+                                                <button onClick={() => handleDelete(c._id)} className="text-slate-400 hover:text-red-600 transition-colors p-1">
+                                                    <FaTrash size={14} />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                    {editingId === c._id ? (
+                                        <div className="mt-2 space-y-2">
+                                            <textarea
+                                                value={editContent}
+                                                onChange={(e) => setEditContent(e.target.value)}
+                                                rows={2}
+                                                className="w-full bg-white text-slate-700 border-2 border-indigo-200 focus:border-indigo-500 rounded-xl p-3 outline-none text-sm"
+                                            />
+                                            <div className="flex justify-end gap-2">
+                                                <Button size="sm" variant="light" color="danger" onPress={() => setEditingId(null)}>
+                                                    <FaTimes /> Cancel
+                                                </Button>
+                                                <Button size="sm" color="primary" onPress={() => handleEditSave(c._id)}>
+                                                    <FaCheck /> Save
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-sm">{c.comment || c.text}</p>
+                                    )}
                                 </div>
-                                <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">{comment.text}</p>
                             </div>
-                        </div>
-                    ))
+                        );
+                    })
                 )}
             </div>
         </div>
