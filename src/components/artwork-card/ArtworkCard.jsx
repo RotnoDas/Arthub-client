@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 
-const ArtworkCard = ({ artwork }) => {
+const ArtworkCard = ({ artwork, index = 2 }) => {
     return (
         <div className="group flex flex-col bg-slate-100 rounded-3xl border-2 border-slate-300 shadow-xl shadow-slate-300/50 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-fuchsia-500/30">
             <div className="relative overflow-hidden aspect-[4/3]">
@@ -14,6 +14,7 @@ const ArtworkCard = ({ artwork }) => {
                         alt={artwork.title || "Artwork"} 
                         className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-all duration-700 ease-out" 
                         fill 
+                        priority={index <= 1}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 ) : (

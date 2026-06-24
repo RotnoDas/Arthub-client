@@ -50,7 +50,7 @@ export default async function FeaturedArtworks() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     {artworks.map((artwork, index) => (
                         <div key={artwork._id} className="animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both" style={{ animationDelay: `${index * 150}ms` }}>
-                            <ArtworkCard artwork={artwork} />
+                            <ArtworkCard artwork={artwork} index={index} />
                         </div>
                     ))}
                 </div>
