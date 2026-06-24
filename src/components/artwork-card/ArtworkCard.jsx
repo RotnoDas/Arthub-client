@@ -23,7 +23,12 @@ const ArtworkCard = ({ artwork, index = 2 }) => {
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                <div className="absolute top-4 right-4 z-10">
+                <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
+                    {artwork.status === 'sold' && (
+                        <div className="bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full shadow-lg transform rotate-3">
+                            SOLD
+                        </div>
+                    )}
                     <Chip size="sm" className="font-bold shadow-lg shadow-black/20 bg-white/90 backdrop-blur-md text-fuchsia-600 border border-white/50">
                         {artwork.category || "Uncategorized"}
                     </Chip>
@@ -46,9 +51,15 @@ const ArtworkCard = ({ artwork, index = 2 }) => {
                     <span className="text-2xl font-black bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">
                         ${Number(artwork.price).toFixed(2)}
                     </span>
-                    <Link href={`/artworks/${artwork._id}`} className="flex items-center gap-2 font-bold text-sm bg-slate-900 text-white rounded-xl px-5 py-2.5 shadow-lg shadow-slate-900/20 hover:bg-fuchsia-600 hover:shadow-fuchsia-600/30 transition-all active:scale-95">
-                        <FaShoppingCart /> Buy Now
-                    </Link>
+                    {artwork.status === 'sold' ? (
+                        <div className="flex items-center gap-2 font-bold text-sm bg-slate-200 text-slate-400 rounded-xl px-5 py-2.5 shadow-inner cursor-not-allowed">
+                            Sold Out
+                        </div>
+                    ) : (
+                        <Link href={`/artworks/${artwork._id}`} className="flex items-center gap-2 font-bold text-sm bg-slate-900 text-white rounded-xl px-5 py-2.5 shadow-lg shadow-slate-900/20 hover:bg-fuchsia-600 hover:shadow-fuchsia-600/30 transition-all active:scale-95">
+                            <FaShoppingCart /> Buy Now
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
