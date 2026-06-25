@@ -57,7 +57,7 @@ const NavBar = () => {
     };
 
     return (
-        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm py-2 border-b border-slate-200 dark:border-slate-800/50" : "bg-slate-50 dark:bg-slate-950 py-4 border-b border-transparent"}`}>
+        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm py-2 border-b border-slate-200 dark:border-slate-800/50" : "bg-transparent py-4 border-b border-transparent"}`}>
             <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1" onClick={closeMenu}>
                     <div className="-m-1.5 p-1.5 flex items-center transition-transform hover:scale-105 active:scale-95 cursor-pointer">

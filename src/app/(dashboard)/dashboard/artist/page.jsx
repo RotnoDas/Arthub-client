@@ -14,7 +14,7 @@ export default function ArtistDashboardOverview() {
 
   useEffect(() => {
     if (user?.email) {
-      apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/artist/${user.email}`)
+      apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/artist/${user.email}`, { cache: 'no-store' })
         .then(r => r.json())
         .then(d => { setArtworks(Array.isArray(d) ? d : []); setLoading(false); })
         .catch(() => setLoading(false));
