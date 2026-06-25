@@ -10,7 +10,7 @@ const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "
 const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "arthub";
 const inputClass = "w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500/60 dark:focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 transition shadow-sm dark:shadow-none";
 
-const CATEGORIES = ["Painting", "Digital Art", "Photography", "Sculpture", "Drawing", "Abstract", "Portrait", "Landscape", "Street Art", "Other"];
+const CATEGORIES = ["Painting", "Digital Art", "Photography", "Sculpture", "Drawing", "Mixed Media"];
 
 export default function AddArtworkPage() {
   const { data: sessionData } = authClient.useSession();
@@ -26,8 +26,11 @@ export default function AddArtworkPage() {
   // Load existing artwork for editing
   useEffect(() => {
     if (editId) {
-      fetch(`http://localhost:5000/api/artworks/${editId}`)
-        .then(r => r.json())
+      fetch(`http://localhost:5000/api/single-artworks/${editId}`)
+        .then(async (r) => {
+          if (!r.ok) throw new Error("Not found");
+          return r.json();
+        })
         .then(data => {
           if (data) setFormData({ title: data.title || "", description: data.description || "", price: data.price || "", category: data.category || "", image: data.image || "" });
         })

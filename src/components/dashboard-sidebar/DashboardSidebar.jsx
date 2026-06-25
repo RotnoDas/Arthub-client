@@ -69,7 +69,7 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
         />
       )}
       
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 h-screen shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`fixed lg:sticky top-0 inset-y-0 left-0 z-50 w-64 h-screen shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="h-full flex flex-col bg-white dark:bg-slate-900 transition-colors duration-300">
 
           {/* Brand */}

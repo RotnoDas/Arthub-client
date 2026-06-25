@@ -63,7 +63,7 @@ export default function SalesHistoryPage() {
               {sales.map(sale => (
                 <tr key={sale._id} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                   <td className="px-5 py-4 font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{sale.artworkTitle}</td>
-                  <td className="px-5 py-4 text-slate-600 dark:text-slate-400">{sale.buyerName || sale.userEmail}</td>
+                  <td className="px-5 py-4 text-slate-600 dark:text-slate-400">{sale.buyerName || sale.buyerEmail}</td>
                   <td className="px-5 py-4 text-slate-500 dark:text-slate-500">{new Date(sale.purchaseDate || sale.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
                   <td className="px-5 py-4">
                     <span className="font-bold text-green-600 dark:text-emerald-400 text-base">+${sale.amount}</span>

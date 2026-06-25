@@ -21,7 +21,7 @@ const ArtistControls = ({ artworkId }) => {
             
             if (res.ok) {
                 toast.success('Artwork deleted successfully.');
-                router.push('/dashboard/artist/my-artworks');
+                router.push('/dashboard/artist/manage-artworks');
             } else {
                 toast.error('Failed to delete artwork.');
             }
@@ -38,7 +38,7 @@ const ArtistControls = ({ artworkId }) => {
                 Artist Controls
             </h4>
             <div className="flex flex-col sm:flex-row gap-4">
-                <Link href={`/dashboard/artist/edit-artwork/${artworkId}`} className="flex-1">
+                <Link href={`/dashboard/artist/add-artwork?edit=${artworkId}`} className="flex-1">
                     <Button className="w-full bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-900/50 text-amber-700 dark:text-amber-500 font-bold hover:bg-amber-100 dark:hover:bg-amber-900/40 shadow-sm transition-all">
                         <FaEdit /> Edit Details
                     </Button>
@@ -64,7 +64,7 @@ const ArtistControls = ({ artworkId }) => {
                             <Button variant="light" onPress={() => setIsOpen(false)} className="font-bold text-slate-500 dark:text-slate-400">
                                 Cancel
                             </Button>
-                            <Button color="danger" className="font-bold shadow-md" isLoading={isDeleting} onPress={handleDelete}>
+                            <Button className="bg-red-600 hover:bg-red-700 text-white font-bold shadow-md shadow-red-500/20" isLoading={isDeleting} onPress={handleDelete}>
                                 Yes, Delete
                             </Button>
                         </div>

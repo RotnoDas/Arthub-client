@@ -10,6 +10,9 @@ export default function ManageUsersPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -34,13 +37,29 @@ export default function ManageUsersPage() {
     } catch { toast.error("Failed to update role."); }
   };
 
-  const handleDeleteUser = async (userId, userName) => {
-    if (!confirm(`Are you sure you want to permanently delete "${userName}"? This cannot be undone.`)) return;
+  const handleDeleteClick = (userId, userName) => {
+    setItemToDelete({ id: userId, name: userName });
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    setIsDeleting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${userId}`, { method: "DELETE" });
-      if (res.ok) { toast.success("User deleted successfully."); fetchUsers(); }
-      else { toast.error("Failed to delete user."); }
-    } catch { toast.error("Error deleting user."); }
+      const res = await fetch(`http://localhost:5000/api/users/${itemToDelete.id}`, { method: "DELETE" });
+      if (res.ok) { 
+        toast.success("User deleted successfully."); 
+        fetchUsers(); 
+        setDeleteModalOpen(false);
+      } else { 
+        toast.error("Failed to delete user."); 
+      }
+    } catch { 
+      toast.error("Error deleting user."); 
+    } finally {
+      setIsDeleting(false);
+      setItemToDelete(null);
+    }
   };
 
   const filtered = users.filter(u =>
@@ -132,7 +151,7 @@ export default function ManageUsersPage() {
                   <td className="px-5 py-4">
                     {u._id !== user?.id ? (
                       <button
-                        onClick={() => handleDeleteUser(u._id, u.name)}
+                        onClick={() => handleDeleteClick(u._id, u.name)}
                         className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 flex items-center justify-center transition-colors cursor-pointer"
                         title="Delete user"
                       >
@@ -150,6 +169,25 @@ export default function ManageUsersPage() {
         )}
       </div>
       {!loading && <p className="text-slate-500 dark:text-slate-400 text-sm px-1">{filtered.length} of {users.length} user{users.length !== 1 ? "s" : ""}</p>}
+
+      {deleteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-sm w-full p-6 animate-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
+                <h3 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">Delete User</h3>
+                <p className="text-slate-600 dark:text-slate-400 font-medium mb-8">
+                    Are you sure you want to permanently delete "{itemToDelete?.name}"? This action cannot be undone.
+                </p>
+                <div className="flex justify-end gap-3">
+                    <button onClick={() => setDeleteModalOpen(false)} className="px-4 py-2 rounded-xl font-bold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        Cancel
+                    </button>
+                    <button onClick={confirmDelete} disabled={isDeleting} className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold shadow-md shadow-red-500/20 transition-colors disabled:opacity-50">
+                        {isDeleting ? "Deleting..." : "Yes, Delete"}
+                    </button>
+                </div>
+            </div>
+        </div>
+      )}
     </div>
   );
 }

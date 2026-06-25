@@ -182,7 +182,7 @@ export default function UserDashboard() {
                 {purchases.slice(0, 5).map((p) => (
                   <tr key={p._id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                     <td className="px-5 py-4 font-semibold text-slate-900 dark:text-white">{p.artworkTitle}</td>
-                    <td className="px-5 py-4 text-slate-600 dark:text-slate-400 text-xs">{p.artistEmail}</td>
+                    <td className="px-5 py-4 text-slate-600 dark:text-slate-400 text-xs">{p.artistName || p.artistEmail}</td>
                     <td className="px-5 py-4 text-green-600 dark:text-green-400 font-bold">${p.amount}</td>
                     <td className="px-5 py-4 text-slate-500 dark:text-slate-400 text-xs">{new Date(p.purchaseDate).toLocaleDateString()}</td>
                   </tr>

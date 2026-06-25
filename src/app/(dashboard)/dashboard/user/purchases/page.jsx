@@ -59,7 +59,7 @@ export default function PurchaseHistoryPage() {
                       <span className="font-semibold text-slate-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">{p.artworkTitle}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-slate-600 dark:text-slate-400">{p.artistEmail}</td>
+                  <td className="px-5 py-4 text-slate-600 dark:text-slate-400 text-sm">{p.artistName || p.artistEmail}</td>
                   <td className="px-5 py-4">
                     <span className="font-bold text-green-600 dark:text-emerald-400">${p.amount}</span>
                   </td>

@@ -11,6 +11,9 @@ export default function ManageArtworksPage() {
   const user = sessionData?.user;
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchArtworks = async () => {
     if (!user?.email) return;
@@ -25,12 +28,29 @@ export default function ManageArtworksPage() {
 
   useEffect(() => { fetchArtworks(); }, [user]);
 
-  const handleDelete = async (id) => {
-    if (!confirm("Delete this artwork? This cannot be undone.")) return;
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    setIsDeleting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/artworks/${id}`, { method: "DELETE" });
-      if (res.ok) { toast.success("Artwork deleted."); fetchArtworks(); }
-    } catch { toast.error("Delete failed."); }
+      const res = await fetch(`http://localhost:5000/api/artworks/${itemToDelete}`, { method: "DELETE" });
+      if (res.ok) { 
+        toast.success("Artwork deleted."); 
+        fetchArtworks(); 
+        setDeleteModalOpen(false);
+      } else {
+        toast.error("Delete failed.");
+      }
+    } catch { 
+      toast.error("Delete failed."); 
+    } finally {
+      setIsDeleting(false);
+      setItemToDelete(null);
+    }
   };
 
   return (
@@ -96,7 +116,7 @@ export default function ManageArtworksPage() {
                           <FaEdit size={13} />
                         </button>
                       </Link>
-                      <button onClick={() => handleDelete(art._id)} className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 flex items-center justify-center transition-colors">
+                      <button onClick={() => handleDeleteClick(art._id)} className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 flex items-center justify-center transition-colors">
                         <FaTrash size={13} />
                       </button>
                     </div>
@@ -110,6 +130,25 @@ export default function ManageArtworksPage() {
       </div>
       {artworks.length > 0 && (
         <p className="text-slate-500 text-sm px-1">{artworks.length} artwork{artworks.length !== 1 ? "s" : ""} listed</p>
+      )}
+
+      {deleteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-sm w-full p-6 animate-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
+                <h3 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">Delete Artwork</h3>
+                <p className="text-slate-600 dark:text-slate-400 font-medium mb-8">
+                    Are you sure you want to permanently delete this artwork? This action cannot be undone.
+                </p>
+                <div className="flex justify-end gap-3">
+                    <Button variant="light" onPress={() => setDeleteModalOpen(false)} className="font-bold text-slate-500 dark:text-slate-400">
+                        Cancel
+                    </Button>
+                    <Button className="bg-red-600 hover:bg-red-700 text-white font-bold shadow-md shadow-red-500/20" isLoading={isDeleting} onPress={confirmDelete}>
+                        Yes, Delete
+                    </Button>
+                </div>
+            </div>
+        </div>
       )}
     </div>
   );

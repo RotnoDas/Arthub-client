@@ -59,20 +59,28 @@ export default function ProfilePage() {
     setSavingProfile(true);
     try {
       // Update session via BetterAuth
-      const authRes = await authClient.updateUser({ name, image });
+      const { data, error } = await authClient.updateUser({ name, image });
       
-      // Update custom backend if needed
-      await fetch(`http://localhost:5000/api/users/${user.id}`, {
+      if (error) {
+        toast.error(error.message || "Update failed.");
+        setSavingProfile(false);
+        return;
+      }
+      
+      // Update custom backend using email (safest identifier)
+      await fetch(`http://localhost:5000/api/users/update-profile/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, image }),
       });
 
-      if (authRes.error) {
-        toast.error(authRes.error.message || "Update failed.");
-      } else {
-        toast.success("Profile updated!");
-      }
+      toast.success("Profile updated!");
+      
+      // Force a reload so the entire website (navbar, layouts) gets the new name
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      
     } catch {
       toast.error("Could not update profile.");
     } finally {
@@ -83,19 +91,26 @@ export default function ProfilePage() {
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) return toast.error("Passwords don't match.");
-    if (newPassword.length < 6) return toast.error("Password must be at least 6 characters.");
+    if (newPassword.length < 8) return toast.error("Password must be at least 8 characters.");
+    
     setSavingPassword(true);
+    
     try {
-      await authClient.changePassword({
+      const { data, error } = await authClient.changePassword({
         currentPassword,
         newPassword,
         revokeOtherSessions: true,
       });
-      toast.success("Password changed!");
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-    } catch {
+
+      if (error) {
+        toast.error(error.message || "Password change failed.");
+      } else {
+        toast.success("Password changed successfully!");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      }
+    } catch (err) {
       toast.error("Password change failed. Check your current password.");
     } finally {
       setSavingPassword(false);

@@ -55,9 +55,9 @@ export default function CollectionPage() {
                   </div>
                 )}
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <Link href={`/artworks/${item.artworkId || "#"}`} className="flex items-center gap-2 text-white text-xs font-semibold bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-lg hover:bg-white/30 transition">
-                    View Details <FaExternalLinkAlt size={10} />
+                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center p-4">
+                  <Link href={`/artworks/${item.artworkId || "#"}`} className="flex items-center justify-center gap-2 text-white text-sm font-bold bg-gradient-to-r from-pink-500 to-indigo-500 px-5 py-2.5 rounded-xl shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-105 transition-all duration-300 w-3/4 text-center">
+                    View Details <FaExternalLinkAlt size={12} />
                   </Link>
                 </div>
               </div>
@@ -65,7 +65,7 @@ export default function CollectionPage() {
               {/* Card Info */}
               <div className="p-4">
                 <p className="font-bold text-slate-900 dark:text-white text-sm truncate group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">{item.artworkTitle}</p>
-                <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">by {item.artistEmail}</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">by {item.artistName || item.artistEmail}</p>
                 <div className="flex items-center justify-between mt-3">
                   <span className="text-green-600 dark:text-emerald-400 font-bold text-sm">${item.amount}</span>
                   <span className="text-slate-400 dark:text-slate-500 text-[10px]">{new Date(item.purchaseDate).toLocaleDateString()}</span>

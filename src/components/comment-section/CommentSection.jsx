@@ -15,6 +15,10 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
     // Edit State
     const [editingId, setEditingId] = useState(null);
     const [editContent, setEditContent] = useState('');
+    
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -69,19 +73,28 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
         }
     };
 
-    const handleDelete = async (commentId) => {
-        if (!window.confirm("Are you sure you want to delete this comment?")) return;
-        
+    const handleDeleteClick = (commentId) => {
+        setItemToDelete(commentId);
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/comments/${commentId}`, { method: 'DELETE' });
+            const res = await fetch(`http://localhost:5000/api/comments/${itemToDelete}`, { method: 'DELETE' });
             if (res.ok) {
-                setComments(comments.filter(c => c._id !== commentId));
+                setComments(comments.filter(c => c._id !== itemToDelete));
                 toast.success('Comment deleted.');
+                setDeleteModalOpen(false);
             } else {
                 toast.error('Failed to delete comment.');
             }
         } catch (error) {
             toast.error('An error occurred.');
+        } finally {
+            setIsDeleting(false);
+            setItemToDelete(null);
         }
     };
 
@@ -186,7 +199,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                                                 <button onClick={() => { setEditingId(c._id); setEditContent(c.comment || c.text); }} className="text-slate-400 hover:text-indigo-600 transition-colors p-1">
                                                     <FaEdit size={14} />
                                                 </button>
-                                                <button onClick={() => handleDelete(c._id)} className="text-slate-400 hover:text-red-600 transition-colors p-1">
+                                                <button onClick={() => handleDeleteClick(c._id)} className="text-slate-400 hover:text-red-600 transition-colors p-1">
                                                     <FaTrash size={14} />
                                                 </button>
                                             </div>
@@ -219,6 +232,25 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                     })
                 )}
             </div>
+
+            {deleteModalOpen && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-sm w-full p-6 animate-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
+                        <h3 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">Delete Comment</h3>
+                        <p className="text-slate-600 dark:text-slate-400 font-medium mb-8">
+                            Are you sure you want to permanently delete this comment? This action cannot be undone.
+                        </p>
+                        <div className="flex justify-end gap-3">
+                            <button onClick={() => setDeleteModalOpen(false)} className="px-4 py-2 rounded-xl font-bold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                                Cancel
+                            </button>
+                            <button onClick={confirmDelete} disabled={isDeleting} className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold shadow-md shadow-red-500/20 transition-colors disabled:opacity-50">
+                                {isDeleting ? "Deleting..." : "Yes, Delete"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
