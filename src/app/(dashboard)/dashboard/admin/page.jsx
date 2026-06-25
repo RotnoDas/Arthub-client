@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
     if (loading || !data) {
         return (
             <div className="py-20 flex justify-center">
-                <div className="text-slate-500 animate-pulse text-sm font-medium">Loading analytics...</div>
+                <div className="text-slate-500 dark:text-slate-400 animate-pulse text-sm font-medium">Loading analytics...</div>
             </div>
         );
     }
@@ -45,8 +45,8 @@ export default function AdminDashboardPage() {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold text-slate-900 mb-1">Analytics Overview</h1>
-                <p className="text-slate-500">A high-level snapshot of the ArtHub platform.</p>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Analytics Overview</h1>
+                <p className="text-slate-500 dark:text-slate-400">A high-level snapshot of the ArtHub platform.</p>
             </div>
 
             {/* Stat Cards */}
@@ -54,14 +54,14 @@ export default function AdminDashboardPage() {
                 {stats.map((stat) => {
                     const Icon = stat.icon;
                     return (
-                        <div key={stat.title} className={`rounded-2xl border border-slate-200 bg-white shadow-sm p-5 ring-1 ${stat.ring}`}>
+                        <div key={stat.title} className={`rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-5 ring-1 ${stat.ring} dark:ring-0`}>
                             <div className="flex items-center gap-4">
                                 <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-white shadow-md shrink-0`}>
                                     <Icon size={18} />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{stat.title}</p>
-                                    <h3 className="text-2xl font-black text-slate-900 mt-0.5">{stat.value}</h3>
+                                    <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.title}</p>
+                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">{stat.value}</h3>
                                 </div>
                             </div>
                         </div>
@@ -72,10 +72,10 @@ export default function AdminDashboardPage() {
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Revenue Area Chart */}
-                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6">
                     <div className="flex items-center gap-2 mb-6">
-                        <FaChartLine className="text-fuchsia-500" />
-                        <h3 className="text-base font-bold text-slate-900">Revenue Over Time</h3>
+                        <FaChartLine className="text-fuchsia-500 dark:text-fuchsia-400" />
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white">Revenue Over Time</h3>
                     </div>
                     <div className="h-80 w-full">
                         {data.salesData && data.salesData.length > 0 ? (
@@ -99,16 +99,16 @@ export default function AdminDashboardPage() {
                                 </AreaChart>
                             </ResponsiveContainer>
                         ) : (
-                            <div className="flex h-full items-center justify-center text-slate-400 font-medium text-sm">No sales data available yet.</div>
+                            <div className="flex h-full items-center justify-center text-slate-400 dark:text-slate-500 font-medium text-sm">No sales data available yet.</div>
                         )}
                     </div>
                 </div>
 
                 {/* Category Pie Chart */}
-                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6">
                     <div className="flex items-center gap-2 mb-6">
-                        <FaPaintBrush className="text-indigo-500" />
-                        <h3 className="text-base font-bold text-slate-900">Artworks by Category</h3>
+                        <FaPaintBrush className="text-indigo-500 dark:text-indigo-400" />
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white">Artworks by Category</h3>
                     </div>
                     <div className="h-80 w-full">
                         {data.categoryData && data.categoryData.length > 0 ? (
@@ -149,7 +149,7 @@ export default function AdminDashboardPage() {
                                 </PieChart>
                             </ResponsiveContainer>
                         ) : (
-                            <div className="flex h-full items-center justify-center text-slate-400 font-medium text-sm">No category data available yet.</div>
+                            <div className="flex h-full items-center justify-center text-slate-400 dark:text-slate-500 font-medium text-sm">No category data available yet.</div>
                         )}
                     </div>
                 </div>

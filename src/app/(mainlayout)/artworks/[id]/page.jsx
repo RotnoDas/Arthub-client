@@ -50,12 +50,12 @@ export default async function ArtworkDetails({ params }) {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 py-16 px-6 lg:px-8">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-16 px-6 lg:px-8 transition-colors duration-500">
             <div className="max-w-7xl mx-auto">
-                <div className="bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden mb-12">
+                <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-12 transition-colors duration-500">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left side: Image */}
-                        <div className="relative aspect-square lg:aspect-auto lg:h-full bg-slate-100 p-8 flex items-center justify-center">
+                        <div className="relative aspect-square lg:aspect-auto lg:h-full bg-slate-100 dark:bg-slate-950 p-8 flex items-center justify-center">
                             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-100 via-transparent to-transparent opacity-50"></div>
                             {artwork.image ? (
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-slate-300 group">
@@ -80,42 +80,42 @@ export default async function ArtworkDetails({ params }) {
 
                         {/* Right side: Details */}
                         <div className="p-10 lg:p-16 flex flex-col justify-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fuchsia-50 text-fuchsia-700 text-xs font-bold uppercase tracking-widest w-fit mb-6 shadow-sm border border-fuchsia-100">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fuchsia-50 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-400 text-xs font-bold uppercase tracking-widest w-fit mb-6 shadow-sm border border-fuchsia-100 dark:border-fuchsia-500/20">
                                 <FaTag /> {artwork.category || "Original Art"}
                             </div>
                             
-                            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
                                 {artwork.title}
                             </h1>
 
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shadow-inner">
+                                <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-inner">
                                     <FaUser />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-semibold text-slate-900">Artist</p>
-                                    <Link href={`/artworks?search=${encodeURIComponent(artwork.artistEmail)}`} className="text-sm text-fuchsia-600 hover:text-indigo-600 font-bold transition-colors">
+                                    <p className="text-sm font-semibold text-slate-900 dark:text-white">Artist</p>
+                                    <Link href={`/artworks?search=${encodeURIComponent(artwork.artistEmail)}`} className="text-sm text-fuchsia-600 dark:text-fuchsia-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition-colors">
                                         {artwork.artistEmail}
                                     </Link>
                                 </div>
                                 <div className="ml-auto text-right">
-                                    <p className="text-xs text-slate-400 font-medium uppercase tracking-widest">Uploaded</p>
-                                    <p className="text-sm font-semibold text-slate-700">
+                                    <p className="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase tracking-widest">Uploaded</p>
+                                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                                         {new Date(artwork.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="prose prose-slate mb-10">
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">About this piece</h3>
-                                <p className="text-slate-600 leading-relaxed text-lg">
+                            <div className="prose prose-slate dark:prose-invert mb-10">
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">About this piece</h3>
+                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
                                     {artwork.description || "No description provided by the artist."}
                                 </p>
                             </div>
 
-                            <div className="mt-auto border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div className="mt-auto border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                                 <div>
-                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Price</p>
+                                    <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Price</p>
                                     <p className="text-4xl font-black bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">
                                         ${Number(artwork.price).toFixed(2)}
                                     </p>
@@ -129,17 +129,12 @@ export default async function ArtworkDetails({ params }) {
                                 <ArtistControls artworkId={artwork._id} />
                             )}
 
-                            {/* Authenticity Guarantee */}
-                            <div className="mt-8 flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm">
-                                <FaCheckCircle className="text-emerald-500 text-xl" />
-                                <span className="font-medium">100% Authentic Digital Original. Secure transactions via Stripe.</span>
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Comment Section below the artwork card */}
-                <div className="bg-white rounded-[3rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden p-8 lg:p-16">
+                <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden p-8 lg:p-16 transition-colors duration-500">
                     <CommentSection artworkId={artwork._id} session={session} isPurchased={isPurchased} />
                 </div>
             </div>

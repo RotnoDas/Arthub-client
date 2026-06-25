@@ -108,18 +108,18 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
     };
 
     return (
-        <div className="mt-8 border-t border-slate-100 pt-8">
-            <h3 className="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
-                Discussion <span className="bg-fuchsia-100 text-fuchsia-700 text-sm py-1 px-3 rounded-full">{comments.length}</span>
+        <div className="mt-8 border-t border-slate-100 dark:border-slate-800 pt-8 transition-colors duration-500">
+            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                Discussion <span className="bg-fuchsia-100 dark:bg-fuchsia-500/20 text-fuchsia-700 dark:text-fuchsia-400 text-sm py-1 px-3 rounded-full">{comments.length}</span>
             </h3>
 
             {/* Comment Input */}
-            <div className="mb-8 p-6 bg-indigo-50/50 rounded-3xl border border-indigo-100 shadow-sm">
+            <div className="mb-8 p-6 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-3xl border border-indigo-100 dark:border-indigo-900/50 shadow-sm transition-colors duration-500">
                 {!session ? (
                     <div className="text-center py-6">
-                        <FaLock className="mx-auto text-indigo-300 w-8 h-8 mb-3" />
-                        <h4 className="text-lg font-bold text-slate-700 mb-2">Join the conversation</h4>
-                        <p className="text-slate-500 mb-6">You must log in to participate.</p>
+                        <FaLock className="mx-auto text-indigo-300 dark:text-indigo-800 w-8 h-8 mb-3" />
+                        <h4 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">Join the conversation</h4>
+                        <p className="text-slate-500 dark:text-slate-400 mb-6">You must log in to participate.</p>
                         <Link href="/login">
                             <Button className="bg-indigo-600 text-white font-bold px-8 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all rounded-full">
                                 Log In
@@ -128,9 +128,9 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                     </div>
                 ) : !isPurchased ? (
                     <div className="text-center py-6">
-                        <FaShieldAlt className="mx-auto text-amber-400 w-8 h-8 mb-3" />
-                        <h4 className="text-lg font-bold text-slate-700 mb-2">Verified Buyers Only</h4>
-                        <p className="text-slate-500">Only users who have purchased this artwork can leave a comment.</p>
+                        <FaShieldAlt className="mx-auto text-amber-400 dark:text-amber-600 w-8 h-8 mb-3" />
+                        <h4 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">Verified Buyers Only</h4>
+                        <p className="text-slate-500 dark:text-slate-400">Only users who have purchased this artwork can leave a comment.</p>
                     </div>
                 ) : (
                     <form onSubmit={handleSubmit} className="flex gap-4 items-start">
@@ -141,7 +141,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                                 rows={2}
-                                className="w-full bg-white text-slate-700 border-2 border-indigo-100 shadow-sm hover:border-indigo-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 rounded-2xl transition-all p-3 outline-none resize-y font-medium text-sm"
+                                className="w-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-2 border-indigo-100 dark:border-indigo-900/50 shadow-sm hover:border-indigo-300 dark:hover:border-indigo-500/50 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 rounded-2xl transition-all p-3 outline-none resize-y font-medium text-sm placeholder:text-slate-400 dark:placeholder:text-slate-600"
                             />
                             <div className="flex justify-end">
                                 <Button 
@@ -161,9 +161,9 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
             {/* Comments List */}
             <div className="space-y-4">
                 {isLoading ? (
-                    <div className="text-center text-indigo-400 py-8 font-medium animate-pulse">Loading comments...</div>
+                    <div className="text-center text-indigo-400 dark:text-indigo-600 py-8 font-medium animate-pulse">Loading comments...</div>
                 ) : comments.length === 0 ? (
-                    <div className="text-center text-slate-400 py-10 font-medium bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
+                    <div className="text-center text-slate-400 dark:text-slate-500 py-10 font-medium bg-slate-50/50 dark:bg-slate-900/50 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800 transition-colors duration-500">
                         No comments yet. Be the first verified buyer to share your thoughts!
                     </div>
                 ) : (
@@ -171,13 +171,13 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                         const isOwner = session?.user?.email && (c.userEmail === session.user.email || c.userId === session.user.email || c.userId === session.user.id);
                         
                         return (
-                            <div key={c._id} className="flex gap-4 p-5 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                            <div key={c._id} className="flex gap-4 p-5 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all group">
                                 <Avatar src={c.avatar} className="flex-shrink-0" />
                                 <div className="flex-1">
                                     <div className="flex items-center justify-between mb-1">
                                         <div className="flex items-center gap-2">
-                                            <span className="font-bold text-slate-900">{c.userName}</span>
-                                            <span className="text-xs text-slate-400 font-medium">
+                                            <span className="font-bold text-slate-900 dark:text-white">{c.userName}</span>
+                                            <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">
                                                 {new Date(c.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                             </span>
                                         </div>
@@ -199,7 +199,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                                                 value={editContent}
                                                 onChange={(e) => setEditContent(e.target.value)}
                                                 rows={2}
-                                                className="w-full bg-white text-slate-700 border-2 border-indigo-200 focus:border-indigo-500 rounded-xl p-3 outline-none text-sm"
+                                                className="w-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-2 border-indigo-200 dark:border-indigo-900/50 focus:border-indigo-500 rounded-xl p-3 outline-none text-sm"
                                             />
                                             <div className="flex justify-end gap-2">
                                                 <Button size="sm" variant="light" color="danger" onPress={() => setEditingId(null)}>
@@ -211,7 +211,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                                             </div>
                                         </div>
                                     ) : (
-                                        <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-sm">{c.comment || c.text}</p>
+                                        <p className="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-wrap text-sm">{c.comment || c.text}</p>
                                     )}
                                 </div>
                             </div>

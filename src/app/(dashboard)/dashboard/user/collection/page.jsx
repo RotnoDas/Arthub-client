@@ -22,21 +22,21 @@ export default function CollectionPage() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 mb-1">My Collection</h1>
-        <p className="text-slate-500">A gallery of all the artworks you own.</p>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">My Collection</h1>
+        <p className="text-slate-500 dark:text-slate-400">A gallery of all the artworks you own.</p>
       </div>
 
       {loading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="rounded-2xl border border-slate-200 bg-slate-50 aspect-square animate-pulse" />
+            <div key={i} className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 aspect-square animate-pulse" />
           ))}
         </div>
       ) : purchases.length === 0 ? (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-16 text-center">
-          <FaPalette className="mx-auto text-5xl text-slate-300 mb-4" />
-          <p className="text-slate-900 font-semibold text-lg">Your collection is empty</p>
-          <p className="text-slate-500 text-sm mt-2 mb-6">Discover and collect unique artworks from talented artists.</p>
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-16 text-center transition-colors duration-500">
+          <FaPalette className="mx-auto text-5xl text-slate-300 dark:text-slate-700 mb-4" />
+          <p className="text-slate-900 dark:text-white font-semibold text-lg">Your collection is empty</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 mb-6">Discover and collect unique artworks from talented artists.</p>
           <Link href="/artworks" className="inline-block px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-semibold text-sm hover:opacity-90 transition shadow-md shadow-pink-500/20">
             Explore Artworks
           </Link>
@@ -44,14 +44,14 @@ export default function CollectionPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {purchases.map((item) => (
-            <div key={item._id} className="group rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-pink-300 hover:shadow-lg hover:shadow-pink-500/5 transition-all duration-300 overflow-hidden">
+            <div key={item._id} className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-pink-300 dark:hover:border-pink-500/50 hover:shadow-lg hover:shadow-pink-500/5 dark:hover:shadow-pink-500/10 transition-all duration-300 overflow-hidden">
               {/* Artwork Image / Placeholder */}
-              <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-pink-500/5 via-slate-50 to-indigo-500/5">
+              <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-pink-500/5 via-slate-50 to-indigo-500/5 dark:from-pink-500/10 dark:via-slate-900/50 dark:to-indigo-500/10">
                 {item.artworkImage ? (
                   <img src={item.artworkImage} alt={item.artworkTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <FaPalette className="text-4xl text-slate-300 group-hover:text-pink-500/50 transition-colors duration-300" />
+                    <FaPalette className="text-4xl text-slate-300 dark:text-slate-700 group-hover:text-pink-500/50 transition-colors duration-300" />
                   </div>
                 )}
                 {/* Hover overlay */}
@@ -64,11 +64,11 @@ export default function CollectionPage() {
 
               {/* Card Info */}
               <div className="p-4">
-                <p className="font-bold text-slate-900 text-sm truncate group-hover:text-pink-600 transition-colors">{item.artworkTitle}</p>
-                <p className="text-slate-500 text-xs mt-0.5 truncate">by {item.artistEmail}</p>
+                <p className="font-bold text-slate-900 dark:text-white text-sm truncate group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">{item.artworkTitle}</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">by {item.artistEmail}</p>
                 <div className="flex items-center justify-between mt-3">
-                  <span className="text-green-600 font-bold text-sm">${item.amount}</span>
-                  <span className="text-slate-400 text-[10px]">{new Date(item.purchaseDate).toLocaleDateString()}</span>
+                  <span className="text-green-600 dark:text-emerald-400 font-bold text-sm">${item.amount}</span>
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px]">{new Date(item.purchaseDate).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
@@ -77,7 +77,7 @@ export default function CollectionPage() {
       )}
 
       {purchases.length > 0 && (
-        <p className="text-slate-500 text-sm text-center">{purchases.length} artwork{purchases.length !== 1 ? "s" : ""} in your collection</p>
+        <p className="text-slate-500 dark:text-slate-400 text-sm text-center">{purchases.length} artwork{purchases.length !== 1 ? "s" : ""} in your collection</p>
       )}
     </div>
   );

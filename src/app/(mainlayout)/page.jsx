@@ -4,7 +4,7 @@ import FeaturedArtworks from "@/components/featured-artworks/FeaturedArtworks";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent">
       <Banner />
       <ArtCategories />
       <FeaturedArtworks />

@@ -57,11 +57,11 @@ const slideData = [
 
 const Banner = () => {
     return (
-        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-white">
+        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-white dark:bg-transparent">
             {/* Soft Light Theme Background with Pastel Blurs */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-50 via-white to-slate-100 -z-20" />
-            <div className="absolute top-[-10%] right-[-5%] w-150 h-150 bg-fuchsia-200/50 rounded-full blur-[120px] -z-10 animate-pulse" />
-            <div className="absolute bottom-[-10%] left-[-5%] w-150 h-150 bg-indigo-200/50 rounded-full blur-[120px] -z-10" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 -z-20" />
+            <div className="absolute top-[-10%] right-[-5%] w-150 h-150 bg-fuchsia-200/50 dark:bg-fuchsia-900/20 rounded-full blur-[120px] -z-10 animate-pulse" />
+            <div className="absolute bottom-[-10%] left-[-5%] w-150 h-150 bg-indigo-200/50 dark:bg-indigo-900/20 rounded-full blur-[120px] -z-10" />
 
             <Swiper
                 navigation
@@ -81,7 +81,7 @@ const Banner = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8 }}
-                                        className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-fuchsia-200 bg-fuchsia-50 text-fuchsia-800 text-xs font-bold uppercase tracking-widest mx-auto lg:mx-0 shadow-sm"
+                                        className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-fuchsia-200 dark:border-fuchsia-500/30 bg-fuchsia-50 dark:bg-fuchsia-500/10 text-fuchsia-800 dark:text-fuchsia-400 text-xs font-bold uppercase tracking-widest mx-auto lg:mx-0 shadow-sm"
                                     >
                                         {slide.tagIcon} {slide.tag}
                                     </motion.div>
@@ -91,7 +91,7 @@ const Banner = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
-                                        className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-black leading-[1.15]"
+                                        className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 dark:text-white leading-[1.15]"
                                     >
                                         {slide.title}
                                         <span className="bg-linear-to-r from-fuchsia-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent block mt-2">
@@ -105,7 +105,7 @@ const Banner = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8, delay: 0.2 }}
-                                        className="text-slate-800 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
+                                        className="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
                                     >
                                         {slide.desc}
                                     </motion.p>
@@ -128,7 +128,7 @@ const Banner = () => {
                                         <Link href={slide.secondaryLink}>
                                             <Button
                                                 variant="bordered"
-                                                className="border-slate-300 hover:bg-slate-50 hover:border-slate-400 text-slate-700 font-semibold h-14 px-8 text-md w-full sm:w-auto border-2 group transition-all"
+                                                className="border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold h-14 px-8 text-md w-full sm:w-auto border-2 group transition-all"
                                                 radius="full"
                                             >
                                                 {slide.secondaryBtn}
@@ -145,8 +145,8 @@ const Banner = () => {
                                     transition={{ duration: 1, ease: "easeOut" }}
                                     className="relative group hidden lg:block"
                                 >
-                                    <div className="absolute -inset-2 bg-linear-to-r from-fuchsia-200 to-indigo-300 rounded-[3rem] blur-xl opacity-50 group-hover:opacity-80 transition duration-1000"></div>
-                                    <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-4/5 border border-slate-100">
+                                    <div className="absolute -inset-2 bg-linear-to-r from-fuchsia-200 to-indigo-300 rounded-[3rem] blur-xl opacity-50 dark:opacity-20 group-hover:opacity-80 transition duration-1000"></div>
+                                    <div className="relative bg-white dark:bg-slate-900 p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-4/5 border border-slate-100 dark:border-slate-800">
                                         <Image
                                             src={slide.img}
                                             alt={slide.tag}
@@ -157,7 +157,7 @@ const Banner = () => {
                                         />
                                         
                                         {/* Minimalist Floating Overlay */}
-                                        <div className="absolute bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white/40 shadow-2xl">
+                                        <div className="absolute bottom-6 left-6 right-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-2xl border border-white/40 dark:border-slate-800 shadow-2xl">
                                             <div className="flex items-center gap-4">
                                                 <div className="flex -space-x-4">
                                                     {[1, 2, 3].map((i) => (
@@ -166,14 +166,14 @@ const Banner = () => {
                                                             src={`https://i.pravatar.cc/100?img=${i + 30}`}
                                                             width={44}
                                                             height={44}
-                                                            className="w-11 h-11 rounded-full border-2 border-white shadow-sm"
+                                                            className="w-11 h-11 rounded-full border-2 border-white dark:border-slate-900 shadow-sm"
                                                             alt="avatar"
                                                         />
                                                     ))}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-sm text-slate-900 tracking-wide">Join 50k+ Collectors</p>
-                                                    <p className="text-xs text-indigo-600 font-semibold mt-0.5">Discover new art daily</p>
+                                                    <p className="font-bold text-sm text-slate-900 dark:text-white tracking-wide">Join 50k+ Collectors</p>
+                                                    <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold mt-0.5">Discover new art daily</p>
                                                 </div>
                                             </div>
                                         </div>

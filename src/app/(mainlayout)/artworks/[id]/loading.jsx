@@ -2,11 +2,11 @@ import { Skeleton } from "@heroui/react";
 
 export default function Loading() {
     return (
-        <div className="min-h-screen bg-slate-50 py-16 px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto bg-white rounded-[3rem] shadow-xl border border-slate-100 overflow-hidden">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-16 px-6 lg:px-8 transition-colors duration-500">
+            <div className="max-w-7xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors duration-500">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Left side: Image Skeleton */}
-                    <div className="relative aspect-square lg:aspect-auto lg:h-full bg-slate-50 p-8 flex items-center justify-center">
+                    <div className="relative aspect-square lg:aspect-auto lg:h-full bg-slate-50 dark:bg-slate-950/50 p-8 flex items-center justify-center transition-colors duration-500">
                         <Skeleton className="w-full h-full rounded-2xl" />
                     </div>
 
@@ -34,7 +34,7 @@ export default function Loading() {
                             <Skeleton className="w-5/6 h-4 rounded-md" />
                         </div>
 
-                        <div className="mt-auto border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                        <div className="mt-auto border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 transition-colors duration-500">
                             <div className="space-y-2">
                                 <Skeleton className="w-16 h-4 rounded-md" />
                                 <Skeleton className="w-32 h-10 rounded-md" />

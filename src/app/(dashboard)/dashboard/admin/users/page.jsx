@@ -49,7 +49,7 @@ export default function ManageUsersPage() {
   );
 
   const roleBadge = (role) => {
-    const map = { admin: "bg-amber-100 text-amber-700", artist: "bg-indigo-100 text-indigo-700", user: "bg-slate-100 text-slate-700" };
+    const map = { admin: "bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400", artist: "bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400", user: "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300" };
     return map[role] || map.user;
   };
 
@@ -57,51 +57,52 @@ export default function ManageUsersPage() {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-1">Manage Users</h1>
-          <p className="text-slate-500">View all users and change their roles.</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Manage Users</h1>
+          <p className="text-slate-500 dark:text-slate-400">View all users and change their roles.</p>
         </div>
         <div className="relative">
-          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-xs" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search by name or email..."
-            className="pl-8 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/60 transition w-64 shadow-sm"
+            className="pl-8 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500/60 dark:focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/60 dark:focus:ring-indigo-500/30 transition w-64 shadow-sm dark:shadow-none"
           />
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden transition-colors duration-500">
         {loading ? (
-          <div className="p-12 text-center text-slate-500 animate-pulse">Loading users...</div>
+          <div className="p-12 text-center text-slate-500 dark:text-slate-400 animate-pulse">Loading users...</div>
         ) : filtered.length === 0 ? (
           <div className="p-14 text-center">
-            <FaUsers className="mx-auto text-5xl text-slate-300 mb-4" />
-            <p className="text-slate-500 font-medium">{search ? "No users match your search." : "No users found."}</p>
+            <FaUsers className="mx-auto text-5xl text-slate-300 dark:text-slate-700 mb-4" />
+            <p className="text-slate-500 dark:text-slate-400 font-medium">{search ? "No users match your search." : "No users found."}</p>
           </div>
         ) : (
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm whitespace-nowrap">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
+              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                 {["User", "Email", "Role", "Change Role", "Delete"].map(h => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider">{h}</th>
+                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map(u => (
-                <tr key={u._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                <tr key={u._id} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <img
                         src={u.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name || "U")}&background=e2e8f0&color=475569&bold=true`}
                         alt={u.name}
-                        className="w-9 h-9 rounded-full object-cover"
+                        className="w-9 h-9 rounded-full object-cover border border-slate-200 dark:border-slate-700"
                       />
-                      <span className="font-semibold text-slate-900">{u.name}</span>
+                      <span className="font-semibold text-slate-900 dark:text-white">{u.name}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-slate-600 text-xs">{u.email}</td>
+                  <td className="px-5 py-4 text-slate-600 dark:text-slate-400 text-xs">{u.email}</td>
                   <td className="px-5 py-4">
                     <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${roleBadge(u.role)}`}>
                       {u.role || "user"}
@@ -117,37 +118,38 @@ export default function ManageUsersPage() {
                             e.target.value = '';
                           }
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer hover:bg-slate-200 transition-colors border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                        className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-500/50"
                       >
-                        <option value="" disabled>Change Role</option>
-                        <option value="user">👤 Make User</option>
-                        <option value="artist">🎨 Make Artist</option>
-                        <option value="admin">🛡️ Make Admin</option>
+                        <option value="" disabled className="bg-white dark:bg-slate-900">Change Role</option>
+                        <option value="user" className="bg-white dark:bg-slate-900">👤 Make User</option>
+                        <option value="artist" className="bg-white dark:bg-slate-900">🎨 Make Artist</option>
+                        <option value="admin" className="bg-white dark:bg-slate-900">🛡️ Make Admin</option>
                       </select>
                     ) : (
-                      <span className="text-slate-400 text-xs font-medium">You</span>
+                      <span className="text-slate-400 dark:text-slate-500 text-xs font-medium">You</span>
                     )}
                   </td>
                   <td className="px-5 py-4">
                     {u._id !== user?.id ? (
                       <button
                         onClick={() => handleDeleteUser(u._id, u.name)}
-                        className="w-8 h-8 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors cursor-pointer"
+                        className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 flex items-center justify-center transition-colors cursor-pointer"
                         title="Delete user"
                       >
                         <FaTrash size={12} />
                       </button>
                     ) : (
-                      <span className="text-slate-400 text-xs">—</span>
+                      <span className="text-slate-400 dark:text-slate-600 text-xs">—</span>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </div>
-      {!loading && <p className="text-slate-500 text-sm px-1">{filtered.length} of {users.length} user{users.length !== 1 ? "s" : ""}</p>}
+      {!loading && <p className="text-slate-500 dark:text-slate-400 text-sm px-1">{filtered.length} of {users.length} user{users.length !== 1 ? "s" : ""}</p>}
     </div>
   );
 }

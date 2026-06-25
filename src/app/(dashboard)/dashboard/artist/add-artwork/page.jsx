@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dbdj8yyjn";
 const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "arthub";
-const inputClass = "w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/10 transition shadow-sm";
+const inputClass = "w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500/60 dark:focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 transition shadow-sm dark:shadow-none";
 
 const CATEGORIES = ["Painting", "Digital Art", "Photography", "Sculpture", "Drawing", "Abstract", "Portrait", "Landscape", "Street Art", "Other"];
 
@@ -84,22 +84,22 @@ export default function AddArtworkPage() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 mb-1">{editId ? "Edit Artwork" : "Add New Artwork"}</h1>
-        <p className="text-slate-500">{editId ? "Update your artwork details below." : "List a new artwork on the ArtHub marketplace."}</p>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{editId ? "Edit Artwork" : "Add New Artwork"}</h1>
+        <p className="text-slate-500 dark:text-slate-400">{editId ? "Update your artwork details below." : "List a new artwork on the ArtHub marketplace."}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Image Upload */}
-        <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center hover:border-indigo-300 transition-colors">
+        <div className="rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 text-center hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-colors duration-500">
           {formData.image ? (
             <div className="space-y-4">
               <img src={formData.image} alt="Preview" className="w-full max-h-64 object-contain rounded-xl mx-auto" />
               <div className="flex gap-3 justify-center">
-                <label className="cursor-pointer px-4 py-2 rounded-xl bg-indigo-50 text-indigo-600 text-sm font-semibold hover:bg-indigo-100 transition flex items-center gap-2">
+                <label className="cursor-pointer px-4 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-sm font-semibold hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition flex items-center gap-2">
                   <FaUpload size={12} /> Change Image
                   <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                 </label>
-                <button type="button" onClick={() => setFormData(p => ({ ...p, image: "" }))} className="px-4 py-2 rounded-xl bg-red-50 text-red-600 text-sm font-semibold hover:bg-red-100 transition flex items-center gap-2">
+                <button type="button" onClick={() => setFormData(p => ({ ...p, image: "" }))} className="px-4 py-2 rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm font-semibold hover:bg-red-100 dark:hover:bg-red-500/20 transition flex items-center gap-2">
                   <FaTimes size={12} /> Remove
                 </button>
               </div>
@@ -108,14 +108,14 @@ export default function AddArtworkPage() {
             <label className="cursor-pointer block">
               <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
               <div className="space-y-3 py-4">
-                <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mx-auto">
+                <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-2xl mx-auto transition-colors">
                   <FaUpload />
                 </div>
                 <div>
-                  <p className="text-slate-900 font-semibold">{uploading ? "Uploading..." : "Upload Artwork Image"}</p>
-                  <p className="text-slate-500 text-xs mt-1">Click to browse · PNG, JPG, WEBP · Max 10MB</p>
+                  <p className="text-slate-900 dark:text-white font-semibold transition-colors">{uploading ? "Uploading..." : "Upload Artwork Image"}</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-1 transition-colors">Click to browse · PNG, JPG, WEBP · Max 10MB</p>
                 </div>
-                {uploading && <div className="w-48 h-1.5 bg-slate-200 rounded-full mx-auto overflow-hidden"><div className="h-full bg-indigo-500 rounded-full animate-pulse w-3/4" /></div>}
+                {uploading && <div className="w-48 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto overflow-hidden"><div className="h-full bg-indigo-500 rounded-full animate-pulse w-3/4" /></div>}
               </div>
             </label>
           )}
@@ -123,27 +123,27 @@ export default function AddArtworkPage() {
 
         {/* Title */}
         <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Artwork Title *</label>
+          <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Artwork Title *</label>
           <input value={formData.title} onChange={e => setFormData(p => ({ ...p, title: e.target.value }))} placeholder="E.g. Neon Sunset in Tokyo" className={inputClass} />
         </div>
 
         {/* Description */}
         <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Description</label>
+          <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Description</label>
           <textarea value={formData.description} onChange={e => setFormData(p => ({ ...p, description: e.target.value }))} rows={4} placeholder="Describe your artwork — techniques, inspiration, story..." className={`${inputClass} resize-none`} />
         </div>
 
         {/* Price + Category */}
         <div className="grid grid-cols-2 gap-5">
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Price (USD) *</label>
+            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Price (USD) *</label>
             <input type="number" min="0" step="0.01" value={formData.price} onChange={e => setFormData(p => ({ ...p, price: e.target.value }))} placeholder="0.00" className={inputClass} />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Category *</label>
+            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Category *</label>
             <select value={formData.category} onChange={e => setFormData(p => ({ ...p, category: e.target.value }))} className={`${inputClass} cursor-pointer`}>
-              <option value="" className="bg-white text-slate-900">Select category...</option>
-              {CATEGORIES.map(c => <option key={c} value={c} className="bg-white text-slate-900">{c}</option>)}
+              <option value="" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Select category...</option>
+              {CATEGORIES.map(c => <option key={c} value={c} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">{c}</option>)}
             </select>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function AddArtworkPage() {
           <Button type="submit" isLoading={submitting} color="primary" startContent={!submitting && <FaSave size={13} />} className="font-semibold shadow-lg shadow-primary/20 px-8">
             {editId ? "Save Changes" : "Post Artwork"}
           </Button>
-          <button type="button" onClick={() => router.push("/dashboard/artist/manage-artworks")} className="px-6 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 text-sm font-semibold transition-colors flex items-center gap-2">
+          <button type="button" onClick={() => router.push("/dashboard/artist/manage-artworks")} className="px-6 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 text-sm font-semibold transition-colors flex items-center gap-2">
             <FaTimes size={12} /> Cancel
           </button>
         </div>
