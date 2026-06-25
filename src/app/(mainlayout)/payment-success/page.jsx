@@ -1,4 +1,3 @@
-import { apiFetch } from "@/lib/api";
 import { stripe } from '@/lib/stripe';
 import { Button } from '@heroui/react';
 import Link from 'next/link';
@@ -37,11 +36,14 @@ export default async function PaymentSuccessPage({ searchParams }) {
             paymentStatus: session?.payment_status
         };
 
-        // Record purchase to backend
+        // Record purchase to backend (server-to-server, no browser session available)
         try {
-            await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/purchase`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/purchase`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-internal-secret': process.env.INTERNAL_API_SECRET || 'dev-internal-secret'
+                },
                 body: JSON.stringify(purchaseData)
             });
         } catch (e) {
@@ -60,11 +62,14 @@ export default async function PaymentSuccessPage({ searchParams }) {
             tier: meta.tier
         };
 
-        // Upgrade subscription on backend
+        // Upgrade subscription on backend (server-to-server, no browser session available)
         try {
-            await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/upgrade-subscription/${meta.buyerEmail}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/upgrade-subscription/${meta.buyerEmail}`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-internal-secret': process.env.INTERNAL_API_SECRET || 'dev-internal-secret'
+                },
                 body: JSON.stringify(subData)
             });
         } catch (e) {

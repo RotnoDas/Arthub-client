@@ -19,11 +19,35 @@ const ArtworkPagination = ({ totalPages }) => {
         router.push(`/artworks?${params.toString()}`);
     };
 
-    // Generate page numbers to show
-    const pages = [];
-    for (let i = 1; i <= safeTotalPages; i++) {
-        pages.push(i);
-    }
+    // Generate page numbers to show with ellipsis
+    const getPageNumbers = () => {
+        const delta = 1; // Number of pages to show around current page
+        const range = [];
+        const rangeWithDots = [];
+        let l;
+
+        for (let i = 1; i <= safeTotalPages; i++) {
+            if (i === 1 || i === safeTotalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+                range.push(i);
+            }
+        }
+
+        for (let i of range) {
+            if (l) {
+                if (i - l === 2) {
+                    rangeWithDots.push(l + 1);
+                } else if (i - l !== 1) {
+                    rangeWithDots.push('...');
+                }
+            }
+            rangeWithDots.push(i);
+            l = i;
+        }
+
+        return rangeWithDots;
+    };
+    
+    const pages = getPageNumbers();
 
     return (
         <div className="flex justify-center mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 pb-16 transition-colors duration-500">
@@ -40,18 +64,22 @@ const ArtworkPagination = ({ totalPages }) => {
                     <FaChevronLeft size={10} /> Previous
                 </button>
 
-                {pages.map(page => (
-                    <button
-                        key={page}
-                        onClick={() => handlePageChange(page)}
-                        className={`w-10 h-10 flex items-center justify-center font-extrabold rounded-full transition-all text-sm ${
-                            currentPage === page
-                                ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-xl shadow-slate-900/20 dark:shadow-white/20"
-                                : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
-                        }`}
-                    >
-                        {page}
-                    </button>
+                {pages.map((page, index) => (
+                    page === '...' ? (
+                        <span key={`ellipsis-${index}`} className="w-10 flex items-center justify-center text-slate-400 font-bold">...</span>
+                    ) : (
+                        <button
+                            key={page}
+                            onClick={() => handlePageChange(page)}
+                            className={`w-10 h-10 flex items-center justify-center font-extrabold rounded-full transition-all text-sm ${
+                                currentPage === page
+                                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-xl shadow-slate-900/20 dark:shadow-white/20"
+                                    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
+                            }`}
+                        >
+                            {page}
+                        </button>
+                    )
                 ))}
 
                 <button 

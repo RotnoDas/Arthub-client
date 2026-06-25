@@ -2,8 +2,7 @@ import dns from "dns";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/navbar/NavBar";
-import Footer from "@/components/footer/Footer";
+
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({

@@ -39,5 +39,20 @@ export const auth = betterAuth({
     },
     plugins: [
         jwt(), 
-    ]
+    ],
+    databaseHooks: {
+        user: {
+            create: {
+                before: async (user) => {
+                    // Only allow 'user' or 'artist' as roles — prevent admin escalation via direct API calls
+                    const allowedRoles = ["user", "artist"];
+                    const safeRole = allowedRoles.includes(user.role) ? user.role : "user";
+                    return {
+                        data: { ...user, role: safeRole, isBlocked: false }
+                    };
+                }
+            }
+        }
+    }
 });
+

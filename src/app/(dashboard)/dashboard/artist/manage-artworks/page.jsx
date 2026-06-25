@@ -20,7 +20,7 @@ export default function ManageArtworksPage() {
     if (!user?.email) return;
     setLoading(true);
     try {
-      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/artist/${user.email}`);
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/artist/${user.email}`);
       const data = await res.json();
       setArtworks(Array.isArray(data) ? data : []);
     } catch { toast.error("Failed to load artworks"); }
@@ -38,7 +38,7 @@ export default function ManageArtworksPage() {
     if (!itemToDelete) return;
     setIsDeleting(true);
     try {
-      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/${itemToDelete}`, { method: "DELETE" });
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/${itemToDelete}`, { method: "DELETE" });
       if (res.ok) { 
         toast.success("Artwork deleted."); 
         fetchArtworks(); 

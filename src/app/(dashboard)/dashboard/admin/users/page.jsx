@@ -29,7 +29,7 @@ export default function ManageUsersPage() {
 
   const handleRoleChange = async (userId, newRole) => {
     try {
-      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/role/${userId}`, {
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/role/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: newRole }),
@@ -47,7 +47,7 @@ export default function ManageUsersPage() {
     if (!itemToDelete) return;
     setIsDeleting(true);
     try {
-      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/${itemToDelete.id}`, { method: "DELETE" });
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/${itemToDelete.id}`, { method: "DELETE" });
       if (res.ok) { 
         toast.success("User deleted successfully."); 
         fetchUsers(); 

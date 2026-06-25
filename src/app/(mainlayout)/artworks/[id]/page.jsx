@@ -1,4 +1,3 @@
-import { apiFetch } from "@/lib/api";
 import Image from "next/image";
 import { FaTag, FaCheckCircle, FaUser } from "react-icons/fa";
 import Link from "next/link";
@@ -11,7 +10,7 @@ import ArtistControls from "@/components/artist-controls/ArtistControls";
 
 async function fetchArtwork(id) {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/single-artworks/${id}`, { cache: 'no-store' });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/single-artworks/${id}`, { cache: 'no-store' });
         if (!res.ok) return null;
         return res.json();
     } catch (error) {
@@ -39,12 +38,9 @@ export default async function ArtworkDetails({ params }) {
     let isPurchased = false;
     if (session?.user?.email) {
         try {
-            const cookiesStore = await headers();
-            const cookieStr = cookiesStore.get('cookie') || '';
-            const token = cookieStr.split("arthub.session_token=")[1]?.split(";")[0] || "";
-            const purchaseRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/purchase/${session.user.email}`, {
+            const purchaseRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/purchase/${session.user.email}`, {
                 cache: 'no-store',
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: { 'x-internal-secret': process.env.INTERNAL_API_SECRET || 'dev-internal-secret' }
             });
             if (purchaseRes.ok) {
                 const purchases = await purchaseRes.json();

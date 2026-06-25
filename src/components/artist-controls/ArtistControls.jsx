@@ -16,7 +16,7 @@ const ArtistControls = ({ artworkId }) => {
     const handleDelete = async () => {
         setIsDeleting(true);
         try {
-            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/${artworkId}`, {
+            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/${artworkId}`, {
                 method: 'DELETE',
             });
             

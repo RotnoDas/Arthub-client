@@ -19,8 +19,8 @@ export default function UserDashboard() {
   useEffect(() => {
     if (user?.email) {
       Promise.all([
-        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/purchase/${user.email}`, { cache: 'no-store' }).then(res => res.json()),
-        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/${user.email}`, { cache: 'no-store' }).then(res => res.json())
+        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/purchase/${user.email}`, { cache: 'no-store' }).then(res => res.json()),
+        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/${user.email}`, { cache: 'no-store' }).then(res => res.json())
       ])
       .then(([purchasesData, userData]) => {
         setPurchases(Array.isArray(purchasesData) ? purchasesData : []);

@@ -7,7 +7,7 @@ export async function fetchArtworks(search = '', category = '', minPrice = '', m
         if (maxPrice) queryParams.append('maxPrice', maxPrice);
         queryParams.append('page', page);
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks?${queryParams.toString()}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks?${queryParams.toString()}`, {
             cache: 'no-store'
         });
         
