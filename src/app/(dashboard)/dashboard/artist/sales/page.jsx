@@ -14,7 +14,7 @@ export default function SalesHistoryPage() {
   useEffect(() => {
     if (user?.email) {
       // Fetch sales for this artist from purchases collection
-      apiFetch(`http://localhost:5000/api/purchases/artist/${user.email}`)
+      apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/purchases/artist/${user.email}`)
         .then(r => r.json())
         .then(d => { setSales(Array.isArray(d) ? d : []); setLoading(false); })
         .catch(() => setLoading(false));

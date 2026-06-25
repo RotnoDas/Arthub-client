@@ -5,7 +5,7 @@ import ArtworkCard from "@/components/artwork-card/ArtworkCard";
 
 async function fetchFeaturedArtworks() {
     try {
-        const res = await apiFetch("http://localhost:5000/api/artworks?limit=6", {
+        const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks?limit=6`, {
             cache: 'no-store' // ensures auto-refresh on page reload
         });
         if (!res.ok) return [];

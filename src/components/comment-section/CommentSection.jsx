@@ -24,7 +24,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const res = await apiFetch(`http://localhost:5000/api/comments/${artworkId}`);
+                const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/comments/${artworkId}`);
                 if (res.ok) {
                     const data = await res.json();
                     setComments(data);
@@ -52,7 +52,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                 comment: newComment
             };
 
-            const res = await apiFetch(`http://localhost:5000/api/artworks/${artworkId}/comments`, {
+            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/${artworkId}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(commentData)
@@ -83,7 +83,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
         if (!itemToDelete) return;
         setIsDeleting(true);
         try {
-            const res = await apiFetch(`http://localhost:5000/api/comments/${itemToDelete}`, { method: 'DELETE' });
+            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/comments/${itemToDelete}`, { method: 'DELETE' });
             if (res.ok) {
                 setComments(comments.filter(c => c._id !== itemToDelete));
                 toast.success('Comment deleted.');
@@ -103,7 +103,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
         if (!editContent.trim()) return;
 
         try {
-            const res = await apiFetch(`http://localhost:5000/api/comments/${commentId}`, {
+            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/comments/${commentId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: editContent })

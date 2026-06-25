@@ -13,7 +13,7 @@ export default function PurchaseHistoryPage() {
 
   useEffect(() => {
     if (user?.email) {
-      apiFetch(`http://localhost:5000/api/artworks/purchase/${user.email}`)
+      apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/purchase/${user.email}`)
         .then((res) => res.json())
         .then((data) => { setPurchases(Array.isArray(data) ? data : []); setLoading(false); })
         .catch(() => setLoading(false));

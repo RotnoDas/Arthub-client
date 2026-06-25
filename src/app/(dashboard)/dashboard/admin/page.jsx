@@ -13,7 +13,7 @@ export default function AdminDashboardPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        apiFetch('http://localhost:5000/api/admin/analytics')
+        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/admin/analytics`)
             .then(res => res.json())
             .then(json => {
                 setData(json);

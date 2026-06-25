@@ -39,7 +39,7 @@ export default async function PaymentSuccessPage({ searchParams }) {
 
         // Record purchase to backend
         try {
-            await apiFetch('http://localhost:5000/api/artworks/purchase', {
+            await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/purchase`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(purchaseData)
@@ -62,7 +62,7 @@ export default async function PaymentSuccessPage({ searchParams }) {
 
         // Upgrade subscription on backend
         try {
-            await apiFetch(`http://localhost:5000/api/users/upgrade-subscription/${meta.buyerEmail}`, {
+            await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/upgrade-subscription/${meta.buyerEmail}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(subData)

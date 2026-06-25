@@ -10,7 +10,7 @@ export default function AdminTransactionsPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    apiFetch("http://localhost:5000/api/transactions")
+    apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/transactions`)
       .then(r => r.json())
       .then(data => { setTransactions(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => { toast.error("Failed to load transactions."); setLoading(false); });

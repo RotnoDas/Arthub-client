@@ -27,7 +27,7 @@ export default function AddArtworkPage() {
   // Load existing artwork for editing
   useEffect(() => {
     if (editId) {
-      apiFetch(`http://localhost:5000/api/single-artworks/${editId}`)
+      apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/single-artworks/${editId}`)
         .then(async (r) => {
           if (!r.ok) throw new Error("Not found");
           return r.json();
@@ -74,7 +74,7 @@ export default function AddArtworkPage() {
     setSubmitting(true);
     try {
       const payload = { ...formData, artistEmail: user.email, artistName: user.name };
-      const url = editId ? `http://localhost:5000/api/artworks/${editId}` : `http://localhost:5000/api/artworks`;
+      const url = editId ? `${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/${editId}` : `${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks`;
       const method = editId ? "PATCH" : "POST";
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (res.ok) {

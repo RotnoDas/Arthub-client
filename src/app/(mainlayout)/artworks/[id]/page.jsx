@@ -11,7 +11,7 @@ import ArtistControls from "@/components/artist-controls/ArtistControls";
 
 async function fetchArtwork(id) {
     try {
-        const res = await fetch(`http://localhost:5000/api/single-artworks/${id}`, { cache: 'no-store' });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/single-artworks/${id}`, { cache: 'no-store' });
         if (!res.ok) return null;
         return res.json();
     } catch (error) {
@@ -42,7 +42,7 @@ export default async function ArtworkDetails({ params }) {
             const cookiesStore = await headers();
             const cookieStr = cookiesStore.get('cookie') || '';
             const token = cookieStr.split("arthub.session_token=")[1]?.split(";")[0] || "";
-            const purchaseRes = await fetch(`http://localhost:5000/api/artworks/purchase/${session.user.email}`, {
+            const purchaseRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/purchase/${session.user.email}`, {
                 cache: 'no-store',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

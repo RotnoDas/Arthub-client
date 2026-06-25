@@ -19,8 +19,8 @@ export default function UserDashboard() {
   useEffect(() => {
     if (user?.email) {
       Promise.all([
-        apiFetch(`http://localhost:5000/api/artworks/purchase/${user.email}`).then(res => res.json()),
-        apiFetch(`http://localhost:5000/api/users/${user.email}`).then(res => res.json())
+        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/purchase/${user.email}`).then(res => res.json()),
+        apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/${user.email}`).then(res => res.json())
       ])
       .then(([purchasesData, userData]) => {
         setPurchases(Array.isArray(purchasesData) ? purchasesData : []);
@@ -35,7 +35,7 @@ export default function UserDashboard() {
     setCheckoutLoading(true);
     const loadingToast = toast.loading(`Redirecting to Stripe...`);
     try {
-      const res = await apiFetch('http://localhost:5000/api/checkout/subscription', {
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/checkout/subscription`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ buyerEmail: user.email, tier, origin: window.location.origin })

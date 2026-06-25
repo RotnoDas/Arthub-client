@@ -16,7 +16,7 @@ export default function AdminArtworksPage() {
   const fetchArtworks = async () => {
     setLoading(true);
     try {
-      const res = await apiFetch("http://localhost:5000/api/artworks?limit=500");
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks?limit=500`);
       const data = await res.json();
       setArtworks(Array.isArray(data) ? data : (data.artworks || []));
     } catch { toast.error("Failed to load artworks."); }
@@ -34,7 +34,7 @@ export default function AdminArtworksPage() {
     if (!itemToDelete) return;
     setIsDeleting(true);
     try {
-      const res = await apiFetch(`http://localhost:5000/api/artworks/${itemToDelete}`, { method: "DELETE" });
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/artworks/${itemToDelete}`, { method: "DELETE" });
       if (res.ok) { 
         toast.success("Artwork deleted."); 
         fetchArtworks(); 

@@ -69,7 +69,7 @@ export default function ProfilePage() {
       }
       
       // Update custom backend using email (safest identifier)
-      await apiFetch(`http://localhost:5000/api/users/update-profile/${user.email}`, {
+      await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/users/update-profile/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, image }),

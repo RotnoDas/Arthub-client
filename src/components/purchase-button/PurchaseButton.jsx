@@ -50,7 +50,7 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
                 origin: window.location.origin
             };
 
-            const res = await apiFetch('http://localhost:5000/api/checkout/artwork', {
+            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/checkout/artwork`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(purchaseData)
