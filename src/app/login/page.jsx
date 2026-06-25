@@ -32,7 +32,7 @@ const LoginPage = () => {
             setIsLoading(false);
         } else {
             toast.success("Welcome back!");
-            window.location.href = "/dashboard";
+            window.location.href = "/";
         }
     };
 
@@ -40,6 +40,7 @@ const LoginPage = () => {
         const loadingToast = toast.loading("Redirecting to Google...");
         const { data, error } = await authClient.signIn.social({
             provider: "google",
+            callbackURL: "/",
         });
 
         if (error) {
