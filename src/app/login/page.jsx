@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const LoginPage = () => {
     const router = useRouter();
@@ -79,8 +80,17 @@ const LoginPage = () => {
 
             {/* Right Panel - Minimalist Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16 lg:p-20 xl:p-32 relative">
-                <div className="w-full max-w-sm sm:max-w-md xl:max-w-lg">
-                    <div className="mb-10 sm:mb-12 lg:hidden flex justify-center">
+                
+                {/* Back to Home Link (Absolute Top Left of Right Panel) */}
+                <Link href="/" className="absolute top-6 left-6 sm:top-8 sm:left-8 flex items-center gap-2 text-sm font-medium text-default-500 hover:text-foreground transition-colors group">
+                    <span className="w-8 h-8 rounded-full bg-default-100 group-hover:bg-default-200 flex items-center justify-center transition-colors">
+                        <FaArrowLeft size={12} />
+                    </span>
+                    Back to Home
+                </Link>
+
+                <div className="w-full max-w-sm sm:max-w-md xl:max-w-lg mt-12 sm:mt-0">
+                    <div className="mb-10 sm:mb-12 lg:hidden flex justify-center mt-4">
                         <Logo />
                     </div>
 

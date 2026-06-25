@@ -37,41 +37,37 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
 
     const handlePurchase = async () => {
         setIsLoading(true);
-        // Mock Stripe Redirect
-        toast.loading('Redirecting to secure Stripe checkout...', { duration: 2000 });
+        const loadingToast = toast.loading('Redirecting to secure Stripe checkout...');
         
-        setTimeout(async () => {
-            try {
-                // Mocking the purchase API call directly for this phase
-                const purchaseData = {
-                    amount: artwork.price,
-                    artworkId: artwork._id,
-                    artworkTitle: artwork.title,
-                    artistEmail: artwork.artistEmail,
-                    buyerEmail: session.user.email,
-                    paymentType: 'card',
-                    transactionId: `mock_txn_${Math.random().toString(36).substring(7)}`,
-                    paymentStatus: 'completed'
-                };
+        try {
+            const purchaseData = {
+                amount: artwork.price,
+                artworkId: artwork._id,
+                artworkTitle: artwork.title,
+                artistEmail: artwork.artistEmail,
+                buyerEmail: session.user.email,
+                origin: window.location.origin
+            };
 
-                const res = await fetch('http://localhost:5000/api/artworks/purchase', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(purchaseData)
-                });
+            const res = await fetch('http://localhost:5000/api/checkout/artwork', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(purchaseData)
+            });
 
-                if (res.ok) {
-                    toast.success('Payment successful! Artwork purchased.');
-                    window.location.reload(); // Reload to update status
-                } else {
-                    toast.error('Payment processing failed.');
-                }
-            } catch (error) {
-                toast.error('An error occurred during checkout.');
-            } finally {
+            const data = await res.json();
+
+            if (res.ok && data.url) {
+                toast.success('Redirecting...', { id: loadingToast });
+                window.location.href = data.url; // Redirect to Stripe Checkout
+            } else {
+                toast.error(data.message || data.error || 'Checkout failed.', { id: loadingToast, duration: 5000 });
                 setIsLoading(false);
             }
-        }, 2000);
+        } catch (error) {
+            toast.error('An error occurred connecting to checkout.', { id: loadingToast });
+            setIsLoading(false);
+        }
     };
 
     return (

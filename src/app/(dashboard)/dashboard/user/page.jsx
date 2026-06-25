@@ -2,29 +2,62 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
-import { FaPalette, FaDollarSign, FaShoppingBag, FaUser } from "react-icons/fa";
+import { FaPalette, FaDollarSign, FaShoppingBag, FaUser, FaCrown } from "react-icons/fa";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function UserDashboard() {
   const { data: sessionData } = authClient.useSession();
   const user = sessionData?.user;
 
   const [purchases, setPurchases] = useState([]);
+  const [dbUser, setDbUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/api/artworks/purchase/${user.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setPurchases(Array.isArray(data) ? data : []);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
+      Promise.all([
+        fetch(`http://localhost:5000/api/artworks/purchase/${user.email}`).then(res => res.json()),
+        fetch(`http://localhost:5000/api/users/${user.email}`).then(res => res.json())
+      ])
+      .then(([purchasesData, userData]) => {
+        setPurchases(Array.isArray(purchasesData) ? purchasesData : []);
+        setDbUser(userData);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
     }
   }, [user]);
 
-  if (!user) return <div className="text-white p-8">Loading...</div>;
+  const handleUpgrade = async (tier) => {
+    setCheckoutLoading(true);
+    const loadingToast = toast.loading(`Redirecting to Stripe...`);
+    try {
+      const res = await fetch('http://localhost:5000/api/checkout/subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ buyerEmail: user.email, tier, origin: window.location.origin })
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+      } else {
+        toast.error("Failed to initiate checkout", { id: loadingToast });
+        setCheckoutLoading(false);
+      }
+    } catch {
+      toast.error("Error connecting to server", { id: loadingToast });
+      setCheckoutLoading(false);
+    }
+  };
+
+  if (!user || loading) return <div className="text-white p-8">Loading...</div>;
+
+  const tier = dbUser?.subscriptionTier || "free";
+  let maxPurchases = 3;
+  if (tier === "pro") maxPurchases = 9;
+  if (tier === "premium") maxPurchases = "Unlimited";
 
   const totalSpent = purchases.reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
 
@@ -58,6 +91,35 @@ export default function UserDashboard() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Subscription Tier Overview */}
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-10">
+          <FaCrown size={120} />
+        </div>
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              Subscription Status: <span className="text-pink-400 capitalize">{tier}</span>
+            </h2>
+            <p className="text-slate-400 mt-2">
+              You have purchased {purchases.length} out of {maxPurchases} allowed artworks.
+            </p>
+          </div>
+          <div className="flex gap-3">
+            {tier === "free" && (
+              <Button isLoading={checkoutLoading} onPress={() => handleUpgrade("pro")} className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold px-6 shadow-lg">
+                Upgrade to Pro ($9.99)
+              </Button>
+            )}
+            {tier !== "premium" && (
+              <Button isLoading={checkoutLoading} onPress={() => handleUpgrade("premium")} className="bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold px-6 shadow-lg">
+                Upgrade to Premium ($19.99)
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Quick Nav Cards */}
