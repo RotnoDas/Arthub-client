@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { FaExchangeAlt, FaSearch } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -9,7 +10,7 @@ export default function AdminTransactionsPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/transactions")
+    apiFetch("http://localhost:5000/api/transactions")
       .then(r => r.json())
       .then(data => { setTransactions(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => { toast.error("Failed to load transactions."); setLoading(false); });

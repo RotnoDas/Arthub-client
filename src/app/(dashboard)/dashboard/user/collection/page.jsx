@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { FaPalette, FaExternalLinkAlt } from "react-icons/fa";
@@ -12,7 +13,7 @@ export default function CollectionPage() {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/api/artworks/purchase/${user.email}`)
+      apiFetch(`http://localhost:5000/api/artworks/purchase/${user.email}`)
         .then((res) => res.json())
         .then((data) => { setPurchases(Array.isArray(data) ? data : []); setLoading(false); })
         .catch(() => setLoading(false));

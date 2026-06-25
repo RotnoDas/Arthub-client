@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { FaHistory } from "react-icons/fa";
@@ -13,7 +14,7 @@ export default function SalesHistoryPage() {
   useEffect(() => {
     if (user?.email) {
       // Fetch sales for this artist from purchases collection
-      fetch(`http://localhost:5000/api/purchases/artist/${user.email}`)
+      apiFetch(`http://localhost:5000/api/purchases/artist/${user.email}`)
         .then(r => r.json())
         .then(d => { setSales(Array.isArray(d) ? d : []); setLoading(false); })
         .catch(() => setLoading(false));

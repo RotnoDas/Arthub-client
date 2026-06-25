@@ -1,4 +1,5 @@
 'use client';
+import { apiFetch } from "@/lib/api";
 
 import React, { useState } from 'react';
 import { Button } from '@heroui/react';
@@ -15,7 +16,7 @@ const ArtistControls = ({ artworkId }) => {
     const handleDelete = async () => {
         setIsDeleting(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/artworks/${artworkId}`, {
+            const res = await apiFetch(`http://localhost:5000/api/artworks/${artworkId}`, {
                 method: 'DELETE',
             });
             

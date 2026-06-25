@@ -1,10 +1,11 @@
+import { apiFetch } from "@/lib/api";
 import Image from "next/image";
 import { FaTag, FaCheckCircle, FaUser } from "react-icons/fa";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import CommentSection from "@/components/comment-section/CommentSection";
+import CommentSection from "@/components/comment-section/CommentSection";
 import PurchaseButton from "@/components/purchase-button/PurchaseButton";
 import ArtistControls from "@/components/artist-controls/ArtistControls";
 
@@ -22,7 +23,6 @@ async function fetchArtwork(id) {
 export default async function ArtworkDetails({ params }) {
     const resolvedParams = await params;
     const { id } = resolvedParams;
-    
     // Fetch auth session (this allows public read access, but gives us user data if logged in)
     const session = await auth.api.getSession({
         headers: await headers()
@@ -39,7 +39,13 @@ export default async function ArtworkDetails({ params }) {
     let isPurchased = false;
     if (session?.user?.email) {
         try {
-            const purchaseRes = await fetch(`http://localhost:5000/api/artworks/purchase/${session.user.email}`, { cache: 'no-store' });
+            const cookiesStore = await headers();
+            const cookieStr = cookiesStore.get('cookie') || '';
+            const token = cookieStr.split("arthub.session_token=")[1]?.split(";")[0] || "";
+            const purchaseRes = await fetch(`http://localhost:5000/api/artworks/purchase/${session.user.email}`, {
+                cache: 'no-store',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             if (purchaseRes.ok) {
                 const purchases = await purchaseRes.json();
                 isPurchased = purchases.some(p => p.artworkId === id);

@@ -1,3 +1,4 @@
+import { apiFetch } from "@/lib/api";
 import { stripe } from '@/lib/stripe';
 import { Button } from '@heroui/react';
 import Link from 'next/link';
@@ -38,7 +39,7 @@ export default async function PaymentSuccessPage({ searchParams }) {
 
         // Record purchase to backend
         try {
-            await fetch('http://localhost:5000/api/artworks/purchase', {
+            await apiFetch('http://localhost:5000/api/artworks/purchase', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(purchaseData)
@@ -61,7 +62,7 @@ export default async function PaymentSuccessPage({ searchParams }) {
 
         // Upgrade subscription on backend
         try {
-            await fetch(`http://localhost:5000/api/users/upgrade-subscription/${meta.buyerEmail}`, {
+            await apiFetch(`http://localhost:5000/api/users/upgrade-subscription/${meta.buyerEmail}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(subData)

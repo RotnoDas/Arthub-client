@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState } from "react";
 import { Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
@@ -68,7 +69,7 @@ export default function ProfilePage() {
       }
       
       // Update custom backend using email (safest identifier)
-      await fetch(`http://localhost:5000/api/users/update-profile/${user.email}`, {
+      await apiFetch(`http://localhost:5000/api/users/update-profile/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, image }),

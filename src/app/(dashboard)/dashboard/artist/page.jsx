@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
@@ -13,7 +14,7 @@ export default function ArtistDashboardOverview() {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/api/artworks/artist/${user.email}`)
+      apiFetch(`http://localhost:5000/api/artworks/artist/${user.email}`)
         .then(r => r.json())
         .then(d => { setArtworks(Array.isArray(d) ? d : []); setLoading(false); })
         .catch(() => setLoading(false));

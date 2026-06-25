@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { FaPalette, FaTrash, FaSearch } from "react-icons/fa";
@@ -15,7 +16,7 @@ export default function AdminArtworksPage() {
   const fetchArtworks = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/artworks?limit=500");
+      const res = await apiFetch("http://localhost:5000/api/artworks?limit=500");
       const data = await res.json();
       setArtworks(Array.isArray(data) ? data : (data.artworks || []));
     } catch { toast.error("Failed to load artworks."); }
@@ -33,7 +34,7 @@ export default function AdminArtworksPage() {
     if (!itemToDelete) return;
     setIsDeleting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/artworks/${itemToDelete}`, { method: "DELETE" });
+      const res = await apiFetch(`http://localhost:5000/api/artworks/${itemToDelete}`, { method: "DELETE" });
       if (res.ok) { 
         toast.success("Artwork deleted."); 
         fetchArtworks(); 

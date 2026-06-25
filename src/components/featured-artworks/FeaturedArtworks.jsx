@@ -1,10 +1,11 @@
+import { apiFetch } from "@/lib/api";
 import Link from "next/link";
 import { FaChevronRight } from "react-icons/fa";
 import ArtworkCard from "@/components/artwork-card/ArtworkCard";
 
 async function fetchFeaturedArtworks() {
     try {
-        const res = await fetch("http://localhost:5000/api/artworks?limit=6", {
+        const res = await apiFetch("http://localhost:5000/api/artworks?limit=6", {
             cache: 'no-store' // ensures auto-refresh on page reload
         });
         if (!res.ok) return [];

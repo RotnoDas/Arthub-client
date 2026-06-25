@@ -1,4 +1,5 @@
 'use client';
+import { apiFetch } from "@/lib/api";
 
 import React, { useEffect, useState } from 'react';
 import { FaUsers, FaPaintBrush, FaCheckCircle, FaWallet, FaChartLine } from 'react-icons/fa';
@@ -12,7 +13,7 @@ export default function AdminDashboardPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/admin/analytics')
+        apiFetch('http://localhost:5000/api/admin/analytics')
             .then(res => res.json())
             .then(json => {
                 setData(json);

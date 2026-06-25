@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
@@ -26,7 +27,7 @@ export default function AddArtworkPage() {
   // Load existing artwork for editing
   useEffect(() => {
     if (editId) {
-      fetch(`http://localhost:5000/api/single-artworks/${editId}`)
+      apiFetch(`http://localhost:5000/api/single-artworks/${editId}`)
         .then(async (r) => {
           if (!r.ok) throw new Error("Not found");
           return r.json();

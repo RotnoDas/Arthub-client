@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
@@ -19,7 +20,7 @@ export default function ManageArtworksPage() {
     if (!user?.email) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/artworks/artist/${user.email}`);
+      const res = await apiFetch(`http://localhost:5000/api/artworks/artist/${user.email}`);
       const data = await res.json();
       setArtworks(Array.isArray(data) ? data : []);
     } catch { toast.error("Failed to load artworks"); }
@@ -37,7 +38,7 @@ export default function ManageArtworksPage() {
     if (!itemToDelete) return;
     setIsDeleting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/artworks/${itemToDelete}`, { method: "DELETE" });
+      const res = await apiFetch(`http://localhost:5000/api/artworks/${itemToDelete}`, { method: "DELETE" });
       if (res.ok) { 
         toast.success("Artwork deleted."); 
         fetchArtworks(); 
