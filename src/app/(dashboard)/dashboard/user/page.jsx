@@ -52,7 +52,7 @@ export default function UserDashboard() {
     }
   };
 
-  if (!user || loading) return <div className="text-white p-8">Loading...</div>;
+  if (!user || loading) return <div className="text-slate-500 p-8">Loading...</div>;
 
   const tier = dbUser?.subscriptionTier || "free";
   let maxPurchases = 3;
@@ -66,11 +66,11 @@ export default function UserDashboard() {
       {/* Header */}
       <div className="flex items-center gap-4">
         {user.image && (
-          <img src={user.image} alt={user.name} className="w-16 h-16 rounded-full object-cover ring-2 ring-pink-500/60 ring-offset-2 ring-offset-[#080c16]" />
+          <img src={user.image} alt={user.name} className="w-16 h-16 rounded-full object-cover ring-2 ring-pink-500/60 ring-offset-2 ring-offset-slate-50" />
         )}
         <div>
-          <h1 className="text-3xl font-bold text-white">Welcome back, {user.name} 🎨</h1>
-          <p className="text-slate-400 mt-1">Your personal ArtHub collection dashboard.</p>
+          <h1 className="text-3xl font-bold text-slate-900">Welcome back, {user.name} 🎨</h1>
+          <p className="text-slate-500 mt-1">Your personal ArtHub collection dashboard.</p>
         </div>
       </div>
 
@@ -81,29 +81,29 @@ export default function UserDashboard() {
           { label: "Total Spent", value: `$${totalSpent.toFixed(2)}`, icon: <FaDollarSign />, color: "green" },
           { label: "Recent Purchase", value: purchases[0]?.artworkTitle || "—", icon: <FaShoppingBag />, color: "indigo" },
         ].map((s) => (
-          <div key={s.label} className={`rounded-2xl border border-white/10 bg-white/5 p-5 flex items-center gap-4 hover:border-${s.color}-500/30 transition-colors`}>
-            <div className={`w-12 h-12 rounded-xl bg-${s.color}-500/10 text-${s.color}-400 flex items-center justify-center text-xl`}>
+          <div key={s.label} className={`rounded-2xl border border-slate-200 bg-white p-5 flex items-center gap-4 hover:border-${s.color}-500/30 transition-colors shadow-sm`}>
+            <div className={`w-12 h-12 rounded-xl bg-${s.color}-50 text-${s.color}-600 flex items-center justify-center text-xl`}>
               {s.icon}
             </div>
             <div>
-              <p className="text-slate-400 text-xs font-bold uppercase tracking-wider">{s.label}</p>
-              <p className="text-white font-bold text-xl truncate max-w-[140px]">{s.value}</p>
+              <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">{s.label}</p>
+              <p className="text-slate-900 font-bold text-xl truncate max-w-[140px]">{s.value}</p>
             </div>
           </div>
         ))}
       </div>
 
       {/* Subscription Tier Overview */}
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-8 opacity-10">
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] text-slate-900">
           <FaCrown size={120} />
         </div>
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-              Subscription Status: <span className="text-pink-400 capitalize">{tier}</span>
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              Subscription Status: <span className="text-pink-600 capitalize">{tier}</span>
             </h2>
-            <p className="text-slate-400 mt-2">
+            <p className="text-slate-500 mt-2">
               You have purchased {purchases.length} out of {maxPurchases} allowed artworks.
             </p>
           </div>
@@ -124,31 +124,31 @@ export default function UserDashboard() {
 
       {/* Quick Nav Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <Link href="/dashboard/user/purchases" className="group rounded-2xl border border-white/10 bg-white/5 hover:bg-pink-500/5 hover:border-pink-500/30 transition-all duration-200 p-6 flex flex-col gap-3">
-          <div className="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-lg group-hover:bg-pink-500/20 transition-colors">
+        <Link href="/dashboard/user/purchases" className="group rounded-2xl border border-slate-200 bg-white hover:bg-pink-50 hover:border-pink-200 transition-all duration-200 p-6 flex flex-col gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg group-hover:bg-pink-200 transition-colors">
             <FaShoppingBag />
           </div>
           <div>
-            <p className="font-bold text-white">Purchase History</p>
-            <p className="text-slate-400 text-xs mt-1">View all your past artwork purchases.</p>
+            <p className="font-bold text-slate-900">Purchase History</p>
+            <p className="text-slate-500 text-xs mt-1">View all your past artwork purchases.</p>
           </div>
         </Link>
-        <Link href="/dashboard/user/collection" className="group rounded-2xl border border-white/10 bg-white/5 hover:bg-indigo-500/5 hover:border-indigo-500/30 transition-all duration-200 p-6 flex flex-col gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg group-hover:bg-indigo-500/20 transition-colors">
+        <Link href="/dashboard/user/collection" className="group rounded-2xl border border-slate-200 bg-white hover:bg-indigo-50 hover:border-indigo-200 transition-all duration-200 p-6 flex flex-col gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg group-hover:bg-indigo-200 transition-colors">
             <FaPalette />
           </div>
           <div>
-            <p className="font-bold text-white">My Collection</p>
-            <p className="text-slate-400 text-xs mt-1">Browse your gallery of owned artworks.</p>
+            <p className="font-bold text-slate-900">My Collection</p>
+            <p className="text-slate-500 text-xs mt-1">Browse your gallery of owned artworks.</p>
           </div>
         </Link>
-        <Link href="/dashboard/user/profile" className="group rounded-2xl border border-white/10 bg-white/5 hover:bg-purple-500/5 hover:border-purple-500/30 transition-all duration-200 p-6 flex flex-col gap-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg group-hover:bg-purple-500/20 transition-colors">
+        <Link href="/dashboard/user/profile" className="group rounded-2xl border border-slate-200 bg-white hover:bg-purple-50 hover:border-purple-200 transition-all duration-200 p-6 flex flex-col gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-lg group-hover:bg-purple-200 transition-colors">
             <FaUser />
           </div>
           <div>
-            <p className="font-bold text-white">Profile Settings</p>
-            <p className="text-slate-400 text-xs mt-1">Edit your profile and change password.</p>
+            <p className="font-bold text-slate-900">Profile Settings</p>
+            <p className="text-slate-500 text-xs mt-1">Edit your profile and change password.</p>
           </div>
         </Link>
       </div>
@@ -156,34 +156,34 @@ export default function UserDashboard() {
       {/* Recent Purchases Preview */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-white">Recent Purchases</h2>
-          <Link href="/dashboard/user/purchases" className="text-xs font-semibold text-pink-400 hover:text-pink-300 transition-colors">View All →</Link>
+          <h2 className="text-xl font-bold text-slate-900">Recent Purchases</h2>
+          <Link href="/dashboard/user/purchases" className="text-xs font-semibold text-pink-600 hover:text-pink-700 transition-colors">View All →</Link>
         </div>
-        <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
           {loading ? (
-            <div className="p-10 text-center text-slate-400 animate-pulse">Loading...</div>
+            <div className="p-10 text-center text-slate-500 animate-pulse">Loading...</div>
           ) : purchases.length === 0 ? (
             <div className="p-10 text-center">
-              <FaPalette className="mx-auto text-4xl text-slate-600 mb-3" />
-              <p className="text-slate-400 font-medium">No purchases yet.</p>
-              <Link href="/artworks" className="inline-block mt-3 text-pink-400 text-sm font-semibold hover:text-pink-300">Browse Artworks →</Link>
+              <FaPalette className="mx-auto text-4xl text-slate-300 mb-3" />
+              <p className="text-slate-500 font-medium">No purchases yet.</p>
+              <Link href="/artworks" className="inline-block mt-3 text-pink-600 text-sm font-semibold hover:text-pink-700">Browse Artworks →</Link>
             </div>
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 bg-white/5">
+                <tr className="border-b border-slate-200 bg-slate-50">
                   {["Artwork", "Artist", "Price", "Date"].map((h) => (
-                    <th key={h} className="text-left px-4 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">{h}</th>
+                    <th key={h} className="text-left px-5 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {purchases.slice(0, 5).map((p) => (
-                  <tr key={p._id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-white">{p.artworkTitle}</td>
-                    <td className="px-4 py-3 text-slate-300 text-xs">{p.artistEmail}</td>
-                    <td className="px-4 py-3 text-green-400 font-bold">${p.amount}</td>
-                    <td className="px-4 py-3 text-slate-300 text-xs">{new Date(p.purchaseDate).toLocaleDateString()}</td>
+                  <tr key={p._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                    <td className="px-5 py-4 font-semibold text-slate-900">{p.artworkTitle}</td>
+                    <td className="px-5 py-4 text-slate-600 text-xs">{p.artistEmail}</td>
+                    <td className="px-5 py-4 text-green-600 font-bold">${p.amount}</td>
+                    <td className="px-5 py-4 text-slate-500 text-xs">{new Date(p.purchaseDate).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>
