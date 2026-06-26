@@ -57,7 +57,7 @@ const NavBar = () => {
     };
 
     return (
-        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-surface backdrop-blur-md shadow-sm py-2 border-b border-border/50" : "bg-transparent py-4 border-b border-transparent"}`}>
+        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm shadow-slate-200/50 dark:shadow-none py-3 border-b border-slate-200/80 dark:border-slate-800/80" : "bg-transparent py-5 border-b border-transparent"}`}>
             <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1" onClick={closeMenu}>
                     <div className="-m-1.5 p-1.5 flex items-center transition-transform hover:scale-105 active:scale-95 cursor-pointer">
@@ -101,7 +101,7 @@ const NavBar = () => {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
                     <ThemeSwitcher />
                     {isPending ? (
-                        <div className="w-24 h-9 bg-surface-solid animate-pulse rounded-full"></div>
+                        <div className="w-24 h-9 bg-slate-200 dark:bg-slate-800 animate-pulse rounded-full"></div>
                     ) : user ? (
                         <div className="relative" ref={dropdownRef}>
                             <button
@@ -119,9 +119,9 @@ const NavBar = () => {
                             </button>
 
                             {dropdownOpen && (
-                                <div className="absolute right-0 mt-3 w-64 bg-background border border-border rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                                     {/* User info */}
-                                    <div className="px-4 py-2.5 border-b border-border mb-1.5 cursor-default bg-surface-solid mx-2 rounded-lg">
+                                    <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 mb-1.5 cursor-default bg-slate-50 dark:bg-slate-900/50 mx-2 rounded-lg">
                                         <p className="text-[10px] text-pink-600 dark:text-pink-400 font-bold uppercase tracking-wider mb-0.5">
                                             {user.role} Account
                                         </p>
@@ -148,7 +148,7 @@ const NavBar = () => {
                                         <span>Account Settings</span>
                                     </Link>
 
-                                    <div className="border-t border-border my-1.5" />
+                                    <div className="border-t border-slate-200 dark:border-slate-800 my-1.5" />
 
                                     <button
                                         onClick={handleLogout}
@@ -176,12 +176,12 @@ const NavBar = () => {
 
             {/* Mobile menu */}
             {isMenuOpen && (
-                <div className="lg:hidden absolute top-16 left-0 w-full bg-surface backdrop-blur-xl border-b border-border p-6 shadow-lg z-40 animate-in slide-in-from-top-4 duration-200">
-                    <div className="flex flex-col gap-4">
+                <div className="lg:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800 px-6 py-8 shadow-2xl shadow-slate-200/50 dark:shadow-none z-40 animate-in slide-in-from-top-2 duration-300">
+                    <div className="flex flex-col gap-2">
                         {menuItems.map((item) => (
                             <Link
                                 key={item.name}
-                                className={`text-lg font-semibold transition-colors ${pathname === item.href ? "text-pink-600 dark:text-pink-400" : "text-slate-900 dark:text-slate-100 hover:text-pink-600 dark:hover:text-pink-400"}`}
+                                className={`flex items-center text-lg font-semibold transition-all duration-200 px-4 py-3.5 rounded-2xl ${pathname === item.href ? "bg-pink-50 dark:bg-pink-500/10 text-pink-600 dark:text-pink-400" : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"}`}
                                 href={item.href}
                                 onClick={closeMenu}
                             >
@@ -191,7 +191,7 @@ const NavBar = () => {
 
                         {user && (
                             <Link
-                                className={`text-lg font-semibold transition-colors ${pathname.includes("dashboard") ? "text-pink-600 dark:text-pink-400" : "text-slate-900 dark:text-slate-100 hover:text-pink-600 dark:hover:text-pink-400"}`}
+                                className={`flex items-center text-lg font-semibold transition-all duration-200 px-4 py-3.5 rounded-2xl ${pathname.includes("dashboard") ? "bg-pink-50 dark:bg-pink-500/10 text-pink-600 dark:text-pink-400" : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"}`}
                                 href={getDashboardLink()}
                                 onClick={closeMenu}
                             >
@@ -199,21 +199,24 @@ const NavBar = () => {
                             </Link>
                         )}
 
-                        <div className="border-t border-border pt-6 mt-2">
+                        <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent my-6 opacity-80"></div>
+                        <div>
                             {!user ? (
-                                <div className="flex flex-col gap-3">
-                                    <Link href="/login" className="w-full bg-surface-solid hover:bg-slate-200 dark:hover:bg-slate-700 text-foreground font-semibold h-12 rounded-xl flex items-center justify-center text-md transition-colors" onClick={closeMenu}>
+                                <div className="flex flex-col gap-3 px-2">
+                                    <Link href="/login" className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold h-14 rounded-2xl flex items-center justify-center text-md transition-all duration-300" onClick={closeMenu}>
                                         Login
                                     </Link>
-                                    <Link href="/register" className="relative overflow-hidden group w-full bg-linear-to-r from-pink-500 to-indigo-500 text-white font-semibold h-12 rounded-xl flex items-center justify-center text-md shadow-lg shadow-pink-500/30 hover:shadow-indigo-500/50 transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02]" onClick={closeMenu}>
+                                    <Link href="/register" className="relative overflow-hidden group w-full bg-linear-to-r from-pink-500 to-indigo-500 text-white font-semibold h-14 rounded-2xl flex items-center justify-center text-md shadow-lg shadow-pink-500/25 hover:shadow-indigo-500/40 transition-all duration-300 hover:-translate-y-0.5" onClick={closeMenu}>
                                         <span className="relative z-10">Sign Up</span>
                                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
                                     </Link>
                                 </div>
                             ) : (
-                                <button onClick={() => { handleLogout(); closeMenu(); }} className="w-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 font-semibold h-12 rounded-xl flex items-center justify-center text-md transition-colors">
-                                    Log Out
-                                </button>
+                                <div className="px-2">
+                                    <button onClick={() => { handleLogout(); closeMenu(); }} className="w-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 font-semibold h-14 rounded-2xl flex items-center justify-center text-md transition-all duration-300">
+                                        Log Out
+                                    </button>
+                                </div>
                             )}
                         </div>
                     </div>
