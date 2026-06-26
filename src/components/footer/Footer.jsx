@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Mail } from 'lucide-react';
 import Logo from '../logo/Logo';
-import { FaTwitter, FaGithub, FaInstagram } from 'react-icons/fa';
+import { FaGithub, FaInstagram } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
     return (
@@ -39,8 +40,8 @@ const Footer = () => {
                     <div>
                         <h3 className="font-bold text-foreground mb-4">Connect</h3>
                         <div className="flex items-center gap-4 mb-4">
-                            <a href="#" className="text-muted hover:text-foreground transition-colors" aria-label="Twitter">
-                                <FaTwitter className="w-5 h-5" />
+                            <a href="#" className="text-muted hover:text-foreground transition-colors" aria-label="X (Twitter)">
+                                <FaXTwitter className="w-5 h-5" />
                             </a>
                             <a href="#" className="text-muted hover:text-foreground transition-colors" aria-label="Instagram">
                                 <FaInstagram className="w-5 h-5" />
