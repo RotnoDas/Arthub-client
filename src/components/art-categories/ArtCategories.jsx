@@ -27,13 +27,13 @@ const ArtCategories = () => {
                         Find exactly what you're looking for by browsing our curated collections of diverse artistic mediums.
                     </p>
                 </div>
-                
+
                 <div className="flex flex-wrap justify-center gap-6">
                     {categories.map((category) => {
                         const Icon = category.icon;
                         return (
                             <Link href={`/artworks?category=${encodeURIComponent(category.name)}`} key={category.name}>
-                                <div 
+                                <div
                                     className={`group flex flex-col items-center justify-center bg-background w-36 h-36 md:w-44 md:h-44 rounded-[2.5rem] border-2 border-border shadow-xl shadow-slate-300/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden`}
                                 >
                                     {/* Glass reflection */}

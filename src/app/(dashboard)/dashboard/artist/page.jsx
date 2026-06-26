@@ -93,28 +93,28 @@ export default function ArtistDashboardOverview() {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm whitespace-nowrap">
-              <thead>
-                <tr className="border-b border-border bg-surface-solid">
-                  {["Title", "Category", "Price", "Status"].map(h => (
-                    <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {artworks.slice(0, 5).map(a => (
-                  <tr key={a._id} className="border-b border-border/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-5 py-3.5 font-semibold text-foreground flex items-center gap-3">
-                      {a.image ? <img src={a.image} alt={a.title} className="w-9 h-9 rounded-lg object-cover shrink-0" /> : <div className="w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center shrink-0"><FaPalette className="text-accent-secondary text-xs" /></div>}
-                      <span className="truncate max-w-[180px]">{a.title}</span>
-                    </td>
-                    <td className="px-5 py-3.5 text-muted">{a.category || "—"}</td>
-                    <td className="px-5 py-3.5 text-green-600 dark:text-green-400 font-bold">${a.price}</td>
-                    <td className="px-5 py-3.5">
-                      <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${a.status === "sold" ? "bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400" : "bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400"}`}>{a.status || "Available"}</span>
-                    </td>
+                <thead>
+                  <tr className="border-b border-border bg-surface-solid">
+                    {["Title", "Category", "Price", "Status"].map(h => (
+                      <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
+                </thead>
+                <tbody>
+                  {artworks.slice(0, 5).map(a => (
+                    <tr key={a._id} className="border-b border-border/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                      <td className="px-5 py-3.5 font-semibold text-foreground flex items-center gap-3">
+                        {a.image ? <img src={a.image} alt={a.title} className="w-9 h-9 rounded-lg object-cover shrink-0" /> : <div className="w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center shrink-0"><FaPalette className="text-accent-secondary text-xs" /></div>}
+                        <span className="truncate max-w-[180px]">{a.title}</span>
+                      </td>
+                      <td className="px-5 py-3.5 text-muted">{a.category || "—"}</td>
+                      <td className="px-5 py-3.5 text-green-600 dark:text-green-400 font-bold">${a.price}</td>
+                      <td className="px-5 py-3.5">
+                        <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${a.status === "sold" ? "bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400" : "bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400"}`}>{a.status || "Available"}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
           )}

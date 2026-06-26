@@ -12,13 +12,13 @@ const Search = () => {
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-background shadow-sm border border-border text-muted text-xs font-bold uppercase tracking-widest mb-2 transition-colors duration-500">
                     Start Exploring
                 </div>
-                
+
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-foreground leading-tight transition-colors duration-500">
                     Discover{' '}
                     <span className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">Original</span>{' '}
                     Masterpieces
                 </h1>
-                
+
                 <p className="text-lg md:text-xl text-muted font-medium max-w-2xl mx-auto transition-colors duration-500">
                     Explore breathtaking digital creations, validate your aesthetic, and connect with visionary independent artists globally.
                 </p>

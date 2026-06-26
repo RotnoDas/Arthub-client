@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import Logo from '@/components/logo/Logo';
 
-const DashboardLayout = ({children}) => {
+const DashboardLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    return (    
+    return (
         <div className="min-h-screen flex flex-col lg:flex-row bg-background transition-colors duration-300">
             {/* Mobile Header */}
             <div className="lg:hidden flex items-center justify-between p-4 bg-background border-b border-border sticky top-0 z-40 transition-colors duration-300">
@@ -22,7 +22,7 @@ const DashboardLayout = ({children}) => {
             </div>
 
             <DashboardSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-            
+
             <div className="flex-1 overflow-x-hidden">
                 <div className="px-4 sm:px-6 lg:px-8 py-8 lg:py-10 max-w-5xl w-full mx-auto">
                     {children}

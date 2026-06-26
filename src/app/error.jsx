@@ -16,18 +16,18 @@ export default function Error({ error, reset }) {
                 <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                     <FaExclamationTriangle size={36} />
                 </div>
-                
+
                 <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-4">
                     Something went wrong!
                 </h2>
-                
+
                 <p className="text-slate-500 font-medium leading-relaxed mb-8">
-                    An unexpected error occurred while rendering this view. Our team has been notified. 
+                    An unexpected error occurred while rendering this view. Our team has been notified.
                     You can try reloading the page to see if that resolves the issue.
                 </p>
 
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                    <Button 
+                    <Button
                         onPress={() => reset()}
                         className="w-full sm:w-auto font-bold bg-gradient-to-r from-red-600 to-rose-500 text-white shadow-xl shadow-red-500/20 hover:shadow-2xl hover:shadow-red-500/40 transition-all h-14 px-8 rounded-2xl"
                     >

@@ -9,7 +9,7 @@ export async function generateMetadata({ searchParams }) {
     const params = await searchParams;
     const search = params?.search || '';
     const category = params?.category || '';
-    
+
     if (search) {
         return { title: `Search: ${search}` };
     }
@@ -26,7 +26,7 @@ const ArtworksPage = async ({ searchParams }) => {
     const minPrice = searchParamsData.minPrice || '';
     const maxPrice = searchParamsData.maxPrice || '';
     const page = parseInt(searchParamsData.page) || 1;
-    
+
     const responseData = await fetchArtworks(searchTerm, category, minPrice, maxPrice, page);
     const artworks = responseData.artworks || (Array.isArray(responseData) ? responseData : []);
     const totalPages = responseData.totalPages || 0;
@@ -35,7 +35,7 @@ const ArtworksPage = async ({ searchParams }) => {
     return (
         <div className="min-h-screen bg-background transition-colors duration-500">
             <Search />
-            
+
             <main className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
                 <div className="flex justify-between items-center mb-12">
                     <h2 className="text-3xl font-extrabold flex items-center gap-2 text-foreground tracking-tight">

@@ -43,7 +43,7 @@ export default function AddArtworkPage() {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
-    
+
     const fd = new FormData();
     fd.append("file", file);
     fd.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
@@ -54,7 +54,7 @@ export default function AddArtworkPage() {
         body: fd,
       });
       const data = await res.json();
-      
+
       if (res.ok && data.secure_url) {
         setFormData(prev => ({ ...prev, image: data.secure_url }));
         toast.success("Image uploaded successfully!");

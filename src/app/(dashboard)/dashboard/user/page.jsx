@@ -22,12 +22,12 @@ export default function UserDashboard() {
         apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/purchase/${user.email}`, { cache: 'no-store' }).then(res => res.json()),
         apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/${user.email}`, { cache: 'no-store' }).then(res => res.json())
       ])
-      .then(([purchasesData, userData]) => {
-        setPurchases(Array.isArray(purchasesData) ? purchasesData : []);
-        setDbUser(userData);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+        .then(([purchasesData, userData]) => {
+          setPurchases(Array.isArray(purchasesData) ? purchasesData : []);
+          setDbUser(userData);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     }
   }, [user]);
 
@@ -172,23 +172,23 @@ export default function UserDashboard() {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm whitespace-nowrap">
-              <thead>
-                <tr className="border-b border-border bg-surface-solid">
-                  {["Artwork", "Artist", "Price", "Date"].map((h) => (
-                    <th key={h} className="text-left px-5 py-4 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {purchases.slice(0, 5).map((p) => (
-                  <tr key={p._id} className="border-b border-border/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-5 py-4 font-semibold text-foreground">{p.artworkTitle}</td>
-                    <td className="px-5 py-4 text-muted text-xs">{p.artistName || p.artistEmail}</td>
-                    <td className="px-5 py-4 text-green-600 dark:text-green-400 font-bold">${p.amount}</td>
-                    <td className="px-5 py-4 text-muted text-xs">{new Date(p.purchaseDate).toLocaleDateString()}</td>
+                <thead>
+                  <tr className="border-b border-border bg-surface-solid">
+                    {["Artwork", "Artist", "Price", "Date"].map((h) => (
+                      <th key={h} className="text-left px-5 py-4 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
+                </thead>
+                <tbody>
+                  {purchases.slice(0, 5).map((p) => (
+                    <tr key={p._id} className="border-b border-border/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                      <td className="px-5 py-4 font-semibold text-foreground">{p.artworkTitle}</td>
+                      <td className="px-5 py-4 text-muted text-xs">{p.artistName || p.artistEmail}</td>
+                      <td className="px-5 py-4 text-green-600 dark:text-green-400 font-bold">${p.amount}</td>
+                      <td className="px-5 py-4 text-muted text-xs">{new Date(p.purchaseDate).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
           )}

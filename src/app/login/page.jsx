@@ -81,7 +81,7 @@ const LoginPage = () => {
 
             {/* Right Panel - Minimalist Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16 lg:p-20 xl:p-32 relative">
-                
+
                 {/* Back to Home Link (Absolute Top Left of Right Panel) */}
                 <Link href="/" className="absolute top-6 left-6 sm:top-8 sm:left-8 flex items-center gap-2 text-sm font-medium text-muted hover:text-slate-900 dark:hover:text-white transition-colors group">
                     <span className="w-8 h-8 rounded-full bg-surface-solid group-hover:bg-slate-200 dark:group-hover:bg-slate-700 flex items-center justify-center transition-colors text-muted">

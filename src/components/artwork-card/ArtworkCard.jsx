@@ -9,18 +9,18 @@ const ArtworkCard = ({ artwork, index = 2 }) => {
         <div className="group flex flex-col bg-slate-100 dark:bg-slate-900 rounded-3xl border-2 border-slate-300 dark:border-slate-800 shadow-xl shadow-slate-300/50 dark:shadow-none overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-fuchsia-500/30 dark:hover:border-fuchsia-500/50">
             <div className="relative overflow-hidden aspect-[4/3]">
                 {artwork.image ? (
-                    <Image 
-                        src={artwork.image} 
-                        alt={artwork.title || "Artwork"} 
-                        className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-all duration-700 ease-out" 
-                        fill 
+                    <Image
+                        src={artwork.image}
+                        alt={artwork.title || "Artwork"}
+                        className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-all duration-700 ease-out"
+                        fill
                         priority={index <= 1}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center bg-background text-slate-400 dark:text-slate-600 text-sm font-medium">No Image Available</div>
                 )}
-                
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-end">
@@ -34,7 +34,7 @@ const ArtworkCard = ({ artwork, index = 2 }) => {
                     </Chip>
                 </div>
             </div>
-            
+
             <div className="p-6 flex flex-col grow">
                 <div className="space-y-2 mb-4">
                     <Link href={`/artworks/${artwork._id}`} className="block">
@@ -46,7 +46,7 @@ const ArtworkCard = ({ artwork, index = 2 }) => {
                         {artwork.description || "An amazing piece of art by an independent creator."}
                     </p>
                 </div>
-                
+
                 <div className="pt-4 mt-auto border-t border-border flex justify-between items-center">
                     <span className="text-2xl font-black bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">
                         ${Number(artwork.price).toFixed(2)}

@@ -32,11 +32,11 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
         <Providers>
           <Toaster position="top-center" toastOptions={{
-              className: '!bg-white dark:!bg-slate-900 !text-slate-900 dark:!text-white !border !border-slate-200 dark:!border-white/10 shadow-xl',
-              style: {
-                  borderRadius: '12px',
-                  padding: '16px',
-              }
+            className: '!bg-white dark:!bg-slate-900 !text-slate-900 dark:!text-white !border !border-slate-200 dark:!border-white/10 shadow-xl',
+            style: {
+              borderRadius: '12px',
+              padding: '16px',
+            }
           }} />
           {children}
         </Providers>

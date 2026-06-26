@@ -13,7 +13,7 @@ export default function Loading() {
                     {/* Right side: Details Skeleton */}
                     <div className="p-10 lg:p-16 flex flex-col justify-center space-y-8">
                         <Skeleton className="w-32 h-8 rounded-full" />
-                        
+
                         <div className="space-y-4">
                             <Skeleton className="w-full h-12 rounded-lg" />
                             <Skeleton className="w-3/4 h-12 rounded-lg" />

@@ -10,12 +10,12 @@ export async function fetchArtworks(search = '', category = '', minPrice = '', m
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks?${queryParams.toString()}`, {
             cache: 'no-store'
         });
-        
+
         if (!res.ok) {
             console.error("Failed to fetch artworks:", res.statusText);
             return [];
         }
-        
+
         return res.json();
     } catch (error) {
         console.error("Error fetching artworks:", error);

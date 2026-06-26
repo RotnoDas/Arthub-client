@@ -42,32 +42,32 @@ export default function PurchaseHistoryPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm whitespace-nowrap">
-            <thead>
-              <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
-                {["Artwork Name", "Artist", "Price", "Purchase Date"].map((h) => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {purchases.map((p) => (
-                <tr key={p._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-pink-50 dark:bg-pink-500/10 flex items-center justify-center shrink-0">
-                        <FaPalette className="text-pink-600 dark:text-pink-400 text-sm" />
-                      </div>
-                      <span className="font-semibold text-foreground group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">{p.artworkTitle}</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4 text-muted text-sm">{p.artistName || p.artistEmail}</td>
-                  <td className="px-5 py-4">
-                    <span className="font-bold text-green-600 dark:text-emerald-400">${p.amount}</span>
-                  </td>
-                  <td className="px-5 py-4 text-muted">{new Date(p.purchaseDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+              <thead>
+                <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
+                  {["Artwork Name", "Artist", "Price", "Purchase Date"].map((h) => (
+                    <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {purchases.map((p) => (
+                  <tr key={p._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-pink-50 dark:bg-pink-500/10 flex items-center justify-center shrink-0">
+                          <FaPalette className="text-pink-600 dark:text-pink-400 text-sm" />
+                        </div>
+                        <span className="font-semibold text-foreground group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">{p.artworkTitle}</span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 text-muted text-sm">{p.artistName || p.artistEmail}</td>
+                    <td className="px-5 py-4">
+                      <span className="font-bold text-green-600 dark:text-emerald-400">${p.amount}</span>
+                    </td>
+                    <td className="px-5 py-4 text-muted">{new Date(p.purchaseDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         )}

@@ -3,7 +3,7 @@ import { apiFetch } from "@/lib/api";
 
 import React, { useEffect, useState } from 'react';
 import { FaUsers, FaPaintBrush, FaCheckCircle, FaWallet, FaChartLine } from 'react-icons/fa';
-import { 
+import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
     PieChart, Pie, Legend
 } from 'recharts';
@@ -84,14 +84,14 @@ export default function AdminDashboardPage() {
                                 <AreaChart data={data.salesData} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
                                     <defs>
                                         <linearGradient id="adminColorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stopColor="#c026d3" stopOpacity={0.45}/>
-                                            <stop offset="100%" stopColor="#c026d3" stopOpacity={0.03}/>
+                                            <stop offset="0%" stopColor="#c026d3" stopOpacity={0.45} />
+                                            <stop offset="100%" stopColor="#c026d3" stopOpacity={0.03} />
                                         </linearGradient>
                                     </defs>
                                     <XAxis dataKey="date" stroke="#64748b" fontSize={12} fontWeight={600} tickLine={false} axisLine={false} />
                                     <YAxis stroke="#64748b" fontSize={12} fontWeight={600} tickLine={false} axisLine={false} tickFormatter={(val) => `$${val}`} />
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                                    <RechartsTooltip 
+                                    <RechartsTooltip
                                         contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', backgroundColor: '#ffffff', color: '#0f172a', fontSize: '13px', fontWeight: '600', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)' }}
                                         formatter={(value) => [`$${value}`, 'Revenue']}
                                         labelStyle={{ color: '#64748b', fontWeight: '700', marginBottom: '4px' }}
@@ -134,18 +134,18 @@ export default function AdminDashboardPage() {
                                         }
                                         labelLine={data.categoryData.length > 1 ? { stroke: '#94a3b8', strokeWidth: 1 } : false}
                                     />
-                                    <RechartsTooltip 
+                                    <RechartsTooltip
                                         contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', backgroundColor: '#ffffff', color: '#0f172a', fontSize: '13px', fontWeight: '600', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.15)' }}
                                         formatter={(value, name) => [`${value} artworks`, name]}
                                     />
-                                    <Legend 
+                                    <Legend
                                         iconType="circle"
                                         iconSize={10}
                                         formatter={(value, entry) => {
                                             const item = data.categoryData.find(d => d.name === value);
                                             return `${value} — ${item ? item.value : 0} artworks`;
                                         }}
-                                        wrapperStyle={{ fontSize: '12px', fontWeight: '700', color: '#334155', paddingTop: '12px' }} 
+                                        wrapperStyle={{ fontSize: '12px', fontWeight: '700', color: '#334155', paddingTop: '12px' }}
                                     />
                                 </PieChart>
                             </ResponsiveContainer>

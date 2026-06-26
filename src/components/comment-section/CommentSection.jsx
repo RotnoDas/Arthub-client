@@ -16,7 +16,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
     // Edit State
     const [editingId, setEditingId] = useState(null);
     const [editContent, setEditContent] = useState('');
-    
+
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -158,8 +158,8 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                                 className="w-full bg-background text-foreground border-2 border-indigo-100 dark:border-indigo-900/50 shadow-sm hover:border-indigo-300 dark:hover:border-indigo-500/50 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 rounded-2xl transition-all p-3 outline-none resize-y font-medium text-sm placeholder:text-slate-400 dark:placeholder:text-slate-600"
                             />
                             <div className="flex justify-end">
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     isLoading={isSubmitting}
                                     isDisabled={!newComment.trim()}
                                     className="bg-indigo-600 text-white font-bold rounded-xl shadow-md shadow-indigo-200 hover:shadow-indigo-300 hover:bg-indigo-700 transition-all px-6 py-2 h-10"
@@ -183,7 +183,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                 ) : (
                     comments.map((c) => {
                         const isOwner = session?.user?.email && (c.userEmail === session.user.email || c.userId === session.user.email || c.userId === session.user.id);
-                        
+
                         return (
                             <div key={c._id} className="flex gap-4 p-5 bg-background rounded-3xl border border-border shadow-sm hover:shadow-md transition-all group">
                                 <Avatar src={c.avatar} className="flex-shrink-0" />
@@ -206,7 +206,7 @@ const CommentSection = ({ artworkId, session, isPurchased }) => {
                                             </div>
                                         )}
                                     </div>
-                                    
+
                                     {editingId === c._id ? (
                                         <div className="mt-2 space-y-2">
                                             <textarea

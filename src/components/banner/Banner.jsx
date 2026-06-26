@@ -155,7 +155,7 @@ const Banner = () => {
                                             priority={index === 0}
                                             className="rounded-[2rem] object-cover transform transition duration-1000 group-hover:scale-110"
                                         />
-                                        
+
                                         {/* Minimalist Floating Overlay */}
                                         <div className="absolute bottom-6 left-6 right-6 bg-surface backdrop-blur-xl p-5 rounded-2xl border border-white/40 dark:border-slate-800 shadow-2xl">
                                             <div className="flex items-center gap-4">

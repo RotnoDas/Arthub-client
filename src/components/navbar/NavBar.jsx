@@ -115,48 +115,66 @@ const NavBar = () => {
                                     className="w-9 h-9 rounded-full object-cover ring-2 ring-offset-2 ring-offset-white dark:ring-offset-slate-900 ring-pink-500 dark:ring-pink-400 shadow-md shadow-pink-500/20"
                                     src={user.image || `https://ui-avatars.com/api/?name=${user.name}&background=random`}
                                     alt="avatar"
+                                    referrerPolicy="no-referrer"
                                 />
                             </button>
 
                             {dropdownOpen && (
-                                <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="absolute right-0 mt-4 w-72 bg-white/95 backdrop-blur-xl dark:bg-slate-950/95 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] dark:shadow-none p-2 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                                     {/* User info */}
-                                    <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 mb-1.5 cursor-default bg-slate-50 dark:bg-slate-900/50 mx-2 rounded-lg">
-                                        <p className="text-[10px] text-pink-600 dark:text-pink-400 font-bold uppercase tracking-wider mb-0.5">
+                                    <div className="px-4 py-4 mb-2 cursor-default bg-gradient-to-br from-slate-50 to-slate-100/80 dark:from-slate-900/50 dark:to-slate-900/20 rounded-xl border border-slate-100 dark:border-slate-800/50 flex flex-col items-center text-center">
+                                        <Image
+                                            unoptimized
+                                            width={48}
+                                            height={48}
+                                            className="w-12 h-12 rounded-full object-cover ring-2 ring-white dark:ring-slate-900 shadow-md mb-2"
+                                            src={user.image || `https://ui-avatars.com/api/?name=${user.name}&background=random`}
+                                            alt="avatar"
+                                            referrerPolicy="no-referrer"
+                                        />
+                                        <p className="font-extrabold text-slate-800 dark:text-white text-base truncate w-full">{user.name}</p>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate w-full font-medium mt-0.5">{user.email}</p>
+                                        <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-500/10 text-pink-600 dark:text-pink-400 text-[10px] font-bold uppercase tracking-widest shadow-sm">
                                             {user.role} Account
-                                        </p>
-                                        <p className="font-bold text-foreground text-sm truncate">{user.name}</p>
-                                        <p className="text-[11px] text-muted truncate mt-0.5">{user.email}</p>
+                                        </div>
                                     </div>
 
                                     {/* Actions */}
-                                    <Link
-                                        href={getDashboardLink()}
-                                        onClick={() => setDropdownOpen(false)}
-                                        className="w-full flex items-center gap-3 px-5 py-2.5 text-left text-xs font-semibold text-muted hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer"
-                                    >
-                                        <FaTachometerAlt className="text-slate-400 dark:text-slate-500 text-sm shrink-0" />
-                                        <span>My Dashboard</span>
-                                    </Link>
+                                    <div className="space-y-1">
+                                        <Link
+                                            href={getDashboardLink()}
+                                            onClick={() => setDropdownOpen(false)}
+                                            className="group w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-500/10 rounded-xl transition-all cursor-pointer"
+                                        >
+                                            <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-pink-100 dark:group-hover:bg-pink-500/20 flex items-center justify-center transition-colors">
+                                                <FaTachometerAlt className="text-slate-400 dark:text-slate-500 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors" />
+                                            </div>
+                                            <span>My Dashboard</span>
+                                        </Link>
 
-                                    <Link
-                                        href="/settings"
-                                        onClick={() => setDropdownOpen(false)}
-                                        className="w-full flex items-center gap-3 px-5 py-2.5 text-left text-xs font-semibold text-muted hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer"
-                                    >
-                                        <FaCog className="text-slate-400 dark:text-slate-500 text-sm shrink-0" />
-                                        <span>Account Settings</span>
-                                    </Link>
+                                        <Link
+                                            href="/settings"
+                                            onClick={() => setDropdownOpen(false)}
+                                            className="group w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-500/10 rounded-xl transition-all cursor-pointer"
+                                        >
+                                            <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-pink-100 dark:group-hover:bg-pink-500/20 flex items-center justify-center transition-colors">
+                                                <FaCog className="text-slate-400 dark:text-slate-500 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors" />
+                                            </div>
+                                            <span>Account Settings</span>
+                                        </Link>
 
-                                    <div className="border-t border-slate-200 dark:border-slate-800 my-1.5" />
+                                        <div className="h-px w-full bg-slate-100 dark:bg-slate-800/80 my-2" />
 
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full flex items-center gap-3 px-5 py-2.5 text-left text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-500/10 transition cursor-pointer"
-                                    >
-                                        <FaSignOutAlt className="text-sm shrink-0 text-red-500" />
-                                        <span>Log Out</span>
-                                    </button>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="group w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all cursor-pointer"
+                                        >
+                                            <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 group-hover:bg-red-100 dark:group-hover:bg-red-500/20 flex items-center justify-center transition-colors">
+                                                <FaSignOutAlt className="text-red-500 dark:text-red-400" />
+                                            </div>
+                                            <span>Log Out</span>
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>

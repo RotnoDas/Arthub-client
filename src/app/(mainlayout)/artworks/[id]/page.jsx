@@ -4,7 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import CommentSection from "@/components/comment-section/CommentSection";
+
+import CommentSection from "@/components/comment-section/CommentSection";
 import PurchaseButton from "@/components/purchase-button/PurchaseButton";
 import ArtistControls from "@/components/artist-controls/ArtistControls";
 
@@ -85,7 +86,7 @@ export default async function ArtworkDetails({ params }) {
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fuchsia-50 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-400 text-xs font-bold uppercase tracking-widest w-fit mb-6 shadow-sm border border-fuchsia-100 dark:border-fuchsia-500/20">
                                 <FaTag /> {artwork.category || "Original Art"}
                             </div>
-                            
+
                             <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight mb-4">
                                 {artwork.title}
                             </h1>

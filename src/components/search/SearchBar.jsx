@@ -6,14 +6,14 @@ import { Search as SearchIcon } from 'lucide-react';
 import { FaTimes } from 'react-icons/fa';
 
 const CATEGORIES = [
-    "All Categories", "Painting", "Digital Art", "Photography", 
+    "All Categories", "Painting", "Digital Art", "Photography",
     "Sculpture", "Drawing", "Mixed Media"
 ];
 
 const SearchBar = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    
+
     const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
     const [category, setCategory] = useState(searchParams.get('category') || 'All Categories');
     const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '');
@@ -30,19 +30,19 @@ const SearchBar = () => {
 
         const timer = setTimeout(() => {
             const params = new URLSearchParams();
-            
+
             if (searchQuery.trim()) params.set('search', searchQuery.trim());
-            
+
             if (category && category !== 'All Categories') params.set('category', category);
 
             if (minPrice.trim()) params.set('minPrice', minPrice.trim());
 
             if (maxPrice.trim()) params.set('maxPrice', maxPrice.trim());
-            
+
             params.set('page', '1');
-            
+
             router.push(`/artworks?${params.toString()}`);
-        }, 500); // 500ms debounce
+        }, 500);
 
         return () => clearTimeout(timer);
     }, [searchQuery, category, minPrice, maxPrice, router]);
@@ -77,10 +77,10 @@ const SearchBar = () => {
                         className="w-full h-full min-h-[3rem] sm:min-h-[4rem] bg-transparent border-0 outline-none focus:ring-0 focus:outline-none text-foreground placeholder:text-slate-400 dark:placeholder:text-slate-500 text-lg font-medium pr-4"
                     />
                 </div>
-                
+
                 {/* Category Select */}
                 <div className="sm:w-64 shrink-0 relative">
-                    <select 
+                    <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         className="w-full h-full min-h-[3rem] sm:min-h-[4rem] px-5 py-2 bg-background border-2 border-border rounded-2xl text-foreground font-bold focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-300 dark:focus:border-indigo-500 outline-none cursor-pointer appearance-none transition-all"
@@ -98,18 +98,18 @@ const SearchBar = () => {
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                     <span className="font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-xs">Price Range</span>
                     <div className="flex items-center gap-2 flex-1 sm:flex-none">
-                        <input 
-                            type="number" 
-                            placeholder="Min $" 
+                        <input
+                            type="number"
+                            placeholder="Min $"
                             value={minPrice}
                             onChange={(e) => setMinPrice(e.target.value)}
                             className="w-24 px-4 py-2.5 bg-background border-2 border-border rounded-xl font-bold text-foreground focus:border-fuchsia-300 dark:focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/20 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
                             min="0"
                         />
                         <span className="text-slate-300 dark:text-slate-600 font-bold">-</span>
-                        <input 
-                            type="number" 
-                            placeholder="Max $" 
+                        <input
+                            type="number"
+                            placeholder="Max $"
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
                             className="w-24 px-4 py-2.5 bg-background border-2 border-border rounded-xl font-bold text-foreground focus:border-fuchsia-300 dark:focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/20 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
@@ -120,7 +120,7 @@ const SearchBar = () => {
 
                 {/* Clear Filters Button */}
                 {(searchQuery || category !== 'All Categories' || minPrice || maxPrice) && (
-                    <button 
+                    <button
                         onClick={handleClearFilters}
                         className="w-full sm:w-auto sm:ml-auto px-6 py-2.5 font-bold tracking-wide rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 transition-all flex items-center justify-center gap-2"
                     >

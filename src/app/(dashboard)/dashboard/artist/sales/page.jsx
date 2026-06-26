@@ -53,25 +53,25 @@ export default function SalesHistoryPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm whitespace-nowrap">
-            <thead>
-              <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
-                {["Artwork Title", "Buyer", "Purchase Date", "Amount"].map(h => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sales.map(sale => (
-                <tr key={sale._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
-                  <td className="px-5 py-4 font-semibold text-foreground group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{sale.artworkTitle}</td>
-                  <td className="px-5 py-4 text-muted">{sale.buyerName || sale.buyerEmail}</td>
-                  <td className="px-5 py-4 text-slate-500 dark:text-slate-500">{new Date(sale.purchaseDate || sale.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
-                  <td className="px-5 py-4">
-                    <span className="font-bold text-green-600 dark:text-emerald-400 text-base">+${sale.amount}</span>
-                  </td>
+              <thead>
+                <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
+                  {["Artwork Title", "Buyer", "Purchase Date", "Amount"].map(h => (
+                    <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {sales.map(sale => (
+                  <tr key={sale._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+                    <td className="px-5 py-4 font-semibold text-foreground group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{sale.artworkTitle}</td>
+                    <td className="px-5 py-4 text-muted">{sale.buyerName || sale.buyerEmail}</td>
+                    <td className="px-5 py-4 text-slate-500 dark:text-slate-500">{new Date(sale.purchaseDate || sale.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+                    <td className="px-5 py-4">
+                      <span className="font-bold text-green-600 dark:text-emerald-400 text-base">+${sale.amount}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         )}

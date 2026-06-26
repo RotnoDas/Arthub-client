@@ -38,7 +38,7 @@ export default function ArtistProfilePage() {
     const file = e.target.files[0];
     if (!file) return;
     setUploadingImage(true);
-    
+
     const fd = new FormData();
     fd.append("file", file);
     fd.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
@@ -49,7 +49,7 @@ export default function ArtistProfilePage() {
         body: fd,
       });
       const data = await res.json();
-      
+
       if (res.ok && data.secure_url) {
         setImage(data.secure_url);
         toast.success("Image uploaded! Don't forget to save profile.");
@@ -69,13 +69,13 @@ export default function ArtistProfilePage() {
     try {
       // Update session via BetterAuth
       const { data, error } = await authClient.updateUser({ name, image });
-      
+
       if (error) {
         toast.error(error.message || "Update failed.");
         setSavingProfile(false);
         return;
       }
-      
+
       // Update custom backend using email (safest identifier)
       await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/update-profile/${user.email}`, {
         method: "PATCH",
@@ -84,12 +84,12 @@ export default function ArtistProfilePage() {
       });
 
       toast.success("Profile updated!");
-      
+
       // Force a reload so the entire website (navbar, layouts) gets the new name
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-      
+
     } catch {
       toast.error("Could not update profile.");
     } finally {
@@ -101,9 +101,9 @@ export default function ArtistProfilePage() {
     e.preventDefault();
     if (newPassword !== confirmPassword) return toast.error("Passwords don't match.");
     if (newPassword.length < 8) return toast.error("Password must be at least 8 characters.");
-    
+
     setSavingPassword(true);
-    
+
     try {
       const { data, error } = await authClient.changePassword({
         currentPassword,

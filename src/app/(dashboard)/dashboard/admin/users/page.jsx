@@ -48,15 +48,15 @@ export default function ManageUsersPage() {
     setIsDeleting(true);
     try {
       const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/users/${itemToDelete.id}`, { method: "DELETE" });
-      if (res.ok) { 
-        toast.success("User deleted successfully."); 
-        fetchUsers(); 
+      if (res.ok) {
+        toast.success("User deleted successfully.");
+        fetchUsers();
         setDeleteModalOpen(false);
-      } else { 
-        toast.error("Failed to delete user."); 
+      } else {
+        toast.error("Failed to delete user.");
       }
-    } catch { 
-      toast.error("Error deleting user."); 
+    } catch {
+      toast.error("Error deleting user.");
     } finally {
       setIsDeleting(false);
       setItemToDelete(null);
@@ -102,69 +102,69 @@ export default function ManageUsersPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm whitespace-nowrap">
-            <thead>
-              <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
-                {["User", "Email", "Role", "Change Role", "Delete"].map(h => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(u => (
-                <tr key={u._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={u.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name || "U")}&background=e2e8f0&color=475569&bold=true`}
-                        alt={u.name}
-                        className="w-9 h-9 rounded-full object-cover border border-border"
-                      />
-                      <span className="font-semibold text-foreground">{u.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4 text-muted text-xs">{u.email}</td>
-                  <td className="px-5 py-4">
-                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${roleBadge(u.role)}`}>
-                      {u.role || "user"}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4">
-                    {u._id !== user?.id ? (
-                      <select
-                        defaultValue=""
-                        onChange={(e) => {
-                          if (e.target.value) {
-                            handleRoleChange(u._id, e.target.value);
-                            e.target.value = '';
-                          }
-                        }}
-                        className="px-3 py-1.5 rounded-lg bg-surface-solid text-foreground text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-border focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-500/50"
-                      >
-                        <option value="" disabled className="bg-background">Change Role</option>
-                        <option value="user" className="bg-background">👤 Make User</option>
-                        <option value="artist" className="bg-background">🎨 Make Artist</option>
-                        <option value="admin" className="bg-background">🛡️ Make Admin</option>
-                      </select>
-                    ) : (
-                      <span className="text-slate-400 dark:text-slate-500 text-xs font-medium">You</span>
-                    )}
-                  </td>
-                  <td className="px-5 py-4">
-                    {u._id !== user?.id ? (
-                      <button
-                        onClick={() => handleDeleteClick(u._id, u.name)}
-                        className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 flex items-center justify-center transition-colors cursor-pointer"
-                        title="Delete user"
-                      >
-                        <FaTrash size={12} />
-                      </button>
-                    ) : (
-                      <span className="text-slate-400 dark:text-slate-600 text-xs">—</span>
-                    )}
-                  </td>
+              <thead>
+                <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
+                  {["User", "Email", "Role", "Change Role", "Delete"].map(h => (
+                    <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {filtered.map(u => (
+                  <tr key={u._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={u.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name || "U")}&background=e2e8f0&color=475569&bold=true`}
+                          alt={u.name}
+                          className="w-9 h-9 rounded-full object-cover border border-border"
+                        />
+                        <span className="font-semibold text-foreground">{u.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 text-muted text-xs">{u.email}</td>
+                    <td className="px-5 py-4">
+                      <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${roleBadge(u.role)}`}>
+                        {u.role || "user"}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4">
+                      {u._id !== user?.id ? (
+                        <select
+                          defaultValue=""
+                          onChange={(e) => {
+                            if (e.target.value) {
+                              handleRoleChange(u._id, e.target.value);
+                              e.target.value = '';
+                            }
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-surface-solid text-foreground text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-border focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-500/50"
+                        >
+                          <option value="" disabled className="bg-background">Change Role</option>
+                          <option value="user" className="bg-background">👤 Make User</option>
+                          <option value="artist" className="bg-background">🎨 Make Artist</option>
+                          <option value="admin" className="bg-background">🛡️ Make Admin</option>
+                        </select>
+                      ) : (
+                        <span className="text-slate-400 dark:text-slate-500 text-xs font-medium">You</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4">
+                      {u._id !== user?.id ? (
+                        <button
+                          onClick={() => handleDeleteClick(u._id, u.name)}
+                          className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 flex items-center justify-center transition-colors cursor-pointer"
+                          title="Delete user"
+                        >
+                          <FaTrash size={12} />
+                        </button>
+                      ) : (
+                        <span className="text-slate-400 dark:text-slate-600 text-xs">—</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         )}
@@ -173,20 +173,20 @@ export default function ManageUsersPage() {
 
       {deleteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-            <div className="bg-background rounded-3xl shadow-2xl max-w-sm w-full p-6 animate-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
-                <h3 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">Delete User</h3>
-                <p className="text-muted font-medium mb-8">
-                    Are you sure you want to permanently delete "{itemToDelete?.name}"? This action cannot be undone.
-                </p>
-                <div className="flex justify-end gap-3">
-                    <button onClick={() => setDeleteModalOpen(false)} className="px-4 py-2 rounded-xl font-bold text-muted hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                        Cancel
-                    </button>
-                    <button onClick={confirmDelete} disabled={isDeleting} className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold shadow-md shadow-red-500/20 transition-colors disabled:opacity-50">
-                        {isDeleting ? "Deleting..." : "Yes, Delete"}
-                    </button>
-                </div>
+          <div className="bg-background rounded-3xl shadow-2xl max-w-sm w-full p-6 animate-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
+            <h3 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">Delete User</h3>
+            <p className="text-muted font-medium mb-8">
+              Are you sure you want to permanently delete "{itemToDelete?.name}"? This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setDeleteModalOpen(false)} className="px-4 py-2 rounded-xl font-bold text-muted hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                Cancel
+              </button>
+              <button onClick={confirmDelete} disabled={isDeleting} className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold shadow-md shadow-red-500/20 transition-colors disabled:opacity-50">
+                {isDeleting ? "Deleting..." : "Yes, Delete"}
+              </button>
             </div>
+          </div>
         </div>
       )}
     </div>

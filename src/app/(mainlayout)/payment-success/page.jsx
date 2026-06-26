@@ -85,11 +85,11 @@ export default async function PaymentSuccessPage({ searchParams }) {
                         <FaCheckCircle size={40} className="animate-bounce" />
                     </div>
                 </div>
-                
+
                 <h1 className="text-3xl font-extrabold text-foreground mb-2">
                     {heading}
                 </h1>
-                
+
                 <p className="text-muted mb-8">
                     {message}
                 </p>

@@ -22,7 +22,7 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
 
     if (isArtist) {
         return (
-            <Button disabled className="w-full sm:w-auto bg-surface-solid/50 text-slate-400 dark:text-slate-500 font-bold px-8 h-14 rounded-2xl cursor-not-allowed border border-border">
+            <Button disabled className="w-full sm:w-auto bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 font-bold px-8 h-14 rounded-2xl cursor-not-allowed border border-slate-200 dark:border-slate-700 shadow-inner">
                 You own this artwork
             </Button>
         );
@@ -39,7 +39,7 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
     const handlePurchase = async () => {
         setIsLoading(true);
         const loadingToast = toast.loading('Redirecting to secure Stripe checkout...');
-        
+
         try {
             const purchaseData = {
                 amount: artwork.price,
@@ -72,12 +72,12 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
     };
 
     return (
-        <Button 
+        <Button
             onPress={handlePurchase}
             isLoading={isLoading}
             className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 to-indigo-600 dark:from-fuchsia-500 dark:to-indigo-500 text-white font-bold px-8 h-14 rounded-2xl shadow-xl shadow-fuchsia-500/20 dark:shadow-fuchsia-500/10 hover:shadow-2xl hover:shadow-fuchsia-500/30 hover:-translate-y-1 transition-all"
         >
-            {!isLoading && <FaShoppingCart className="mr-2" />} 
+            {!isLoading && <FaShoppingCart className="mr-2" />}
             Purchase via Stripe
         </Button>
     );

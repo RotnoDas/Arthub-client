@@ -66,32 +66,32 @@ export default function AdminTransactionsPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm whitespace-nowrap">
-            <thead>
-              <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
-                {["Transaction ID", "Type", "User / Artist", "Amount", "Date"].map(h => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(t => (
-                <tr key={t._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                  <td className="px-5 py-4 font-mono text-xs font-semibold text-muted">{t.transactionId || t._id?.slice(-8).toUpperCase()}</td>
-                  <td className="px-5 py-4">
-                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${typeBadge(t)}`}>
-                      {t.paymentFor || t.paymentType || "Purchase"}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4 text-foreground font-medium">{t.userEmail}</td>
-                  <td className="px-5 py-4">
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">${Number(t.amount).toFixed(2)}</span>
-                  </td>
-                  <td className="px-5 py-4 text-slate-500 dark:text-slate-500 font-medium">
-                    {t.paidAt ? new Date(t.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}
-                  </td>
+              <thead>
+                <tr className="border-b border-border bg-slate-50 dark:bg-slate-900/50">
+                  {["Transaction ID", "Type", "User / Artist", "Amount", "Date"].map(h => (
+                    <th key={h} className="text-left px-5 py-3.5 text-xs font-bold text-muted uppercase tracking-wider">{h}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {filtered.map(t => (
+                  <tr key={t._id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-5 py-4 font-mono text-xs font-semibold text-muted">{t.transactionId || t._id?.slice(-8).toUpperCase()}</td>
+                    <td className="px-5 py-4">
+                      <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${typeBadge(t)}`}>
+                        {t.paymentFor || t.paymentType || "Purchase"}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-foreground font-medium">{t.userEmail}</td>
+                    <td className="px-5 py-4">
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">${Number(t.amount).toFixed(2)}</span>
+                    </td>
+                    <td className="px-5 py-4 text-slate-500 dark:text-slate-500 font-medium">
+                      {t.paidAt ? new Date(t.paidAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         )}

@@ -19,7 +19,7 @@ const ArtistControls = ({ artworkId }) => {
             const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/artworks/${artworkId}`, {
                 method: 'DELETE',
             });
-            
+
             if (res.ok) {
                 toast.success('Artwork deleted successfully.');
                 router.push('/dashboard/artist/manage-artworks');
@@ -44,8 +44,8 @@ const ArtistControls = ({ artworkId }) => {
                         <FaEdit /> Edit Details
                     </Button>
                 </Link>
-                <Button 
-                    color="danger" 
+                <Button
+                    color="danger"
                     variant="flat"
                     className="flex-1 font-bold"
                     onPress={() => setIsOpen(true)}
