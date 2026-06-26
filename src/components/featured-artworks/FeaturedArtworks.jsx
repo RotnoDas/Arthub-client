@@ -24,7 +24,7 @@ export default async function FeaturedArtworks() {
     }
 
     return (
-        <section className="relative py-32 bg-slate-50/50 dark:bg-transparent overflow-hidden border-t border-slate-100 dark:border-slate-800/50">
+        <section className="relative py-32 bg-slate-50/50 dark:bg-transparent overflow-hidden border-t border-border/50">
             {/* Elegant Background Decoration for Light Theme */}
             <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] bg-fuchsia-100/50 dark:bg-fuchsia-900/10 rounded-full blur-[120px] -z-10" />
             <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-indigo-100/50 dark:bg-indigo-900/10 rounded-full blur-[120px] -z-10" />
@@ -36,14 +36,14 @@ export default async function FeaturedArtworks() {
                             <span className="w-2 h-2 rounded-full bg-fuchsia-600 dark:bg-fuchsia-500 animate-pulse"></span>
                             Trending Now
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-900 dark:text-white">
+                        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground">
                             Featured <span className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">Artworks</span>
                         </h2>
-                        <p className="text-slate-600 dark:text-slate-400 font-medium max-w-2xl text-lg">
+                        <p className="text-muted font-medium max-w-2xl text-lg">
                             Explore the newest and most breathtaking creations uploaded by our global community of independent artists.
                         </p>
                     </div>
-                    <Link href="/artworks" className="group flex items-center gap-2 text-fuchsia-600 dark:text-fuchsia-400 hover:text-white dark:hover:text-white font-bold px-6 py-3 rounded-xl border-2 border-fuchsia-100 dark:border-fuchsia-500/30 hover:border-fuchsia-600 dark:hover:border-fuchsia-500 hover:bg-fuchsia-600 dark:hover:bg-fuchsia-600 transition-all shadow-sm">
+                    <Link href="/artworks" className="group flex items-center gap-2 text-accent hover:text-white dark:hover:text-white font-bold px-6 py-3 rounded-xl border-2 border-fuchsia-100 dark:border-fuchsia-500/30 hover:border-fuchsia-600 dark:hover:border-fuchsia-500 hover:bg-fuchsia-600 dark:hover:bg-fuchsia-600 transition-all shadow-sm">
                         View Full Gallery <FaChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>

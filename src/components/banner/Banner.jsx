@@ -91,7 +91,7 @@ const Banner = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
-                                        className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 dark:text-white leading-[1.15]"
+                                        className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-foreground leading-[1.15]"
                                     >
                                         {slide.title}
                                         <span className="bg-linear-to-r from-fuchsia-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent block mt-2">
@@ -105,7 +105,7 @@ const Banner = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8, delay: 0.2 }}
-                                        className="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
+                                        className="text-muted text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
                                     >
                                         {slide.desc}
                                     </motion.p>
@@ -128,7 +128,7 @@ const Banner = () => {
                                         <Link href={slide.secondaryLink}>
                                             <Button
                                                 variant="bordered"
-                                                className="border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold h-14 px-8 text-md w-full sm:w-auto border-2 group transition-all"
+                                                className="border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 text-foreground font-semibold h-14 px-8 text-md w-full sm:w-auto border-2 group transition-all"
                                                 radius="full"
                                             >
                                                 {slide.secondaryBtn}
@@ -146,7 +146,7 @@ const Banner = () => {
                                     className="relative group hidden lg:block"
                                 >
                                     <div className="absolute -inset-2 bg-linear-to-r from-fuchsia-200 to-indigo-300 rounded-[3rem] blur-xl opacity-50 dark:opacity-20 group-hover:opacity-80 transition duration-1000"></div>
-                                    <div className="relative bg-white dark:bg-slate-900 p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-4/5 border border-slate-100 dark:border-slate-800">
+                                    <div className="relative bg-background p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-4/5 border border-border">
                                         <Image
                                             src={slide.img}
                                             alt={slide.tag}
@@ -157,7 +157,7 @@ const Banner = () => {
                                         />
                                         
                                         {/* Minimalist Floating Overlay */}
-                                        <div className="absolute bottom-6 left-6 right-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-2xl border border-white/40 dark:border-slate-800 shadow-2xl">
+                                        <div className="absolute bottom-6 left-6 right-6 bg-surface backdrop-blur-xl p-5 rounded-2xl border border-white/40 dark:border-slate-800 shadow-2xl">
                                             <div className="flex items-center gap-4">
                                                 <div className="flex -space-x-4">
                                                     {[1, 2, 3].map((i) => (
@@ -172,8 +172,8 @@ const Banner = () => {
                                                     ))}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-sm text-slate-900 dark:text-white tracking-wide">Join 50k+ Collectors</p>
-                                                    <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold mt-0.5">Discover new art daily</p>
+                                                    <p className="font-bold text-sm text-foreground tracking-wide">Join 50k+ Collectors</p>
+                                                    <p className="text-xs text-accent-secondary font-semibold mt-0.5">Discover new art daily</p>
                                                 </div>
                                             </div>
                                         </div>

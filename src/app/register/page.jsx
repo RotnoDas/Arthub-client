@@ -54,7 +54,7 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+        <div className="flex min-h-screen bg-background">
             {/* Left Panel - High-End Abstract Art Showcase */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center bg-zinc-950">
                 <div className="absolute inset-0 z-0">
@@ -85,8 +85,8 @@ const RegisterPage = () => {
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16 lg:p-20 xl:p-32 relative">
                 
                 {/* Back to Home Link (Absolute Top Left of Right Panel) */}
-                <Link href="/" className="absolute top-6 left-6 sm:top-8 sm:left-8 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors group">
-                    <span className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 flex items-center justify-center transition-colors text-slate-600 dark:text-slate-300">
+                <Link href="/" className="absolute top-6 left-6 sm:top-8 sm:left-8 flex items-center gap-2 text-sm font-medium text-muted hover:text-slate-900 dark:hover:text-white transition-colors group">
+                    <span className="w-8 h-8 rounded-full bg-surface-solid group-hover:bg-slate-200 dark:group-hover:bg-slate-700 flex items-center justify-center transition-colors text-muted">
                         <FaArrowLeft size={12} />
                     </span>
                     Back to Home
@@ -98,14 +98,14 @@ const RegisterPage = () => {
                     </div>
 
                     <div className="mb-8 sm:mb-10 xl:mb-12">
-                        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">Create an account</h1>
-                        <p className="text-slate-500 dark:text-slate-400 mt-2 sm:mt-3 text-sm sm:text-base">Enter your details below to join ArtHub.</p>
+                        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">Create an account</h1>
+                        <p className="text-muted mt-2 sm:mt-3 text-sm sm:text-base">Enter your details below to join ArtHub.</p>
                     </div>
 
                     <Form validationBehavior="native" onSubmit={onSubmit} className="space-y-6 w-full">
                         <TextField isRequired name="name" className="w-full">
-                            <Label className="text-sm font-medium text-slate-900 dark:text-white mb-1 block">Full Name</Label>
-                            <Input placeholder="e.g. John Doe" className="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-slate-900 dark:text-white" />
+                            <Label className="text-sm font-medium text-foreground mb-1 block">Full Name</Label>
+                            <Input placeholder="e.g. John Doe" className="w-full bg-transparent border-b-2 border-border hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-foreground" />
                             <FieldError className="text-red-500 text-xs mt-1 block" />
                         </TextField>
 
@@ -121,8 +121,8 @@ const RegisterPage = () => {
                                 return null;
                             }}
                         >
-                            <Label className="text-sm font-medium text-slate-900 dark:text-white mb-1 block">Email Address</Label>
-                            <Input placeholder="e.g. john@example.com" className="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-slate-900 dark:text-white" />
+                            <Label className="text-sm font-medium text-foreground mb-1 block">Email Address</Label>
+                            <Input placeholder="e.g. john@example.com" className="w-full bg-transparent border-b-2 border-border hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-foreground" />
                             <FieldError className="text-red-500 text-xs mt-1 block" />
                         </TextField>
 
@@ -139,8 +139,8 @@ const RegisterPage = () => {
                                 return null;
                             }}
                         >
-                            <Label className="text-sm font-medium text-slate-900 dark:text-white mb-1 block">Password</Label>
-                            <Input placeholder="Create a strong password" type="password" className="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-slate-900 dark:text-white" />
+                            <Label className="text-sm font-medium text-foreground mb-1 block">Password</Label>
+                            <Input placeholder="Create a strong password" type="password" className="w-full bg-transparent border-b-2 border-border hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-foreground" />
                             <FieldError className="text-red-500 text-xs mt-1 block" />
                         </TextField>
 
@@ -156,8 +156,8 @@ const RegisterPage = () => {
                                 return null;
                             }}
                         >
-                            <Label className="text-sm font-medium text-slate-900 dark:text-white mb-1 block">Confirm Password</Label>
-                            <Input placeholder="Re-enter your password" type="password" className="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-slate-900 dark:text-white" />
+                            <Label className="text-sm font-medium text-foreground mb-1 block">Confirm Password</Label>
+                            <Input placeholder="Re-enter your password" type="password" className="w-full bg-transparent border-b-2 border-border hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-foreground" />
                             <FieldError className="text-red-500 text-xs mt-1 block" />
                         </TextField>
 
@@ -168,8 +168,8 @@ const RegisterPage = () => {
                                 name="role"
                                 className="w-full"
                             >
-                                <Label className="text-sm font-medium text-slate-900 dark:text-white mb-1 block">Account Role</Label>
-                                <Select.Trigger className="w-full bg-transparent border-b-2 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-slate-900 dark:text-white">
+                                <Label className="text-sm font-medium text-foreground mb-1 block">Account Role</Label>
+                                <Select.Trigger className="w-full bg-transparent border-b-2 border-border hover:border-slate-400 dark:hover:border-slate-600 focus-within:border-slate-900 dark:focus-within:border-white py-2 outline-none transition-colors text-foreground">
                                     <Select.Value placeholder="Select Account Role" />
                                 </Select.Trigger>
                                 <Select.Popover>
@@ -183,7 +183,7 @@ const RegisterPage = () => {
 
                         <Button
                             type="submit"
-                            className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium h-12 mt-8 transition-all hover:scale-[1.01] active:scale-95"
+                            className="w-full bg-foreground text-background font-medium h-12 mt-8 transition-all hover:scale-[1.01] active:scale-95"
                             radius="full"
                             isLoading={isLoading}
                         >
@@ -192,24 +192,24 @@ const RegisterPage = () => {
                     </Form>
 
                     <div className="flex items-center my-8">
-                        <div className="flex-1 border-t border-slate-200 dark:border-slate-800" />
-                        <span className="mx-4 text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest font-medium">Or continue with</span>
-                        <div className="flex-1 border-t border-slate-200 dark:border-slate-800" />
+                        <div className="flex-1 border-t border-border" />
+                        <span className="mx-4 text-xs text-muted uppercase tracking-widest font-medium">Or continue with</span>
+                        <div className="flex-1 border-t border-border" />
                     </div>
 
                     <Button
                         onClick={handleGoogleSignIn}
                         variant="bordered"
-                        className="w-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-900 dark:text-white font-medium h-12 transition-all hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-2"
+                        className="w-full border-border hover:bg-slate-50 dark:hover:bg-slate-800/50 text-foreground font-medium h-12 transition-all hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-2"
                         radius="full"
                     >
                         <FcGoogle className="text-2xl" />
                         Continue with Google
                     </Button>
 
-                    <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-10">
+                    <p className="text-center text-sm text-muted mt-10">
                         Already have an account?{" "}
-                        <Link href="/login" className="text-slate-900 dark:text-white font-semibold hover:underline transition-colors ml-1">
+                        <Link href="/login" className="text-foreground font-semibold hover:underline transition-colors ml-1">
                             Log In
                         </Link>
                     </p>

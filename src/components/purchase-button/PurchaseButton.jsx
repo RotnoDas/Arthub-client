@@ -13,7 +13,7 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
     if (!session) {
         return (
             <Link href={`/login?redirect=/artworks/${artwork._id}`} className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold px-8 h-14 rounded-2xl shadow-xl shadow-slate-900/20 dark:shadow-white/10 hover:shadow-2xl hover:-translate-y-1 transition-all">
+                <Button className="w-full sm:w-auto bg-foreground text-background font-bold px-8 h-14 rounded-2xl shadow-xl shadow-slate-900/20 dark:shadow-white/10 hover:shadow-2xl hover:-translate-y-1 transition-all">
                     <FaLock /> Log In to Purchase
                 </Button>
             </Link>
@@ -22,7 +22,7 @@ const PurchaseButton = ({ artwork, session, isArtist }) => {
 
     if (isArtist) {
         return (
-            <Button disabled className="w-full sm:w-auto bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 font-bold px-8 h-14 rounded-2xl cursor-not-allowed border border-slate-200 dark:border-slate-800">
+            <Button disabled className="w-full sm:w-auto bg-surface-solid/50 text-slate-400 dark:text-slate-500 font-bold px-8 h-14 rounded-2xl cursor-not-allowed border border-border">
                 You own this artwork
             </Button>
         );

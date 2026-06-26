@@ -33,12 +33,12 @@ const ArtworksPage = async ({ searchParams }) => {
     const totalItems = responseData.totalItems || artworks.length;
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+        <div className="min-h-screen bg-background transition-colors duration-500">
             <Search />
             
             <main className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
                 <div className="flex justify-between items-center mb-12">
-                    <h2 className="text-3xl font-extrabold flex items-center gap-2 text-slate-900 dark:text-white tracking-tight">
+                    <h2 className="text-3xl font-extrabold flex items-center gap-2 text-foreground tracking-tight">
                         {searchTerm ? `Search Results for "${searchTerm}"` : (category && category !== 'All Categories' ? `${category} Collection` : 'All Artworks')}
                         <span className="text-lg font-bold text-slate-400 dark:text-slate-500 bg-slate-200/50 dark:bg-slate-800/50 px-3 py-1 rounded-full ml-2">
                             {totalItems}
@@ -58,14 +58,14 @@ const ArtworksPage = async ({ searchParams }) => {
                         <ArtworkPagination totalPages={totalPages} />
                     </>
                 ) : (
-                    <div className="text-center py-32 bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-500">
+                    <div className="text-center py-32 bg-background rounded-[3rem] border-2 border-dashed border-border shadow-sm transition-colors duration-500">
                         <div className="flex justify-center mb-6">
                             <div className="p-6 bg-slate-50 dark:bg-slate-800 rounded-full text-slate-300 dark:text-slate-600">
                                 <FaGhost size={64} />
                             </div>
                         </div>
-                        <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-3">No artworks found</h3>
-                        <p className="text-slate-500 dark:text-slate-400 font-medium text-lg max-w-md mx-auto">
+                        <h3 className="text-3xl font-extrabold text-foreground mb-3">No artworks found</h3>
+                        <p className="text-muted font-medium text-lg max-w-md mx-auto">
                             We could not find any artworks matching your current filters. Try adjusting your search or clearing the category.
                         </p>
                     </div>

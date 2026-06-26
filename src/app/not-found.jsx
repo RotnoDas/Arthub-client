@@ -15,10 +15,10 @@ export default function NotFound() {
                 </div>
 
                 <div className="space-y-4 relative z-10">
-                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground">
                         Blank Canvas! Page not found
                     </h1>
-                    <p className="text-lg text-slate-500 dark:text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
+                    <p className="text-lg text-muted font-medium max-w-lg mx-auto leading-relaxed">
                         The artwork or gallery you are looking for might have been sold, removed, or is temporarily unavailable. Or perhaps, the creative vision was just too avant-garde for this URL!
                     </p>
                 </div>
@@ -30,7 +30,7 @@ export default function NotFound() {
                         </Button>
                     </Link>
                     <Link href="/artworks">
-                        <Button className="font-bold bg-white dark:bg-slate-900 text-fuchsia-600 dark:text-fuchsia-400 border-2 border-fuchsia-100 dark:border-fuchsia-500/30 shadow-sm hover:border-fuchsia-300 dark:hover:border-fuchsia-500/60 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-500/10 h-14 px-8 rounded-2xl transition-all">
+                        <Button className="font-bold bg-background text-accent border-2 border-fuchsia-100 dark:border-fuchsia-500/30 shadow-sm hover:border-fuchsia-300 dark:hover:border-fuchsia-500/60 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-500/10 h-14 px-8 rounded-2xl transition-all">
                             Browse Gallery
                         </Button>
                     </Link>

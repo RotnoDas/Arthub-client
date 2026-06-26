@@ -52,9 +52,9 @@ export default async function ArtworkDetails({ params }) {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-16 px-6 lg:px-8 transition-colors duration-500">
+        <div className="min-h-screen bg-background py-16 px-6 lg:px-8 transition-colors duration-500">
             <div className="max-w-7xl mx-auto">
-                <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-12 transition-colors duration-500">
+                <div className="bg-background rounded-[3rem] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-border overflow-hidden mb-12 transition-colors duration-500">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left side: Image */}
                         <div className="relative aspect-square lg:aspect-auto lg:h-full bg-slate-100 dark:bg-slate-950 p-8 flex items-center justify-center">
@@ -86,36 +86,36 @@ export default async function ArtworkDetails({ params }) {
                                 <FaTag /> {artwork.category || "Original Art"}
                             </div>
                             
-                            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                            <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight mb-4">
                                 {artwork.title}
                             </h1>
 
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-inner">
+                                <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-accent-secondary shadow-inner">
                                     <FaUser />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-semibold text-slate-900 dark:text-white">Artist</p>
-                                    <Link href={`/artworks?search=${encodeURIComponent(artwork.artistEmail)}`} className="text-sm text-fuchsia-600 dark:text-fuchsia-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition-colors">
+                                    <p className="text-sm font-semibold text-foreground">Artist</p>
+                                    <Link href={`/artworks?search=${encodeURIComponent(artwork.artistEmail)}`} className="text-sm text-accent hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition-colors">
                                         {artwork.artistEmail}
                                     </Link>
                                 </div>
                                 <div className="ml-auto text-right">
                                     <p className="text-xs text-slate-400 dark:text-slate-500 font-medium uppercase tracking-widest">Uploaded</p>
-                                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                                    <p className="text-sm font-semibold text-foreground">
                                         {new Date(artwork.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
                                     </p>
                                 </div>
                             </div>
 
                             <div className="prose prose-slate dark:prose-invert mb-10">
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">About this piece</h3>
-                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+                                <h3 className="text-xl font-bold text-foreground mb-3">About this piece</h3>
+                                <p className="text-muted leading-relaxed text-lg">
                                     {artwork.description || "No description provided by the artist."}
                                 </p>
                             </div>
 
-                            <div className="mt-auto border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div className="mt-auto border-t border-border pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                                 <div>
                                     <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Price</p>
                                     <p className="text-4xl font-black bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">
@@ -136,7 +136,7 @@ export default async function ArtworkDetails({ params }) {
                 </div>
 
                 {/* Comment Section below the artwork card */}
-                <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden p-8 lg:p-16 transition-colors duration-500">
+                <div className="bg-background rounded-[3rem] shadow-xl shadow-slate-200/40 dark:shadow-none border border-border overflow-hidden p-8 lg:p-16 transition-colors duration-500">
                     <CommentSection artworkId={artwork._id} session={session} isPurchased={isPurchased} />
                 </div>
             </div>

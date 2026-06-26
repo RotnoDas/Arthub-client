@@ -13,17 +13,17 @@ const categories = [
 
 const ArtCategories = () => {
     return (
-        <section className="py-24 relative overflow-hidden border-t border-slate-200 dark:border-slate-800/50">
+        <section className="py-24 relative overflow-hidden border-t border-border/50">
             {/* Subtle background blurs */}
             <div className="absolute top-0 right-1/4 w-96 h-96 bg-fuchsia-100/40 dark:bg-fuchsia-900/10 rounded-full blur-[100px] -z-10" />
             <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-100/40 dark:bg-indigo-900/10 rounded-full blur-[100px] -z-10" />
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-900 dark:text-white mb-4">
+                    <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground mb-4">
                         Explore by <span className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">Category</span>
                     </h2>
-                    <p className="text-slate-600 dark:text-slate-400 text-lg font-medium max-w-2xl mx-auto">
+                    <p className="text-muted text-lg font-medium max-w-2xl mx-auto">
                         Find exactly what you're looking for by browsing our curated collections of diverse artistic mediums.
                     </p>
                 </div>
@@ -34,15 +34,15 @@ const ArtCategories = () => {
                         return (
                             <Link href={`/artworks?category=${encodeURIComponent(category.name)}`} key={category.name}>
                                 <div 
-                                    className={`group flex flex-col items-center justify-center bg-white dark:bg-slate-900 w-36 h-36 md:w-44 md:h-44 rounded-[2.5rem] border-2 border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-300/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden`}
+                                    className={`group flex flex-col items-center justify-center bg-background w-36 h-36 md:w-44 md:h-44 rounded-[2.5rem] border-2 border-border shadow-xl shadow-slate-300/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer relative overflow-hidden`}
                                 >
                                     {/* Glass reflection */}
                                     <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                                    <div className={`p-4 rounded-full bg-white dark:bg-slate-950 shadow-md mb-3 group-hover:scale-110 transition-transform duration-300 border-slate-100 dark:border-slate-800 border-2`}>
+                                    <div className={`p-4 rounded-full bg-white dark:bg-slate-950 shadow-md mb-3 group-hover:scale-110 transition-transform duration-300 border-border border-2`}>
                                         <Icon className={`w-8 h-8 ${category.color}`} />
                                     </div>
-                                    <span className="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base group-hover:text-slate-900 dark:group-hover:text-white relative z-10">{category.name}</span>
+                                    <span className="font-bold text-foreground text-sm md:text-base group-hover:text-slate-900 dark:group-hover:text-white relative z-10">{category.name}</span>
                                 </div>
                             </Link>
                         );

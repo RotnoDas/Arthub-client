@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dbdj8yyjn";
 const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "arthub";
 
-const inputClass = "w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500/60 dark:focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 transition shadow-sm dark:shadow-none";
+const inputClass = "w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500/60 dark:focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 transition shadow-sm dark:shadow-none";
 
 export default function ArtistProfilePage() {
   const { data: sessionData } = authClient.useSession();
@@ -129,12 +129,12 @@ export default function ArtistProfilePage() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Profile Settings</h1>
-        <p className="text-slate-500 dark:text-slate-400">Manage your ArtHub account details.</p>
+        <h1 className="text-3xl font-bold text-foreground mb-1">Profile Settings</h1>
+        <p className="text-muted">Manage your ArtHub account details.</p>
       </div>
 
       {/* Avatar + Basic Info */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6 flex items-center gap-6 transition-colors duration-500">
+      <div className="rounded-2xl border border-border bg-background shadow-sm p-6 flex items-center gap-6 transition-colors duration-500">
         <div className="relative shrink-0 group">
           <label className={`cursor-pointer block relative rounded-full overflow-hidden w-24 h-24 ring-4 ring-indigo-500/20 ring-offset-2 ring-offset-white transition-all ${uploadingImage ? 'opacity-70' : 'hover:opacity-90'}`}>
             <img
@@ -153,33 +153,33 @@ export default function ArtistProfilePage() {
           </span>
         </div>
         <div>
-          <p className="text-slate-900 dark:text-white font-bold text-xl">{user.name}</p>
-          <p className="text-slate-500 dark:text-slate-400 text-sm">{user.email}</p>
-          <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-wider">
+          <p className="text-foreground font-bold text-xl">{user.name}</p>
+          <p className="text-muted text-sm">{user.email}</p>
+          <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-accent-secondary text-[10px] font-bold uppercase tracking-wider">
             {user.role || "user"}
           </span>
         </div>
       </div>
 
       {/* Edit Profile */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6 space-y-5 transition-colors duration-500">
+      <div className="rounded-2xl border border-border bg-background shadow-sm p-6 space-y-5 transition-colors duration-500">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 text-accent-secondary flex items-center justify-center">
             <FaUser size={14} />
           </div>
           <div>
-            <h2 className="text-slate-900 dark:text-white font-bold text-base">Edit Profile</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xs">Update your display name.</p>
+            <h2 className="text-foreground font-bold text-base">Edit Profile</h2>
+            <p className="text-muted text-xs">Update your display name.</p>
           </div>
         </div>
         <form onSubmit={handleProfileUpdate} className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Display Name</label>
+            <label className="text-xs font-bold text-muted uppercase tracking-wider mb-2 block">Display Name</label>
             <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={inputClass} />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Email Address</label>
-            <input value={user.email} disabled className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-600 text-sm cursor-not-allowed shadow-inner dark:shadow-none" />
+            <label className="text-xs font-bold text-muted uppercase tracking-wider mb-2 block">Email Address</label>
+            <input value={user.email} disabled className="w-full px-4 py-2.5 rounded-xl bg-background/50 border border-border text-slate-500 dark:text-slate-600 text-sm cursor-not-allowed shadow-inner dark:shadow-none" />
             <p className="text-slate-500 dark:text-slate-500 text-xs mt-1.5">Email cannot be changed.</p>
           </div>
           <Button type="submit" isLoading={savingProfile} color="primary" className="font-semibold shadow-lg shadow-primary/20 px-8">
@@ -189,27 +189,27 @@ export default function ArtistProfilePage() {
       </div>
 
       {/* Change Password */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6 space-y-5 transition-colors duration-500">
+      <div className="rounded-2xl border border-border bg-background shadow-sm p-6 space-y-5 transition-colors duration-500">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 text-accent-secondary flex items-center justify-center">
             <FaLock size={14} />
           </div>
           <div>
-            <h2 className="text-slate-900 dark:text-white font-bold text-base">Change Password</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xs">Keep your account secure with a strong password.</p>
+            <h2 className="text-foreground font-bold text-base">Change Password</h2>
+            <p className="text-muted text-xs">Keep your account secure with a strong password.</p>
           </div>
         </div>
         <form onSubmit={handlePasswordChange} className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Current Password</label>
+            <label className="text-xs font-bold text-muted uppercase tracking-wider mb-2 block">Current Password</label>
             <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="••••••••" className={inputClass} />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">New Password</label>
+            <label className="text-xs font-bold text-muted uppercase tracking-wider mb-2 block">New Password</label>
             <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="••••••••" className={inputClass} />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 block">Confirm New Password</label>
+            <label className="text-xs font-bold text-muted uppercase tracking-wider mb-2 block">Confirm New Password</label>
             <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className={inputClass} />
           </div>
           <Button type="submit" isLoading={savingPassword} color="secondary" className="font-semibold px-8">

@@ -50,7 +50,7 @@ const ArtworkPagination = ({ totalPages }) => {
     const pages = getPageNumbers();
 
     return (
-        <div className="flex justify-center mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 pb-16 transition-colors duration-500">
+        <div className="flex justify-center mt-16 pt-8 border-t border-border pb-16 transition-colors duration-500">
             <div className="flex items-center gap-2">
                 <button 
                     onClick={() => handlePageChange(currentPage - 1)}
@@ -58,7 +58,7 @@ const ArtworkPagination = ({ totalPages }) => {
                     className={`flex items-center gap-1 font-extrabold px-4 py-2 rounded-xl transition-colors mr-2 text-sm ${
                         currentPage === 1 
                             ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' 
-                            : 'bg-transparent hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-900 dark:text-white'
+                            : 'bg-transparent hover:bg-slate-200 dark:hover:bg-slate-800 text-foreground'
                     }`}
                 >
                     <FaChevronLeft size={10} /> Previous
@@ -73,8 +73,8 @@ const ArtworkPagination = ({ totalPages }) => {
                             onClick={() => handlePageChange(page)}
                             className={`w-10 h-10 flex items-center justify-center font-extrabold rounded-full transition-all text-sm ${
                                 currentPage === page
-                                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-xl shadow-slate-900/20 dark:shadow-white/20"
-                                    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700"
+                                    ? "bg-foreground text-background shadow-xl shadow-slate-900/20 dark:shadow-white/20"
+                                    : "bg-surface-solid text-foreground hover:bg-slate-200 dark:hover:bg-slate-700"
                             }`}
                         >
                             {page}
@@ -88,7 +88,7 @@ const ArtworkPagination = ({ totalPages }) => {
                     className={`flex items-center gap-1 font-extrabold px-4 py-2 rounded-xl transition-colors ml-2 text-sm ${
                         currentPage === safeTotalPages 
                             ? 'text-slate-300 dark:text-slate-700 cursor-not-allowed' 
-                            : 'bg-transparent hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-900 dark:text-white'
+                            : 'bg-transparent hover:bg-slate-200 dark:hover:bg-slate-800 text-foreground'
                     }`}
                 >
                     Next <FaChevronRight size={10} />

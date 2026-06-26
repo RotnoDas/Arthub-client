@@ -55,9 +55,9 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
     return pathname.startsWith(href);
   };
 
-  const roleColor = role === "admin" ? "text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/10" : role === "artist" ? "text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-500/10" : "text-pink-600 dark:text-pink-400 bg-pink-100 dark:bg-pink-500/10";
+  const roleColor = role === "admin" ? "text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/10" : role === "artist" ? "text-accent-secondary bg-indigo-100 dark:bg-indigo-500/10" : "text-pink-600 dark:text-pink-400 bg-pink-100 dark:bg-pink-500/10";
   const activeBg = role === "admin" ? "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/30" : role === "artist" ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/30" : "bg-pink-50 dark:bg-pink-500/10 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-500/30";
-  const activeIcon = role === "admin" ? "bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400" : role === "artist" ? "bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400" : "bg-pink-100 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400";
+  const activeIcon = role === "admin" ? "bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400" : role === "artist" ? "bg-indigo-100 dark:bg-indigo-500/20 text-accent-secondary" : "bg-pink-100 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400";
 
   return (
     <>
@@ -69,23 +69,23 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
         />
       )}
       
-      <aside className={`fixed lg:sticky top-0 inset-y-0 left-0 z-50 w-64 h-screen shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="h-full flex flex-col bg-white dark:bg-slate-900 transition-colors duration-300">
+      <aside className={`fixed lg:sticky top-0 inset-y-0 left-0 z-50 w-64 h-screen shrink-0 border-r border-border bg-background transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="h-full flex flex-col bg-background transition-colors duration-300">
 
           {/* Brand */}
-          <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div className="px-6 py-5 border-b border-border flex items-center justify-between">
             <Logo />
             <button 
               onClick={() => setIsOpen(false)} 
-              className="lg:hidden p-2 -mr-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-2 -mr-2 rounded-xl text-muted hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               <FaTimes size={18} />
             </button>
           </div>
 
         {/* User Profile Card */}
-        <div className="px-4 py-4 border-b border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
+        <div className="px-4 py-4 border-b border-border">
+          <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-surface-solid border border-slate-100 dark:border-slate-700/50">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-200 dark:border-pink-500/30 shrink-0">
               <Image
                 width={40}
@@ -97,7 +97,7 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
               />
             </div>
             <div className="overflow-hidden flex-1">
-              <p className="text-slate-900 dark:text-white text-sm font-bold truncate leading-tight">{session?.user?.name}</p>
+              <p className="text-foreground text-sm font-bold truncate leading-tight">{session?.user?.name}</p>
               <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md ${roleColor}`}>
                 {role}
               </span>
@@ -118,10 +118,10 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border ${
                   active
                     ? `${activeBg}`
-                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 border-transparent"
+                    : "text-muted hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 border-transparent"
                 }`}
               >
-                <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${active ? activeIcon : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"}`}>
+                <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${active ? activeIcon : "bg-surface-solid text-muted"}`}>
                   <Icon size={15} />
                 </span>
                 <span>{label}</span>
@@ -132,9 +132,9 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
         </nav>
 
         {/* Bottom Links */}
-        <div className="px-3 py-4 border-t border-slate-200 dark:border-slate-800 space-y-1">
-          <Link href="/" onClick={() => setIsOpen(false)} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-150 border border-transparent">
-            <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+        <div className="px-3 py-4 border-t border-border space-y-1">
+          <Link href="/" onClick={() => setIsOpen(false)} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-muted hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-150 border border-transparent">
+            <span className="w-8 h-8 rounded-lg bg-surface-solid flex items-center justify-center shrink-0">
               <FaHome size={13} />
             </span>
             Back to Site
@@ -144,9 +144,9 @@ const DashboardSidebar = ({ isOpen, setIsOpen }) => {
               setIsOpen(false);
               handleLogout();
             }}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-150 cursor-pointer border border-transparent"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-muted hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-150 cursor-pointer border border-transparent"
           >
-            <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-surface-solid flex items-center justify-center shrink-0">
               <FaSignOutAlt size={13} />
             </span>
             Sign Out
