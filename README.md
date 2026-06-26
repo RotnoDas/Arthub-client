@@ -4,7 +4,7 @@
 
   **A premium marketplace to discover, share, and appreciate stunning artworks from independent artists.**
 
-  [![Live Site](https://img.shields.io/badge/Live_Site-View_Now-fuchsia?style=for-the-badge&logo=vercel)](https://arthub-client.vercel.app)
+  [![Live Site](https://img.shields.io/badge/Live_Site-View_Now-fuchsia?style=for-the-badge&logo=vercel)](https://arthub-client-liart.vercel.app)
 
 </div>
 
@@ -14,7 +14,7 @@
 
 ArtHub is a global community platform designed for digital artists, photographers, and creatives to showcase their original masterpieces. Users can explore galleries, search by category and price, connect with visionary artists, and purchase exclusive artworks securely.
 
-🌐 **Live Demo:** [https://arthub-client.vercel.app](https://arthub-client.vercel.app) *(Update with your actual URL)*
+🌐 **Live Demo:** [https://arthub-client-liart.vercel.app](https://arthub-client-liart.vercel.app)
 
 ---
 
